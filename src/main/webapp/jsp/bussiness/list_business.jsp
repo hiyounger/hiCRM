@@ -89,7 +89,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	$(function(){
   		//分页展示客户列表
 		$("#businessList").datagrid({
-			url:"buinessInfo",
+			url:"manage/bussiness/buinessInfo",
 			fitColumns:true,
 			checkOnSelect:false,
 			idField:"name",
@@ -126,7 +126,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	$("button").on("click",function(){
 		
-     window.location.href="text/add_buiness.jsp"
+     window.location.href="jsp/bussiness/add_buiness.jsp"
 		
 	})
 	function see(index){
