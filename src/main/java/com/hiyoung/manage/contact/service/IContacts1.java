@@ -14,4 +14,8 @@ public interface IContacts1 {
 
     List<Contacts1> listByPage(Integer page, Integer rows);
 
+    Integer addContacts1(Contacts1 contacts1);
+
+
+
 }

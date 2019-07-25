@@ -1,8 +1,8 @@
 package com.hiyoung.manage.product.controller;
 
-import com.newroad.entity.Product;
-import com.newroad.service.ProductIf;
-import com.newroad.service.imp.ProductImp;
+import com.hiyoung.manage.product.entity.Product;
+import com.hiyoung.manage.product.service.ProductIf;
+import com.hiyoung.manage.product.service.imp.ProductImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;

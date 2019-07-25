@@ -1,8 +1,6 @@
 package com.hiyoung.manage.contact.controller;
 
-import com.hiyoung.manage.contact.entity.Contacts;
 import com.hiyoung.manage.contact.entity.Contacts1;
-import com.hiyoung.manage.contact.service.IContacts;
 import com.hiyoung.manage.contact.service.IContacts1;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,9 +14,6 @@ import java.util.Map;
 
 @Controller
 public class TestController {
-
-    @Resource
-    IContacts iContacts;
 
     @Resource
     IContacts1 iContacts1;
@@ -37,14 +32,14 @@ public class TestController {
 
     @RequestMapping("/test3")
     @ResponseBody
-    public List<Contacts> testData3(){
-        return iContacts.getAll();
+    public List<Contacts1> testData3(){
+        return iContacts1.getAll();
     }
 
     @RequestMapping("/test4")
     @ResponseBody
     public int testData4(){
-        return iContacts.getCount();
+        return iContacts1.getCount();
     }
 
     /**

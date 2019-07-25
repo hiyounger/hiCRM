@@ -45,4 +45,8 @@ public class Contacts1Imp implements IContacts1 {
         return contactsMapper1.selectByPrimaryKey(i);
     }
 
+    @Override
+    public Integer addContacts1(Contacts1 contacts1) {
+        return contactsMapper1.insert(contacts1);
+    }
 }
