@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newroad.jtgj.dao.Contacts1Mapper">
+  <resultMap id="BaseResultMap" type="com.newroad.jtgj.entity.Contacts1">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="customerName" jdbcType="VARCHAR" property="customername" />
+    <result column="number" jdbcType="INTEGER" property="number" />
+    <result column="contactName" jdbcType="VARCHAR" property="contactname" />
+    <result column="businessName" jdbcType="VARCHAR" property="businessname" />
+    <result column="orderTime" jdbcType="DATE" property="ordertime" />
+    <result column="contractAmount" jdbcType="DOUBLE" property="contractamount" />
+    <result column="startingTimeContract" jdbcType="DATE" property="startingtimecontract" />
+    <result column="endTimeContract" jdbcType="DATE" property="endtimecontract" />
+    <result column="customerContractor" jdbcType="VARCHAR" property="customercontractor" />
+    <result column="companyContractor" jdbcType="VARCHAR" property="companycontractor" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="founder" jdbcType="VARCHAR" property="founder" />
+    <result column="updateTime" jdbcType="DATE" property="updatetime" />
+    <result column="creationTime" jdbcType="DATE" property="creationtime" />
+    <result column="personInCharge" jdbcType="VARCHAR" property="personincharge" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, customerName, number, contactName, businessName, orderTime, contractAmount, startingTimeContract,
+    endTimeContract, customerContractor, companyContractor, remarks, founder, updateTime,
+    creationTime, personInCharge
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_crm_contracts
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_crm_contracts
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.newroad.jtgj.entity.Contacts1">
+    insert into tb_crm_contracts (id, customerName, number,
+      contactName, businessName, orderTime,
+      contractAmount, startingTimeContract, endTimeContract,
+      customerContractor, companyContractor,
+      remarks, founder, updateTime,
+      creationTime, personInCharge)
+    values (#{id,jdbcType=INTEGER}, #{customername,jdbcType=VARCHAR}, #{number,jdbcType=INTEGER},
+      #{contactname,jdbcType=VARCHAR}, #{businessname,jdbcType=VARCHAR}, #{ordertime,jdbcType=DATE},
+      #{contractamount,jdbcType=DOUBLE}, #{startingtimecontract,jdbcType=DATE}, #{endtimecontract,jdbcType=DATE},
+      #{customercontractor,jdbcType=VARCHAR}, #{companycontractor,jdbcType=VARCHAR},
+      #{remarks,jdbcType=VARCHAR}, #{founder,jdbcType=VARCHAR}, #{updatetime,jdbcType=DATE},
+      #{creationtime,jdbcType=DATE}, #{personincharge,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.newroad.jtgj.entity.Contacts1">
+    insert into tb_crm_contracts
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="customername != null">
+        customerName,
+      </if>
+      <if test="number != null">
+        number,
+      </if>
+      <if test="contactname != null">
+        contactName,
+      </if>
+      <if test="businessname != null">
+        businessName,
+      </if>
+      <if test="ordertime != null">
+        orderTime,
+      </if>
+      <if test="contractamount != null">
+        contractAmount,
+      </if>
+      <if test="startingtimecontract != null">
+        startingTimeContract,
+      </if>
+      <if test="endtimecontract != null">
+        endTimeContract,
+      </if>
+      <if test="customercontractor != null">
+        customerContractor,
+      </if>
+      <if test="companycontractor != null">
+        companyContractor,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="founder != null">
+        founder,
+      </if>
+      <if test="updatetime != null">
+        updateTime,
+      </if>
+      <if test="creationtime != null">
+        creationTime,
+      </if>
+      <if test="personincharge != null">
+        personInCharge,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="customername != null">
+        #{customername,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null">
+        #{number,jdbcType=INTEGER},
+      </if>
+      <if test="contactname != null">
+        #{contactname,jdbcType=VARCHAR},
+      </if>
+      <if test="businessname != null">
+        #{businessname,jdbcType=VARCHAR},
+      </if>
+      <if test="ordertime != null">
+        #{ordertime,jdbcType=DATE},
+      </if>
+      <if test="contractamount != null">
+        #{contractamount,jdbcType=DOUBLE},
+      </if>
+      <if test="startingtimecontract != null">
+        #{startingtimecontract,jdbcType=DATE},
+      </if>
+      <if test="endtimecontract != null">
+        #{endtimecontract,jdbcType=DATE},
+      </if>
+      <if test="customercontractor != null">
+        #{customercontractor,jdbcType=VARCHAR},
+      </if>
+      <if test="companycontractor != null">
+        #{companycontractor,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="founder != null">
+        #{founder,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=DATE},
+      </if>
+      <if test="creationtime != null">
+        #{creationtime,jdbcType=DATE},
+      </if>
+      <if test="personincharge != null">
+        #{personincharge,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.newroad.jtgj.entity.Contacts1">
+    update tb_crm_contracts
+    <set>
+      <if test="customername != null">
+        customerName = #{customername,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null">
+        number = #{number,jdbcType=INTEGER},
+      </if>
+      <if test="contactname != null">
+        contactName = #{contactname,jdbcType=VARCHAR},
+      </if>
+      <if test="businessname != null">
+        businessName = #{businessname,jdbcType=VARCHAR},
+      </if>
+      <if test="ordertime != null">
+        orderTime = #{ordertime,jdbcType=DATE},
+      </if>
+      <if test="contractamount != null">
+        contractAmount = #{contractamount,jdbcType=DOUBLE},
+      </if>
+      <if test="startingtimecontract != null">
+        startingTimeContract = #{startingtimecontract,jdbcType=DATE},
+      </if>
+      <if test="endtimecontract != null">
+        endTimeContract = #{endtimecontract,jdbcType=DATE},
+      </if>
+      <if test="customercontractor != null">
+        customerContractor = #{customercontractor,jdbcType=VARCHAR},
+      </if>
+      <if test="companycontractor != null">
+        companyContractor = #{companycontractor,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="founder != null">
+        founder = #{founder,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null">
+        updateTime = #{updatetime,jdbcType=DATE},
+      </if>
+      <if test="creationtime != null">
+        creationTime = #{creationtime,jdbcType=DATE},
+      </if>
+      <if test="personincharge != null">
+        personInCharge = #{personincharge,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.newroad.jtgj.entity.Contacts1">
+    update tb_crm_contracts
+    set customerName = #{customername,jdbcType=VARCHAR},
+      number = #{number,jdbcType=INTEGER},
+      contactName = #{contactname,jdbcType=VARCHAR},
+      businessName = #{businessname,jdbcType=VARCHAR},
+      orderTime = #{ordertime,jdbcType=DATE},
+      contractAmount = #{contractamount,jdbcType=DOUBLE},
+      startingTimeContract = #{startingtimecontract,jdbcType=DATE},
+      endTimeContract = #{endtimecontract,jdbcType=DATE},
+      customerContractor = #{customercontractor,jdbcType=VARCHAR},
+      companyContractor = #{companycontractor,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      founder = #{founder,jdbcType=VARCHAR},
+      updateTime = #{updatetime,jdbcType=DATE},
+      creationTime = #{creationtime,jdbcType=DATE},
+      personInCharge = #{personincharge,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <!-- 补充 -->
+  <select id="getAll" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/> from tb_crm_contracts
+  </select>
+  <select id="getCount" resultType="Integer">
+    select count(id) from tb_crm_contracts
+  </select>
+  <select id="listByPage" resultMap="BaseResultMap" parameterType="Integer">
+    select <include refid="Base_Column_List"/> from tb_crm_contracts limit #{offset},#{rows}
+  </select>
+</mapper>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.crm.dao.CustomerMapper" >
+  <resultMap id="BaseResultMap" type="com.crm.entity.Customer" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="transaction_status" property="transactionStatus" jdbcType="INTEGER" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="next_contect_time" property="nextContectTime" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="leader" property="leader" jdbcType="VARCHAR" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="delete_status" property="deleteStatus" jdbcType="INTEGER" />
+    <result column="customer_level" property="customerLevel" jdbcType="VARCHAR" />
+    <result column="customer_source" property="customerSource" jdbcType="VARCHAR" />
+    <result column="customer_industry" property="customerIndustry" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="com.crm.entity.Customer" >
+    insert into customer (id, name, transaction_status, 
+      tel, phone, next_contect_time, 
+      creator, update_time, create_time, 
+      leader, remarks, delete_status, 
+      customer_level, customer_source, customer_industry
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{transactionStatus,jdbcType=INTEGER}, 
+      #{tel,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{nextContectTime,jdbcType=TIMESTAMP}, 
+      #{creator,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{leader,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, #{deleteStatus,jdbcType=INTEGER}, 
+      #{customerLevel,jdbcType=VARCHAR}, #{customerSource,jdbcType=VARCHAR}, #{customerIndustry,jdbcType=VARCHAR}
+      )
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, name, transaction_status, tel, phone, next_contect_time, creator, update_time, 
+    create_time, leader, remarks, delete_status, customer_level, customer_source, customer_industry
+    from customer
+  </select>
+
+  <sql id="Base_Column_List">
+id, name, transaction_status, tel, phone, next_contect_time, creator, update_time, create_time, leader, remarks, delete_status, customer_level, customer_source, customer_industry
+  </sql>
+
+  <select id="getCustomerByPage" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include> from customer limit #{offerset} , #{rows}
+  </select>
+
+  <select id="getCount" resultType="java.lang.Integer">
+  	select count(id) from customer
+  </select>
+
+</mapper>

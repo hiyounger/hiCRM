@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newroad.dao.ContractsMapper">
+  <resultMap id="BaseResultMap" type="com.newroad.entity.Contracts">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="customer_name" jdbcType="VARCHAR" property="customerName" />
+    <result column="telephone" jdbcType="VARCHAR" property="telephone" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="job" jdbcType="VARCHAR" property="job" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="next_contact_time" jdbcType="TIMESTAMP" property="nextContactTime" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="creater" jdbcType="VARCHAR" property="creater" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="is_key_maker" jdbcType="VARCHAR" property="isKeyMaker" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="delete_state" jdbcType="INTEGER" property="deleteState"/>
+  </resultMap>
+
+  <sql id="columns">
+    id, name, customer_name,
+      telephone, phone, email,
+      job, address, next_contact_time,
+      remarks, creater, update_time,
+      is_key_maker, sex
+  </sql>
+  <insert id="insert" parameterType="com.newroad.entity.Contracts">
+    insert into tb_contracts (id, name, customer_name, 
+      telephone, phone, email, 
+      job, address, next_contact_time, 
+      remarks, creater, update_time, 
+      is_key_maker, sex)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{customerName,jdbcType=VARCHAR}, 
+      #{telephone,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{job,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{nextContactTime,jdbcType=TIMESTAMP}, 
+      #{remarks,jdbcType=VARCHAR}, #{creater,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{isKeyMaker,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR})
+  </insert>
+  <select id="getCount" resultType="java.lang.Integer">
+    select count(id) from  tb_contracts where delete_state=0
+  </select>
+  <select id="listBYPage" resultType="com.newroad.entity.Contracts">
+    select
+    <include refid="columns"/> from tb_contracts where delete_state=0 limit #{offerset},#{rows}
+  </select>
+  <update id="deleteById" >
+    update tb_contracts set delete_state=1 where id=#{id,jdbcType=INTEGER}
+  </update>
+</mapper>
