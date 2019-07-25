@@ -34,4 +34,4 @@ logging:
     com:
       hiyoung: debug
 mybatis:
-  type-aliases-package: com.newroad.jtgj
+  type-aliases-package: com.hiyoung.*.*.entity

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.crm.dao.CustomerMapper" >
-  <resultMap id="BaseResultMap" type="com.crm.entity.Customer" >
+<mapper namespace="com.hiyoung.manage.customer.dao.CustomerMapper" >
+  <resultMap id="BaseResultMap" type="com.hiyoung.manage.customer.entity.Customer" >
     <result column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="transaction_status" property="transactionStatus" jdbcType="INTEGER" />
@@ -18,7 +18,7 @@
     <result column="customer_source" property="customerSource" jdbcType="VARCHAR" />
     <result column="customer_industry" property="customerIndustry" jdbcType="VARCHAR" />
   </resultMap>
-  <insert id="insert" parameterType="com.crm.entity.Customer" >
+  <insert id="insert" parameterType="com.hiyoung.manage.customer.entity.Customer" >
     insert into customer (id, name, transaction_status, 
       tel, phone, next_contect_time, 
       creator, update_time, create_time, 

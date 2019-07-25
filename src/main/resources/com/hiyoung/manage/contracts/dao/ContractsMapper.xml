@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.newroad.dao.ContractsMapper">
-  <resultMap id="BaseResultMap" type="com.newroad.entity.Contracts">
+<mapper namespace="com.hiyoung.manage.contracts.dao.ContractsMapper">
+  <resultMap id="BaseResultMap" type="com.hiyoung.manage.contracts.entity.Contracts">
     <result column="id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="customer_name" jdbcType="VARCHAR" property="customerName" />
@@ -26,7 +26,7 @@
       remarks, creater, update_time,
       is_key_maker, sex
   </sql>
-  <insert id="insert" parameterType="com.newroad.entity.Contracts">
+  <insert id="insert" parameterType="com.hiyoung.manage.contracts.entity.Contracts">
     insert into tb_contracts (id, name, customer_name, 
       telephone, phone, email, 
       job, address, next_contact_time, 
@@ -41,7 +41,7 @@
   <select id="getCount" resultType="java.lang.Integer">
     select count(id) from  tb_contracts where delete_state=0
   </select>
-  <select id="listBYPage" resultType="com.newroad.entity.Contracts">
+  <select id="listBYPage" resultType="com.hiyoung.manage.contracts.entity.Contracts">
     select
     <include refid="columns"/> from tb_contracts where delete_state=0 limit #{offerset},#{rows}
   </select>

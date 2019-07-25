@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.newroad.dao.LeadsMapper">
-  <resultMap id="BaseResultMap" type="com.newroad.entity.Leads">
+<mapper namespace="com.hiyoung.manage.leads.dao.LeadsMapper">
+  <resultMap id="BaseResultMap" type="com.hiyoung.manage.leads.entity.Leads">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="mobil" jdbcType="INTEGER" property="mobil" />
     <result column="update_time" jdbcType="DATE" property="updateTime" />
@@ -46,7 +46,7 @@
   </select>
 
 
-    <insert id="addLeads"  parameterType="com.newroad.entity.Leads">
+    <insert id="addLeads"  parameterType="com.hiyoung.manage.leads.entity.Leads">
          insert into tb_leads (id, mobil, update_time,
       create_time, blame, address,
       next_contacttime, create_person, leads_orgin,
@@ -58,7 +58,7 @@
 
 
     </insert>
-  <insert id="insert" parameterType="com.newroad.entity.Leads">
+  <insert id="insert" parameterType="com.hiyoung.manage.leads.entity.Leads">
     insert into tb_leads (id, mobil, update_time, 
       create_time, blame, address, 
       next_contacttime, create_person, leads_orgin, 
@@ -71,7 +71,7 @@
 
 
 
-  <insert id="insertSelective" parameterType="com.newroad.entity.Leads">
+  <insert id="insertSelective" parameterType="com.hiyoung.manage.leads.entity.Leads">
     insert into tb_leads
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

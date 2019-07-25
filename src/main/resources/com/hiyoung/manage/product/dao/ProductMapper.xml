@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.newroad.dao.ProductMapper">
-  <resultMap id="BaseResultMap" type="com.newroad.entity.Product">
+<mapper namespace="com.hiyoung.manage.product.dao.ProductMapper">
+  <resultMap id="BaseResultMap" type="com.hiyoung.manage.product.entity.Product">
     <result column="product_id" jdbcType="INTEGER" property="productId" />
     <result column="product_type" jdbcType="VARCHAR" property="productType" />
     <result column="product_name" jdbcType="VARCHAR" property="productName" />
@@ -20,7 +20,7 @@
     create_time, update_time, description,product_unit,product_state
   </sql>
 
-  <insert id="insert" parameterType="com.newroad.entity.Product">
+  <insert id="insert" parameterType="com.hiyoung.manage.product.entity.Product">
     insert into tb_crm_product(product_id, product_type, product_name,
       creator_user_id, standard_price, leader_id, 
       create_time, update_time, description, 
@@ -30,7 +30,7 @@
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{description,jdbcType=VARCHAR}, 
       #{productState,jdbcType=INTEGER}, #{productUnit,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.newroad.entity.Product">
+  <insert id="insertSelective" parameterType="com.hiyoung.manage.product.entity.Product">
     insert into tb_crm_product
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="productId != null">
@@ -122,7 +122,7 @@
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{description,jdbcType=VARCHAR},
       #{productState,jdbcType=INTEGER},#{productUnit,jdbcType=VARCHAR})
   </insert>-->
-  <insert id="addProduct" parameterType="com.newroad.entity.Product">
+  <insert id="addProduct" parameterType="com.hiyoung.manage.product.entity.Product">
     insert into tb_crm_product(product_id, product_type, product_name,
       creator_user_id, standard_price, leader_id,
       create_time, update_time, description,

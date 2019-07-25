@@ -35,11 +35,11 @@ public class ShiroConfig  {
         // 设置 SecurityManager
         bean.setSecurityManager(securityManager);
         // 设置登录成功跳转Url
-        bean.setSuccessUrl("/WEB-INF/jsp/index.jsp");
+        bean.setSuccessUrl("/jsp/index.jsp");
         // 设置登录跳转Url
         bean.setLoginUrl("/login.jsp");
         // 设置未授权提示Url
-        bean.setUnauthorizedUrl("/WEB-INF/jsp/fail.jsp");
+        bean.setUnauthorizedUrl("/jsp/fail.jsp");
 
         /**
          * anon：匿名用户可访问

@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@MapperScan("com.hiyoung.*.*.product")
+@MapperScan("com.hiyoung.*.*.dao")
 //@ComponentScan({"com.hiyoung.realm","com.hiyoung.config","com.hiyoung.system"})
 public class JtcrmApplication {
 
