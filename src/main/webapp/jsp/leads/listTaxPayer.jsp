@@ -43,7 +43,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+ request
     		//加载数据
     		function loadData() {
     			$("#dg").datagrid({
-					url:"lead/list.do",
+					url:"manage/leads/list.do",
 					// queryParams:{"id":id},
 					// toolbar:'#tb',
                 	singleSelect:false,

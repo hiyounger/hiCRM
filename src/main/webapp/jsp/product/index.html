@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="easyui/themes/default/easyui.css">
-    <link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
-    <script type="text/javascript" src="easyui/jquery.min.js"></script>
-    <script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
-    <script type="text/javascript" src="easyui/easyui-lang-zh_CN.js"></script>
+    <link rel="stylesheet" href="/static/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/static/easyui/themes/icon.css">
+    <script type="text/javascript" src="/static/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/static/easyui/easyui-lang-zh_CN.js"></script>
     <style>
         .container{
             width: 90%;
@@ -123,7 +123,7 @@
     <div class="container">
         <div class="header">
             <div class="header_left">
-                <img src="img/logo.png">
+                <img src="/static/img/logo.png">
             </div>
             <div class="header_right">
                 <ul>
@@ -212,7 +212,7 @@
 
     function addProduct(){
         //alert("1111");
-        window.open('addProduct.jsp', '新建产品', 'height=400, width=600, top=350, left=350, toolbar=no, menubar=no, scrollbars=yes, resizable=no, location=no, status=no')
+        window.open('jsp/product/addProduct.jsp', '新建产品', 'height=400, width=600, top=350, left=350, toolbar=no, menubar=no, scrollbars=yes, resizable=no, location=no, status=no')
     }
 
 

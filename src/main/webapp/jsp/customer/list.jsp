@@ -8,11 +8,11 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Title</title>
-	<link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">
-	<link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
-	<script type="text/javascript" src="easyui/jquery.min.js"></script>
-	<script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
-	<script type="text/javascript" src="easyui/easyui-lang-zh_CN.js"></script>
+	<link rel="stylesheet" type="text/css" href="static/easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="static/easyui/themes/icon.css">
+	<script type="text/javascript" src="static/easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="static/easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="static/easyui/easyui-lang-zh_CN.js"></script>
 	<style>
 		.container{
 			width: 90%;
@@ -142,7 +142,7 @@
 <div class="container">
 	<div class="header">
 		<div class="header_left">
-			<img src="img/logo.png">
+			<img src="/static/img/logo.png">
 		</div>
 		<div class="header_right">
 			<ul>
@@ -268,7 +268,7 @@
 	//添加按钮
 	$("#addBtn").on("click",function(e){
 		window.open(
-			'add1.jsp', '新建客户', 'height=600, width=750, top=100, left=400, toolbar=no, menubar=no, scrollbars=yes, resizable=no, location=no, status=no'
+			'jps/customer/add1.jsp', '新建客户', 'height=600, width=750, top=100, left=400, toolbar=no, menubar=no, scrollbars=yes, resizable=no, location=no, status=no'
 		);
 	})
 

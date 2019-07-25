@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/lead")
+@RequestMapping("/manage/leads")
 public class LeadsController {
     @Resource
     private LeadsServiceIf leadsServiceIf;

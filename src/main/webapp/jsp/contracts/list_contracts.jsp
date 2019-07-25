@@ -54,7 +54,7 @@
 
         function loadData(){
             $("#dg").datagrid({
-                url:"cns/list",
+                url:"manage/contracts/list",
                 checkOnSelect:true,
                 pagination:true,
                 pageSize:4,

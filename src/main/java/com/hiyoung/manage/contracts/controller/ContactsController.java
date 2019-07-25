@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/cns")
+@RequestMapping("/manage/contracts")
 public class ContactsController {
     private Contracts contracts=new Contracts();
     @Resource

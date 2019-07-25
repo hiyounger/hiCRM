@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/customer")
+@RequestMapping("/manage/customer")
 public class CustomerController {
 
     @Resource

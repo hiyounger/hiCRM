@@ -17,11 +17,11 @@
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <base href="<%=basePath%>">
-    <link rel="stylesheet" href="/static/easyui/themes/default/easyui.css">
-    <link rel="stylesheet" type="text/css" href="/static/easyui/themes/icon.css">
-    <script type="text/javascript" src="/static/easyui/jquery.min.js"></script>
-    <script type="text/javascript" src="/static/easyui/jquery.easyui.min.js"></script>
-    <script type="text/javascript" src="/static/easyui/easyui-lang-zh_CN.js"></script>
+    <link rel="stylesheet" href="static/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="static/easyui/themes/icon.css">
+    <script type="text/javascript" src="static/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="static/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="static/easyui/easyui-lang-zh_CN.js"></script>
     <style>
         .container {
             width: 90%;
@@ -45,6 +45,7 @@
         }
 
         .left {
+            margin-top: 80px;
             width: 15%;
             /*background: rgb(45,48,55);*/
             position: absolute;
@@ -115,7 +116,7 @@
 <div class="container">
     <div class="header">
         <div class="header_left">
-            <img src="/static/img/logo.png">
+            <img src="static/img/logo.png">
         </div>
         <div class="header_right">
             <ul>
@@ -132,7 +133,7 @@
 
     </div>
     <div class="right">
-        <iframe id="iframe" src="/jsp/user/user.jsp" style="width: 100%;height: 100%;"></iframe>
+        <iframe id="iframe" src="jsp/user/user.jsp" style="width: 100%;height: 100%;"></iframe>
 
     </div>
 
@@ -143,48 +144,44 @@
 
 
    $("#sm").sidemenu({
-
        data : [{
-           text: '',
-           iconCls: 'fa fa-wpforms',
            state: 'open',
            children: [{
-               text: '快速访问 >',
-               url:'www.baidu.com'
-           },{
-               text: '仪表盘',
-               url:'www.taobao.com'
-           },{
-               text: '代办事项',
-               url:'www.jingdong.com'
-           },{
                text: '线索',
-               url:'www.baidu.com'
+               url:'jsp/leads/listTaxPayer.jsp'
            },{
                text: '客户',
-               url:'www.baidu.com'
+               url:'jsp/customer/list.jsp'
            },{
                text: '联系人',
-               url:'www.baidu.com'
-           },{
-               text: '公海',
-               url:'www.baidu.com'
+               url:'jsp/contact/index.html'
            },{
                text: '商机',
-               url:'www.baidu.com'
+               url:'jsp/bussiness/list_business.jsp'
            },{
                text: '合同',
-               url:'www.baidu.com'
-           },{
-               text: '回款',
-               url:'www.baidu.com'
+               url:'jsp/contracts/list_contracts.jsp'
            },{
                text: '产品',
-               url:'www.baidu.com'
+               url:'jsp/product/listProduct.jsp'
+           },{
+               text: '产品',
+               url:'jsp/product/listProduct.jsp'
+           },{
+               text: '产品',
+               url:'jsp/product/listProduct.jsp'
+           },{
+               text: '产品',
+               url:'jsp/product/listProduct.jsp'
+           },{
+               text: '产品',
+               url:'jsp/product/listProduct.jsp'
+           },{
+               text: '产品',
+               url:'jsp/product/listProduct.jsp'
            }]
        }],onSelect:function (item) {
-          $("#iframe").attr('src',item.url);
-          location.reload()
+          $("#iframe").attr('src',item.url+'');
        }
    })
 

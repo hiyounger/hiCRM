@@ -20,9 +20,58 @@
     <title>用户登录</title>
     <link rel="stylesheet" type="text/css" href="static/easyui/themes/default/easyui.css">
     <link rel="stylesheet" type="text/css" href="static/easyui/themes/icon.css">
-    <link rel="stylesheet" type="text/css" href="static/css/login.css">
     <script type="text/javascript" src="static/easyui/jquery.min.js"></script>
     <script type="text/javascript" src="static/easyui/jquery.easyui.min.js"></script>
+    <style type="text/css">
+
+        #left{
+            background-color: lightcyan;
+            width: 70%;
+            height: 600px;
+            float: left;
+            background-image: url(static/img/login.png);
+            background-position: 100%;
+
+        }
+        #right{
+            width: 29%;
+            height: 600px;
+            float: left;
+        }
+        #warn{
+            height: 40px;
+            margin: auto;
+            color: red;
+            visibility: hidden;
+        }
+        #submit{
+            display: inline-block;
+            width: 100%;
+            background-color:#00AAEE ;
+            cursor: pointer;
+            border-radius:5px;
+            color: white;
+            border: 10 white solid;
+            height: 40px;
+            text-align: center;
+            line-height:40px;
+        }
+        #table{
+            margin: auto;
+            margin-top: 20px;
+            width: 300px;
+        }
+        #submit:hover{
+            background-color:#55AAEE ;
+        }
+        #copyright{
+            font-size:0.1em;
+            margin-top: 200px;
+            text-align: center;
+            color: #DDDBDC;
+        }
+
+    </style>
 </head>
 <body style="margin: 0px;">
 <div id="left"></div>

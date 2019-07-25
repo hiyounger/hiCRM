@@ -32,7 +32,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/system/list")
+    @GetMapping("/system/user/list")
     public List<User> getUsers(){
         List<User> users = new ArrayList<>();
 

@@ -3,7 +3,7 @@
 	width: 70%;
 	height: 600px;
 	float: left;
-	background-image: url(/static/img/login.png);
+	background-image: url(static/img/login.png);
 	background-position: 100%;
 	
 }

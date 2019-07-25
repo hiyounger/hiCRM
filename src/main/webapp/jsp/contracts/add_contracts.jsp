@@ -118,7 +118,7 @@
     function addData() {
         //使用ajax提交
         $.get(
-            "cns/add",
+            "manage/contracts/add",
             $("#form1").serialize(),
             function(data) {
                 if(data){
