@@ -1,12 +1,12 @@
-package com.hiyoung.manage.contracts.dao;
+package com.hiyoung.manage.contacts.dao;
 
-import com.hiyoung.manage.contracts.entity.Contracts;
+import com.hiyoung.manage.contacts.entity.Contacts;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 @Mapper
-public interface ContractsMapper {
+public interface ContactsMapper {
     /**
      * 按编号删除数据
      * @param id
@@ -20,7 +20,7 @@ public interface ContractsMapper {
      * @param record
      * @return
      */
-    int insert(Contracts record);
+    int insert(Contacts record);
 
     /**
      * 获得总条数
@@ -36,12 +36,12 @@ public interface ContractsMapper {
      * @param rows
      * @return
      */
-    List<Contracts> listBYPage(@Param("offerset") Integer offerset, @Param("rows") Integer rows);
+    List<Contacts> listBYPage(@Param("offerset") Integer offerset, @Param("rows") Integer rows);
 
     /**
      * 通过联系人姓名查一条数据
      * @param name
      * @return
      */
-    public Contracts selectByName(String name);
+    public Contacts selectByName(String name);
 }

@@ -39,3 +39,8 @@ logging:
       hiyoung: debug
 mybatis:
   type-aliases-package: com.hiyoung.*.*.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    default-fetch-size: 100
+    default-statement-timeout: 30
+  type-handlers-package: com.hiyoung.*.*.dao

@@ -118,7 +118,7 @@
     function addData() {
         //使用ajax提交
         $.get(
-            "manage/contracts/add",
+            "manage/Contacts/add",
             $("#form1").serialize(),
             function(data) {
                 if(data){
