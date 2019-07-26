@@ -135,11 +135,11 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <iframe width="500px"  src="add.html" id="dlg" class="easyui-dialog" title="Basic Dialog" data-options="iconCls:'icon-save'" style="width:400px;height:200px;padding:10px">
+   <!-- <div class="container">-->
+        <!--<iframe width="500px"  src="add.html" id="dlg" class="easyui-dialog" title="Basic Dialog" data-options="iconCls:'icon-save'" style="width:400px;height:200px;padding:10px">
 
-        </iframe>
-        <div class="header">
+        </iframe>-->
+       <!-- <div class="header">
             <div class="header_left">
                 <img src="static/img/logo.png">
             </div>
@@ -158,7 +158,7 @@
             </div>
             <div id="sm" class="easyui-sidemenu" data-options="data:data"></div>
 
-        </div>
+        </div>-->
         <div class="right">
             <div class="right_top">
                 <h4>合同管理</h4>
@@ -170,11 +170,11 @@
 
         </div>
 
-    </div>
+    <!--</div>-->
 
 </body>
 <script type="text/javascript">
-    var data = [{
+   /* var data = [{
         text: '',
         iconCls: 'fa fa-wpforms',
         state: 'open',
@@ -203,7 +203,7 @@
         },{
             text: '产品'
         }]
-    }];
+    }];*/
     $(function () {
         $('#dlg').dialog('close');
         $('#dlg').dialog({width:400,height:400});
@@ -218,9 +218,9 @@
         //     })
         // }
         //toggle();
-        $('#_easyui_tree_8').on("click",function () {
+      /*  $('#_easyui_tree_8').on("click",function () {
             console.log("111")
-        });
+        });*/
 
 
         $('#dg').datagrid({
@@ -338,7 +338,6 @@
                 //         }}
             ]]
         });
-
 
     });
 

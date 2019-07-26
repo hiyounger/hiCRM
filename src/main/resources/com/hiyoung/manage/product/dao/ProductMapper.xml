@@ -111,7 +111,7 @@
 
   <!--获得总条数-->
   <select id="getCount" resultType="java.lang.Integer">
-    select count(tb_crm_product.product_id) from tb_crm_product
+      select count(tb_crm_product.product_id) from tb_crm_product
   </select>
 
   <!--创建产品-->
@@ -132,5 +132,32 @@
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{description,jdbcType=VARCHAR},
       #{productState,jdbcType=INTEGER}, #{productUnit,jdbcType=VARCHAR})
   </insert>
+
+  <!--获得总条数-->
+  <select id="getCount1" resultType="java.lang.Integer">
+    <bind name="bindValue" value="'%'+productName+'%'" />
+    select count(tb_crm_product.product_id) from tb_crm_product
+    <where>
+      <if test="productName != null">
+        tb_crm_product.product_name like #{bindValue}
+      </if>
+    </where>
+  </select>
+
+  <select id="listByPageByCondition" resultMap="BaseResultMap">
+    <bind name="bindValue" value="'%'+productName+'%'" />
+      select <include refid="Base_Column_List"/> from tb_crm_product
+      <where>
+        <if test=" isSingle == true">   /*查询单条数据*/
+          create_time=(SELECT MAX(create_time) FROM tb_crm_product)
+        </if>
+        <if test="productName != null">   /*模糊查询*/
+          and tb_crm_product.product_name like #{bindValue}
+        </if>
+      </where>
+      limit #{offset},#{rows}
+  </select>
+
+
 
 </mapper>

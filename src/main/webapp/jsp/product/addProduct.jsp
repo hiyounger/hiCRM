@@ -7,7 +7,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE html>
 <html>
   <head>
-    <base href="<%=basePath%>">
+    <base href="<%=basePath%>" />
     <meta charset="UTF-8">
     <title>新建产品</title>
     
@@ -100,7 +100,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 				<tr>
 					<td colspan="2" align="center">
-						<input type="submit"  name="submit" value="保存" id="submit"/>
+						<input type="submit"  name="submit1" value="保存" id="submit"/>
 						<input type="reset"  name="reset" value="重置" id="reset"/>
 					</td>
 				</tr>
@@ -140,10 +140,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     }
                     else {
                         //添加成功
-                        //console.log(data);
-                        window.close();
-                        //window.onbeforeunload=loadSingleData;
-                    }
+						console.info("111111");
+						$(".panel-tool-close").click();  //对话框的右上角的关闭按钮默认的class 是panel-tool-close
+
+					}
                 }
 
             });
