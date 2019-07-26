@@ -118,6 +118,12 @@
             {field:'role',title:'角色',width:120}
         ]],pagination:true
     });
+
+    $("#new").on('click',function () {
+        parent.$('#win').window('open');
+    })
+
+
 </script>
 </body>
 </html>

@@ -110,6 +110,37 @@
             background: rgb(69, 78, 87);
             color: white;
         }
+
+        body{
+            font-family: "微软雅黑";
+        }
+        .button{
+            width: 70px;
+            height: 30px;
+            border: solid gainsboro 1px;
+            border-radius: 4px;
+            text-align: center;
+            line-height: 30px;
+            display: inline-block;
+            cursor: pointer;
+        }
+        #basic{
+            border-left: solid yellowgreen 5px;
+            margin-left: 10px;
+            margin-top: 30px;
+        }
+        table{
+            margin-left: 30px;
+            margin-top: 10px;
+            height: 300px;
+
+        }
+        .second{
+            margin-top: 10px;
+        }
+        .star{
+            color: red;
+        }
     </style>
 </head>
 <body>
@@ -139,7 +170,88 @@
 
 </div>
 
-</body>
+
+<body>
+<div id="win" class="easyui-window" title="新建员工"  maximizable=false closed=true resizable=false style="width:600px;height:500px;padding:5px;">
+    <div id="basic">&nbsp;&nbsp;基本信息</div>
+
+    <form id="form">
+        <table width="500px" >
+            <tr >
+                <td>
+                    <div><span class="star">*</span>手机号（登录名）</div>
+                    <div class="second" ><input class="easyui-textbox" type="text"/></div>
+                </td>
+                <td >
+                    <div><span class="star">*</span>登录密码</div>
+                    <div class="second"><input class="easyui-textbox" type="text"/></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div><span class="star">*</span>姓名</div>
+                    <div class="second"><input class="easyui-textbox" type="text"/></div>
+                </td>
+                <td>
+                    <div>性别</div>
+                    <div class="second">
+                        <select id="cc" class="easyui-combobox" name="dept" style="width:200px;">
+                            <option value="aa" selected>aitem1</option>
+                            <option>bitem2</option>
+                            <option>bitem3</option>
+                            <option>ditem4</option>
+                            <option>eitem5</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div>邮箱</div>
+                    <div><input class="easyui-textbox" type="text"/></div>
+                </td>
+                <td>
+                    <div><span class="star">*</span>部门</div>
+                    <div class="second"><select id="cc" class="easyui-combobox" name="dept" style="width:200px;">
+                        <option value="aa" selected>aitem1</option>
+                        <option>bitem2</option>
+                        <option>bitem3</option>
+                        <option>ditem4</option>
+                        <option>eitem5</option>
+                    </select></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div>岗位</div>
+                    <div><input  class="easyui-textbox"type="text"/></div>
+
+                </td>
+                <td>
+                    <div>直属上级</div>
+                    <div class="second">
+                        <select id="cc" class="easyui-combobox" name="dept" style="width:200px;">
+                            <option value="aa" selected>aitem1</option>
+                            <option>bitem2</option>
+                            <option>bitem3</option>
+                            <option>ditem4</option>
+                            <option>eitem5</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+            <input type="reset" name="reset" style="display: none;" />
+
+        </table>
+
+        <div>
+            <div class="button" id="save" style="margin-left: 400px;">保存</div>
+            <div class="button" id="cancel">取消</div>
+        </div>
+
+    </form>
+
+</div>
 <script type="text/javascript">
 
 
@@ -185,5 +297,23 @@
        }
    })
 
+   $(".button").on('mouseover',function(){
+       $(this).css("background-color","#95B8E7")
+       $(this).css("color","white")
+   }).on('mouseleave',function(){
+       $(this).css("background-color","white")
+       $(this).css("color","black")
+   })
+   $("#save").on("click",function(){
+       $("#win").window('close');
+   })
+   $("#cancel").on('click',function(){
+       $("#form").form('clear');
+       $(".easyui-combobox").combobox('setValue','aa')
+   })
+
 </script>
+
+
+</body>
 </html>
