@@ -3,23 +3,23 @@
 <mapper namespace="com.hiyoung.manage.leads.dao.LeadsMapper">
   <resultMap id="BaseResultMap" type="com.hiyoung.manage.leads.entity.Leads">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="mobil" jdbcType="INTEGER" property="mobil" />
-    <result column="leadsname" jdbcType="VARCHAR" property="leadsname" />
+    <result column="mobil" jdbcType="VARCHAR" property="mobil" />
+    <result column="leads_name" jdbcType="VARCHAR" property="leadsName" />
     <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
     <result column="create_time" jdbcType="VARCHAR" property="createTime" />
     <result column="blame" jdbcType="VARCHAR" property="blame" />
     <result column="address" jdbcType="VARCHAR" property="address" />
-    <result column="next_contacttime" jdbcType="VARCHAR" property="nextContacttime" />
+    <result column="next_contact_time" jdbcType="VARCHAR" property="nextContactTime" />
     <result column="create_person" jdbcType="VARCHAR" property="createPerson" />
     <result column="leads_orgin" jdbcType="VARCHAR" property="leadsOrgin" />
-    <result column="Customer_level" jdbcType="INTEGER" property="customerLevel" />
+    <result column="customer_level" jdbcType="INTEGER" property="customerLevel" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
-    <result column="telephone" jdbcType="INTEGER" property="telephone" />
+    <result column="telephone" jdbcType="VARCHAR" property="telephone" />
     <result column="state" jdbcType="INTEGER" property="state" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, mobil, leadsname,update_time, create_time, blame, address, next_contacttime, create_person,
-    leads_orgin, Customer_level, remark,telephone,state
+    id, mobil, leads_name,update_time, create_time, blame, address, next_contact_time, create_person,
+    leads_orgin, customer_level, remark,telephone,state
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
@@ -49,15 +49,13 @@
 
 
 
-  <insert id="addLeads" >
-    insert into tb_leads (id, mobil,leadsname,update_time,
-      create_time, blame, address,
-      next_contacttime, create_person, leads_orgin,
-      Customer_level,remark,telephone,state)
-    values (#{id,jdbcType=INTEGER}, #{mobil,jdbcType=INTEGER},#{leadsname,jdbcType=VARCHAR},#{updateTime,jdbcType=VARCHAR},
+  <insert id="addLeads" parameterType="com.hiyoung.manage.leads.entity.Leads" >
+    insert into tb_leads ( id, mobil, leads_name,update_time, create_time, blame, address, next_contact_time, create_person,
+    leads_orgin, customer_level, remark,telephone,state)
+    values (#{id,jdbcType=INTEGER}, #{mobil,jdbcType=VARCHAR},#{leadsName,jdbcType=VARCHAR},#{updateTime,jdbcType=VARCHAR},
       #{createTime,jdbcType=VARCHAR}, #{blame,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
-      #{nextContacttime,jdbcType=VARCHAR}, #{createPerson,jdbcType=VARCHAR}, #{leadsOrgin,jdbcType=VARCHAR},
-      #{customerLevel,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR},#{telephone.jdbcType=INTEGER},#{state.jdbcType=INTEGER})
+      #{nextContactTime,jdbcType=VARCHAR}, #{createPerson,jdbcType=VARCHAR}, #{leadsOrgin,jdbcType=VARCHAR},
+      #{customerLevel,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR},#{telephone.jdbcType=VARCHAR},#{state.jdbcType=INTEGER})
   </insert>
 
 

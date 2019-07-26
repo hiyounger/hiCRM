@@ -46,7 +46,7 @@
             </tr>
             <tr>
                 <td><input class="easyui-textbox"  type="text" name="leadsOrgin" style="width:300px;height: 40px;"/></td>
-                <td><input class="easyui-textbox" type="text" name="leadsname" style="width:300px;height: 40px;"/></td>
+                <td><input class="easyui-textbox" type="text" name="leadsName" style="width:300px;height: 40px;"/></td>
             </tr>
             <tr>
                 <td>客户行业</td>

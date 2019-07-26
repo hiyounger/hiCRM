@@ -69,6 +69,8 @@ public class LeadsController {
     }
  @RequestMapping("/addleads.action")
   public String addLeads(Leads leads){
+
+
      System.out.println("leads="+leads);
      Integer num = leadsServiceIf.addLeads(leads);
      System.out.println("numersdf"+num);

@@ -1,22 +1,25 @@
 package com.hiyoung.manage.leads.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
 public class Leads implements Serializable {
     private Integer id;
-    private String leadsname;
-    private Integer mobil;
-    private Integer telephone;
+    private String leadsName;
+    private String mobil;
+    private String telephone;
+    @DateTimeFormat(pattern ="yyyy-MM-dd")
     private Date updateTime;
-
+    @DateTimeFormat(pattern ="yyyy-MM-dd")
     private Date createTime;
 
     private String blame;
 
     private String address;
-
-    private Date nextContacttime;
+     @DateTimeFormat(pattern ="yyyy-MM-dd")
+    private Date nextContactTime;
 
     private String createPerson;
 
@@ -36,20 +39,20 @@ public class Leads implements Serializable {
         this.state = state;
     }
 
-    public Integer getTelephone() {
-        return telephone;
+    public String getLeadsName() {
+        return leadsName;
     }
 
-    public void setTelephone(Integer telephone) {
-        this.telephone = telephone;
+    public void setLeadsName(String leadsName) {
+        this.leadsName = leadsName;
     }
 
-    public String getLeadsname() {
-        return leadsname;
+    public Date getNextContactTime() {
+        return nextContactTime;
     }
 
-    public void setLeadsname(String leadsname) {
-        this.leadsname = leadsname;
+    public void setNextContactTime(Date nextContactTime) {
+        this.nextContactTime = nextContactTime;
     }
 
     public Integer getId() {
@@ -60,12 +63,20 @@ public class Leads implements Serializable {
         this.id = id;
     }
 
-    public Integer getMobil() {
+    public String getMobil() {
         return mobil;
     }
 
-    public void setMobil(Integer mobil) {
+    public void setMobil(String mobil) {
         this.mobil = mobil;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
     }
 
     public Date getUpdateTime() {
@@ -100,13 +111,6 @@ public class Leads implements Serializable {
         this.address = address == null ? null : address.trim();
     }
 
-    public Date getNextContacttime() {
-        return nextContacttime;
-    }
-
-    public void setNextContacttime(Date nextContacttime) {
-        this.nextContacttime = nextContacttime;
-    }
 
     public String getCreatePerson() {
         return createPerson;
