@@ -30,4 +30,13 @@ public interface CustomerMapper {
      * @return
      */
     Integer addCustomer(Customer customer);
+
+    /**
+     * 删除/批量删除客户
+     * @param id
+     * @return
+     */
+    Integer delCustomer(Integer id);
+
+
 }

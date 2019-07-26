@@ -33,7 +33,7 @@
 
 
         }
-        #img1,#img2{
+        #img1,#img2,#img3{
             width: 15px;
             height: 15px;
         }
@@ -44,9 +44,9 @@
     <script>
 
         //打开添加窗口
-        function addContracts(){
+        function addContacts(){
            window.open(
-               'manage/contracts/add.cns',
+               'manage/Contacts/add.cns',
                '联系人添加页面',
                'height=600, width=800, top=100, left=350, toolbar=no, menubar=no, scrollbars=yes, resizable=no, location=no, status=no'
            )
@@ -60,7 +60,6 @@
                 pageSize:4,
                 pageList:[2,4,6,8],
                 singleSelect:false,checkOnSelect: true, selectOnCheck: true,
-                rownumbers:true,
                 striped:true,
                 frozenColumns:[[
                     {field:'id',checkbox:true,width:20},
@@ -92,22 +91,7 @@
         }
 
         $(function(){
-            loadData("manage/contracts/listone");
-
-            $('#topWindow').window({
-                onBeforeClose: function () { //当面板关闭之前触发的事件
-                    if (confirm('窗口正在关闭，请确认您当前的操作已保存。\n 是否继续关闭窗口？')) {
-
-                        $('#topWindow').window('close', true); //这里调用close 方法，true 表示面板被关闭的时候忽略onBeforeClose 回调函数。
-                        loadData("manage/contracts/listone");
-                    } else
-                        alert("欢迎回来");
-                        return false;
-
-                }
-
-
-            });
+            loadData("manage/Contacts/list");
         })
 
         function deleteData(){
@@ -136,7 +120,7 @@
                     //提交
                     //使用ajax提交
                     $.get(
-                        "manage/contracts/delete",
+                        "manage/Contacts/delete",
                         {ids:temID},
                         function(data) {
                             if(data){
@@ -155,17 +139,17 @@
     </script>
 </head>
 <body>
-<div id="d1">&ensp;&ensp;&ensp;联系人管理<span><button id="bt1" onclick="addContracts()">新建联系人</button></span></div>
+<div id="d1">&ensp;&ensp;&ensp;联系人管理<span><button id="bt1" onclick="addContacts()">新建联系人</button></span></div>
 <div id="d11">
     场景：<select name="">
     <option value="">全部联系人</option>
     <option></option>
 </select> &ensp;&ensp;<img src="static/img/logo.png" id="img1" />&ensp; <a href="javascript:void(0)">高级筛选</a> &ensp;
-            <img src="static/img/logo.png" id="img2" /> <a href="javascript:deleteData()">删除</a>
+            <img src="static/img/logo.png" id="img2" /> <a href="javascript:deleteData()">删除</a>&ensp;
+            <img src="static/img/logo.png" id="img3" /> <a href="javascript:loadData('manage/Contacts/list')">刷新</a>
 </div>
 <div id="d2">
     <table id="dg" style="width:100%;" ></table>
-
 </div>
 </body>
 </html>

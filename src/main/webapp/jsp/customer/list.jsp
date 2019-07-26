@@ -23,14 +23,12 @@
 
 		.right{
 			background:rgb(245,246,249);
-			padding-top: 80px;
+			padding-top: 20px;
 		}
 
 		.header_right li{
 			list-style: none;
 			float: left;
-			margin-left: 40px;
-			margin-top: 20px;
 		}
 
 		.header_right li a{
@@ -51,7 +49,7 @@
 			color:white ;
 		}
 		#addBtn{
-			margin-left: 300px;
+			margin-left: 280px;
 		}
 
 		#tx{
@@ -65,18 +63,13 @@
 		#ss{
 			margin: auto;
 		}
-		#tx1{
+		.tx1{
 			margin-top: -15px;
 			margin-left: 20px;
 			font-size: smaller;
 			color: #5f5f5f;
 		}
-		#tx2{
-			margin-top: -15px;
-			margin-left: 20px;
-			font-size: smaller;
-			color: #5f5f5f;
-		}
+
 		#xx{
 
 			background-color: white;
@@ -98,7 +91,7 @@
             <span id="tx">客户管理 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
                 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
 			<input id="ss" class="easyui-searchbox" data-options="prompt:'请输入客户名称/手机/电话'" style="width:300px"></input>
-			<a href="javascript:void(0);" id="addBtn" class="easyui-linkbutton">新建客户</a>
+			<a href="javascript:void(0);" id="addBtn" onclick="openWindow()" class="easyui-linkbutton">新建客户</a>
 			<select name="more" id="more" class="easyui-combobox" style="width:65px">
 				<option value="-1">更多</option>
 				<option value="1">哈哈</option>
@@ -109,8 +102,14 @@
 		<div>&emsp;&emsp;</div>
 		<div id="xx">
 			<div id="kong">&emsp;&emsp;</div>
-			<span id="tx1">已选中x项&emsp;&emsp;|</span>
-			<span id="tx2">&emsp;转移&emsp;&emsp;导出选中&emsp;&emsp;放入公海&emsp;&emsp;删除&emsp;&emsp;锁定&emsp;&emsp;解锁&emsp;&emsp;添加团队成员&emsp;&emsp;移除全队成员</span>
+			<span class="tx1">已选中</span>
+			<span class="tx1" id="num">
+
+			</span>
+			<span class="tx1">项&emsp;&emsp;|</span>
+			<span class="tx1">&emsp;转移&emsp;&emsp;导出选中&emsp;&emsp;放入公海&emsp;&emsp;</span>
+			<span class="tx1" onclick="deletedata()">删除</span>
+			<span class="tx1">&emsp;&emsp;锁定&emsp;&emsp;解锁&emsp;&emsp;添加团队成员&emsp;&emsp;移除全队成员</span>
 		</div>
 		<div>
 			<table id="dg"></table>
@@ -120,6 +119,7 @@
 
 <script type="text/javascript">
 
+
 	$('#ss').searchbox({
 		searcher:function(value,name){
 			alert(value + "," + name)
@@ -127,6 +127,7 @@
 		prompt:'请输入客户名称/手机/电话'
 	});
 
+	var num=0;
 
 	/*分页查询*/
 	function loadData(){
@@ -138,13 +139,18 @@
 			loadMsg:"正在加载，请稍等.....",//设置加载数据时的提示信息
 			pagination:true,//设置显示分页工具条
 			rownumbers:true,//设置是否显示行号
-			singleSelect:true,//设置是否只能选中一行
+			/*singleSelect:true,//设置是否只能选中一行*/
 			pageNumber:1,//设置起始页码
 			pageSize:5,//设置每页展示的条数
 			pageList:[5,10,15],//设置每页展示展示的条数的下拉列表
+
+			singleSelect: false, //允许选择多行
+			selectOnCheck: true,//true勾选会选择行，false勾选不选择行, 1.3以后有此选项。重点在这里
+			checkOnSelect: true, //true选择行勾选，false选择行不勾选, 1.3以后有此选项
+
 			columns:[[
 				//字段名。标题名。宽
-				{field:"ck",checkbox:"true"},//加复选框
+				{field:"id",checkbox:"true"},//加复选框
 				{field:"name",title:"客户名称"},
 				{field:"transactionStatus",title:"成交状态"},
 				{field:"tel",title:"电话"},//taxOrganId
@@ -159,19 +165,74 @@
 				{field:"customerSource",title:"客户来源"},
 				{field:"customerIndustry",title:"客户行业"},
 				{field:"deleteStatus",title:"状态"}
-			]]
+			]],onCheck:function(rowIndex,rowData){
+				num=num+1;
+				$("#num").text(num)
+			},onUncheck:function () {
+				num=num-1;
+				$("#num").text(num)
+			}
 
 		});
 	};
 	loadData();
 
+	$("#num").text(num)
+
 	//跳转到添加页面
-	//添加按钮
-	$("#addBtn").on("click",function(e){
+	function openWindow(){
 		window.open(
-				'jsp/customer/add1.jsp', '新建客户', 'height=600, width=750, top=100, left=400, toolbar=no, menubar=no, scrollbars=yes, resizable=no, location=no, status=no'
+				'jsp/customer/add1.jsp', '新建客户', 'height=600, width=750, top=100, left=400, toolbar=no, menubar=no, scrollbars=yes, resizable=false'
 		);
-	})
+	}
+
+
+	//批量删除
+	function deletedata() {
+		//返回选中多行
+		var selRow = $('#dg').datagrid('getSelections')
+		//判断是否选中行
+		if (selRow.length==0) {
+			$.messager.alert("提示", "请选择要删除的行！", "info");
+			return;
+		}else{
+			var temID="";
+			//批量获取选中行的评估模板ID
+			for (i = 0; i < selRow.length;i++) {
+				if (temID =="") {
+					temID = selRow[i].id;
+				} else {
+					temID = selRow[i].id + "," + temID;
+				}
+			}
+
+			$.messager.confirm('提示', '是否删除选中数据?', function (r) {
+
+				if (!r) {
+					return;
+				}
+				/*alert(temID);*/
+				//提交
+				$.ajax({
+					type: "POST",
+					async: false,
+					url: "manage/customer/delCustomer?id=" + temID,
+					data: temID,
+					success: function (result) {
+						if (result) {
+
+							$.messager.alert("提示", "恭喜您，信息删除成功！", "info");
+							loadData();
+						} else {
+							$.messager.alert("提示", "删除失败，请重新操作！", "info");
+
+						}
+					}
+				});
+			});
+
+		}
+	};
 
 </script>
 </html>

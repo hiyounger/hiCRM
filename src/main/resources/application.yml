@@ -1,4 +1,8 @@
 spring:
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
   mvc:
     view:
       prefix: /jsp/
@@ -27,12 +31,7 @@ spring:
     maxPoolPreparedStatementPerConnectionSize: 20
     useGlobalDataSourceStat: true
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
-
-  jackson:
-    date-format: yyyy-MM-dd HH:mm:ss
-    time-zone: GMT+8
-
-  #mybatis:
+#mybatis:
  # mapperLocations: classpath:com/hiyoung/system/user/product/*.xml
 logging:
   level:
@@ -40,5 +39,8 @@ logging:
       hiyoung: debug
 mybatis:
   type-aliases-package: com.hiyoung.*.*.entity
-
-
+  configuration:
+    map-underscore-to-camel-case: true
+    default-fetch-size: 100
+    default-statement-timeout: 30
+  type-handlers-package: com.hiyoung.*.*.dao
