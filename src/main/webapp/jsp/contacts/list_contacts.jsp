@@ -152,6 +152,5 @@
     <table id="dg" style="width:100%;" ></table>
 
 </div>
-<div id="addwindow" ></div>
 </body>
 </html>
