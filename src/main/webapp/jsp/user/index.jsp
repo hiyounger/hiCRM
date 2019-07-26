@@ -171,7 +171,7 @@
 </div>
 
 
-<body>
+
 <div id="win" class="easyui-window" title="新建员工"  maximizable=false closed=true resizable=false style="width:600px;height:500px;padding:5px;">
     <div id="basic">&nbsp;&nbsp;基本信息</div>
 
@@ -195,7 +195,7 @@
                 <td>
                     <div>性别</div>
                     <div class="second">
-                        <select id="cc" class="easyui-combobox" name="dept" style="width:200px;">
+                        <select  class="easyui-combobox" name="dept" style="width:200px;">
                             <option value="aa" selected>aitem1</option>
                             <option>bitem2</option>
                             <option>bitem3</option>
@@ -212,7 +212,7 @@
                 </td>
                 <td>
                     <div><span class="star">*</span>部门</div>
-                    <div class="second"><select id="cc" class="easyui-combobox" name="dept" style="width:200px;">
+                    <div class="second"><select class="easyui-combobox" name="dept" style="width:200px;">
                         <option value="aa" selected>aitem1</option>
                         <option>bitem2</option>
                         <option>bitem3</option>
@@ -230,7 +230,7 @@
                 <td>
                     <div>直属上级</div>
                     <div class="second">
-                        <select id="cc" class="easyui-combobox" name="dept" style="width:200px;">
+                        <select  class="easyui-combobox" name="dept" style="width:200px;">
                             <option value="aa" selected>aitem1</option>
                             <option>bitem2</option>
                             <option>bitem3</option>
