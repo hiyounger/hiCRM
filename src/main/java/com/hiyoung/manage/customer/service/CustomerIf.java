@@ -20,4 +20,11 @@ public interface CustomerIf {
      */
     Integer getCount();
 
+    /**
+     * 添加客户
+     * @param customer
+     * @return
+     */
+    Integer addCustomer(Customer customer);
+
 }

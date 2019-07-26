@@ -30,4 +30,21 @@ public class CustomerController {
         return map ;
     }
 
+
+    @RequestMapping("/addCustomer")
+    @ResponseBody
+    public  String addCustomer(Customer customer){
+        System.out.println(customer);
+        Map<String,Object> map = new HashMap<>();
+        int num = customerImp.addCustomer(customer);
+        boolean success=false; //默认没添加成功
+        if(num != 0) {
+            //添加成功
+            success=true;
+        }
+        map.put("success",success);
+        System.out.println(map);
+        return "success";
+    }
+
 }

@@ -38,4 +38,9 @@ public class CustomerImp implements CustomerIf {
     public Integer getCount() {
         return customerMapper.getCount();
     }
+
+    @Override
+    public Integer addCustomer(Customer customer) {
+        return customerMapper.addCustomer(customer);
+    }
 }

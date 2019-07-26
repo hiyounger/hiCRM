@@ -18,7 +18,7 @@
     <result column="customer_source" property="customerSource" jdbcType="VARCHAR" />
     <result column="customer_industry" property="customerIndustry" jdbcType="VARCHAR" />
   </resultMap>
-  <insert id="insert" parameterType="com.hiyoung.manage.customer.entity.Customer" >
+  <insert id="addCustomer" parameterType="com.hiyoung.manage.customer.entity.Customer" >
     insert into customer (id, name, transaction_status, 
       tel, phone, next_contect_time, 
       creator, update_time, create_time, 
@@ -49,5 +49,7 @@ id, name, transaction_status, tel, phone, next_contect_time, creator, update_tim
   <select id="getCount" resultType="java.lang.Integer">
   	select count(id) from customer
   </select>
+
+
 
 </mapper>
