@@ -86,26 +86,38 @@
 
     </div>
 
-    <script>
-        function doSearch(value){
-            alert('You input: ' + value);
-        }
-    </script>
-
-
-
-
-
-    <div class="easyui-pagination" style="border:1px solid #ccc" data-options="
-		total: 114,
-		buttons: [{
-			iconCls:'icon-add',
-			handler:function(){alert('add')}
-		},'-',{
-			iconCls:'icon-save',
-			handler:function(){alert('save')}
-		}]">
-    </div>
+    <div id="pp" style="border:1px solid #ccc"></div>
 </div>
+
+<script>
+    function doSearch(value){
+        alert('You input: ' + value);
+    }
+
+    $('#pp').datagrid({
+        toolbar:"#tb",//设置工具条
+        striped:true,//将行的展示条纹化
+        nowrap:false,//设置内容过多时是否换行，false是换行，true是不换行
+        loadMsg:"正在加载，请稍等.....",//设置加载数据时的提示信息
+        pagination:true,//设置显示分页工具条
+        rownumbers:true,//设置是否显示行号
+        /*singleSelect:true,//设置是否只能选中一行*/
+        pageNumber:1,//设置起始页码
+        pageSize:5,//设置每页展示的条数
+        pageList:[5,10,15],//设置每页展示展示的条数的下拉列表
+        url:'system/user/list',
+        columns:[[
+            {field:'ck',checkbox:'true'},
+            {field:'username',title:'姓名'},
+            {field:'phone',title:'手机号（登录名）',width:140},
+            {field:'sex',title:'性别'},
+            {field:'email',title:'邮箱',width:240},
+            {field:'department',title:'部门'},
+            {field:'position',title:'岗位',width:160},
+            {field:'supervisor',title:'直属上级'},
+            {field:'role',title:'角色',width:120}
+        ]],pagination:true
+    });
+</script>
 </body>
 </html>

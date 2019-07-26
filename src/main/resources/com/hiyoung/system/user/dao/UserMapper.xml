@@ -30,19 +30,19 @@
 
 
   <resultMap id="BaseResultMap" type="com.hiyoung.system.user.entity.User">
-  <id column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
-  <result column="username" property="username" javaType="java.lang.String" jdbcType="VARCHAR" />
-  <result column="password" property="password" javaType="java.lang.String" jdbcType="VARCHAR" />
-  <result column="sex"  property="sex" javaType="java.lang.String" jdbcType="DATE" />
-  <result column="EMAIL" property="email" javaType="java.lang.String" jdbcType="VARCHAR" />
-  <result column="PHONE" property="phone" javaType="java.lang.String" jdbcType="VARCHAR" />
-  <result column="department" property="department" javaType="java.lang.String" jdbcType="VARCHAR" />
-  <result column="position" property="position" javaType="java.lang.String" jdbcType="INTEGER" />
-  <result column="supervisor" property="supervisor" javaType="java.lang.String" jdbcType="INTEGER" />
-  <result column="role" property="role" javaType="java.lang.String" jdbcType="DATE" />
+      <id column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <result column="username" property="username" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <result column="password" property="password" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <result column="sex"  property="sex" javaType="java.lang.String" jdbcType="DATE" />
+      <result column="EMAIL" property="email" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <result column="PHONE" property="phone" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <result column="department" property="department" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <result column="position" property="position" javaType="java.lang.String" jdbcType="INTEGER" />
+      <result column="supervisor" property="supervisor" javaType="java.lang.String" jdbcType="INTEGER" />
+      <result column="role" property="role" javaType="java.lang.String" jdbcType="DATE" />
   </resultMap>
   <sql id="Base_Column_List">
-    id,username,password,sex,email,department,position,supervisor,id,role
+    id,username,sex,email,department,position,supervisor,phone
   </sql>
 
 <!--<select id="getUser" resultMap="BaseResultMap2">
@@ -52,15 +52,15 @@
       user_role.userid left join tb_system_role as role on user_role.roleid = role.id where username =#{username} and password =#{password};
 </select>-->
 <select id="getUser" resultMap="BaseResultMap">
-  select <include refid="Base_Column_List"></include> from tb_user where username =#{username} and password =#{password};
+  select <include refid="Base_Column_List"></include> ,role from tb_user where username =#{username} and password =#{password};
 </select>
 
   <select id="listUsers" resultMap="BaseResultMap">
-  select <include refid="Base_Column_List"></include>
-  from tb_system_user order by UPDATETIME;
+  select <include refid="Base_Column_List"></include> ,role
+  from tb_user limit #{offset},#{count}
 </select>
   
   <select id="getCount" resultType="integer">
-    select count(id) from tb_system_user
+    select count(id) from tb_user
   </select>
 </mapper>
