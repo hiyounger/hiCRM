@@ -33,7 +33,7 @@
 
 
         }
-        #img1,#img2{
+        #img1,#img2,#img3{
             width: 15px;
             height: 15px;
         }
@@ -92,22 +92,6 @@
 
         $(function(){
             loadData("manage/Contacts/list");
-
-            $('#topWindow').window({
-                onBeforeClose: function () { //当面板关闭之前触发的事件
-                    if (confirm('窗口正在关闭，请确认您当前的操作已保存。\n 是否继续关闭窗口？')) {
-                        alert("再见");
-                        loadData("manage/Contacts/listone");
-                        $('#topWindow').window('close', true);
-
-                    } else
-                        alert("欢迎回来");
-                        return false;
-
-                }
-
-
-            });
         })
 
         function deleteData(){
@@ -161,11 +145,13 @@
     <option value="">全部联系人</option>
     <option></option>
 </select> &ensp;&ensp;<img src="static/img/logo.png" id="img1" />&ensp; <a href="javascript:void(0)">高级筛选</a> &ensp;
-            <img src="static/img/logo.png" id="img2" /> <a href="javascript:deleteData()">删除</a>
+            <img src="static/img/logo.png" id="img2" /> <a href="javascript:deleteData()">删除</a>&ensp;
+            <img src="static/img/logo.png" id="img3" /> <a href="javascript:loadData('manage/Contacts/list')">刷新</a>
 </div>
 <div id="d2">
     <table id="dg" style="width:100%;" ></table>
 
 </div>
+<div id="addwindow" ></div>
 </body>
 </html>
