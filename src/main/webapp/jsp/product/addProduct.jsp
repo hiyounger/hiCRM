@@ -86,11 +86,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</tr>
 				
 				<tr>
-					<td>产品描述</td>				
+					<td>产品描述</td>
+                    <td>创建时间</td>
 				</tr>
-				<td class="kv-content">
-					<input type="text" id="description" name="description" placeholder="请输入">
-				</td>
+                <tr>
+                    <td class="kv-content">
+                        <input type="text" id="description" name="description" placeholder="请输入">
+                    </td>
+                    <td class="kv-content">
+                        <input type="text" id="createTime" name="createTime" placeholder="请输入">
+                    </td>
+                </tr>
 
 				<tr>
 					<td colspan="2" align="center">
@@ -102,34 +108,46 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</form>
 	</section>
 	<script type="text/javascript">
+        var myDate = new Date();
+        var date = myDate.getFullYear()
+            + "-"
+            + ((myDate.getMonth() + 1) < 10 ? "0" + (myDate.getMonth() + 1)
+                : (myDate.getMonth() + 1))
+            + "-"
+            + (myDate.getDate() < 10 ? "0" + myDate.getDate() : myDate
+                .getDate())
+            + " "
+            + (myDate.getHours()< 10 ? "0" + myDate.getHours() : myDate.getHours())
+            + ":"
+            + (myDate.getMinutes() < 10 ? "0" + myDate.getMinutes() : myDate.getMinutes())
+            + ":"
+            + (myDate.getSeconds() < 10 ? "0" + myDate.getSeconds() : myDate.getSeconds())
+        $("input[name=createTime]").val(date);
+
 		$(function() {
 			
 			
 		});
 
-		$("#submit").on("click",function () {
-			event.preventDefault();
-			$('#ff').form('submit',{
-				url:'manage/product/addProduct.do',
-				onSubmit: function(){
-					return $(this).form('validate');
-				},
-				success:function(data){
-					//console.info(data.success)
-					JSON.stringify(data);
-					alert(data);
-					parent.window.close();
-					console.log(data);
-					/*if (data.success){
-						//添加数据成功
-						alert("1214325");
-						window.close()
-					} else {
-						alert("sfinviuo;s");
-					}*/
-				}
-			});
-		})
+
+        $("#submit").on("click",function () {
+            //event.preventDefault();
+            $('#ff').form('submit',{
+                url:'manage/product/addProduct.do',
+                success:function(result){
+                    if(result.success){
+                        alert("新建产品失败");
+                    }
+                    else {
+                        //添加成功
+                        //console.log(data);
+                        window.close();
+                        //window.onbeforeunload=loadSingleData;
+                    }
+                }
+
+            });
+        })
 
 
 		//添加产品

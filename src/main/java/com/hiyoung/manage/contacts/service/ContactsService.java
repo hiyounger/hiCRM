@@ -1,11 +1,11 @@
-package com.hiyoung.manage.contracts.service;
+package com.hiyoung.manage.contacts.service;
 
 
-import com.hiyoung.manage.contracts.entity.Contracts;
+import com.hiyoung.manage.contacts.entity.Contacts;
 
 import java.util.List;
 
-public interface ContractsService {
+public interface ContactsService {
 
     /**
      * 按编号删除数据
@@ -18,7 +18,7 @@ public interface ContractsService {
      * @param record
      * @return
      */
-    int insert(Contracts record);
+    int insert(Contacts record);
 
     /**
      * 获得总条数
@@ -32,5 +32,12 @@ public interface ContractsService {
      * @param rowStr
      * @return
      */
-    List<Contracts> listBYPage(String pageStr, String rowStr);
+    List<Contacts> listBYPage(String pageStr, String rowStr);
+
+    /**
+     * 通过联系人姓名查一条数据
+     * @param name
+     * @return
+     */
+    public Contacts selectByName(String name);
 }

@@ -25,6 +25,6 @@ public interface LeadsServiceIf {
     int deleteLeadsById(int id);
 
 
-    Leads addLeads(Leads leads);
+    int addLeads(Leads leads);
 
 }

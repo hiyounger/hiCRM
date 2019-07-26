@@ -1,4 +1,8 @@
 spring:
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
   mvc:
     view:
       prefix: /jsp/
@@ -35,3 +39,8 @@ logging:
       hiyoung: debug
 mybatis:
   type-aliases-package: com.hiyoung.*.*.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    default-fetch-size: 100
+    default-statement-timeout: 30
+  type-handlers-package: com.hiyoung.*.*.dao

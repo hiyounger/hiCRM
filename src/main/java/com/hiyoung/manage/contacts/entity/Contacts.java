@@ -1,10 +1,8 @@
-package com.hiyoung.manage.contracts.entity;
+package com.hiyoung.manage.contacts.entity;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.io.Serializable;
 import java.util.Date;
-
-public class Contracts {
+public class Contacts implements Serializable {
     private Integer id;
 
     private String name;
@@ -139,16 +137,6 @@ public class Contracts {
         this.updateTime = updateTime;
     }
 
-  /*  public void setUpdateTime(String updateTime) {
-
-        Date date= null;
-        try {
-            date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(updateTime);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        this.updateTime = date;
-    }*/
 
     public String getIsKeyMaker() {
         return isKeyMaker;
@@ -160,6 +148,27 @@ public class Contracts {
 
     public String getSex() {
         return sex;
+    }
+
+    @Override
+    public String toString() {
+        return "Contacts{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", customerName='" + customerName + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", job='" + job + '\'' +
+                ", address='" + address + '\'' +
+                ", nextContactTime=" + nextContactTime +
+                ", remarks='" + remarks + '\'' +
+                ", creater='" + creater + '\'' +
+                ", updateTime=" + updateTime +
+                ", isKeyMaker='" + isKeyMaker + '\'' +
+                ", sex='" + sex + '\'' +
+                ", deleteState=" + deleteState +
+                '}';
     }
 
     public void setSex(String sex) {

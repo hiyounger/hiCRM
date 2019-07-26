@@ -1,50 +1,60 @@
-package com.hiyoung.manage.contracts.controller;
+package com.hiyoung.manage.contacts.controller;
 
-import com.hiyoung.manage.contracts.entity.Contracts;
-import com.hiyoung.manage.contracts.service.ContractsService;
+import com.hiyoung.manage.contacts.entity.Contacts;
+import com.hiyoung.manage.contacts.service.ContactsService;
 import com.hiyoung.utils.BeanUtil;
-import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
-@RequestMapping("/manage/contracts")
+@RequestMapping("/manage/Contacts")
 public class ContactsController {
-    private Contracts contracts=new Contracts();
     @Resource
-    ContractsService contractsService;
+    ContactsService contactsService;
     @RequestMapping("/list")
     @ResponseBody
-    public Map<String,Object> getLIst(HttpServletRequest request){
-        String pageStr=request.getParameter("page");
-        String rowsStr=request.getParameter("rows");
+    public Map<String,Object> getLIst( String page,String rows){
         //从请求中获取当前页面和每页展示的条数
-        List<Contracts> list=contractsService.listBYPage(pageStr,rowsStr);
-        Integer zs=contractsService.getCount();
+        List<Contacts> list= contactsService.listBYPage(page,rows);
+        Integer zs= contactsService.getCount();
         Map<String,Object> map=new HashMap<>();
         map.put("total",zs);
         map.put("rows",list);
         return map;
     }
 
+    @RequestMapping("/listone")
+    @ResponseBody
+    public Map<String,Object> getLIstOne(String name){
+       // System.out.println(name);
+        List<Contacts> list=new ArrayList<>();
+        //从请求中获取当前页面和每页展示的条数
+        Contacts Contacts= contactsService.selectByName(name);
+        //System.out.println(Contacts);
+        list.add(Contacts);
+        int zs=1;
+        Map<String,Object> map=new HashMap<>();
+        map.put("total",zs);
+        map.put("rows",list);
+        return map;
+    }
+
+
     @RequestMapping("/delete")
     @ResponseBody
     public Boolean deleteById(HttpServletRequest request){
         String ids0=request.getParameter("ids");
         String[] ids=ids0.split(",");
-        System.out.println(ids0);
         for(String id:ids){
-         int num=contractsService.deleteById(Integer.parseInt(id));
+         int num= contactsService.deleteById(Integer.parseInt(id));
          if(num==0){
              return false;
          }
@@ -54,7 +64,8 @@ public class ContactsController {
 
     @RequestMapping("/add")
     @ResponseBody
- public Boolean addData(HttpServletRequest request){
+ public Boolean addData(HttpServletRequest request, HttpSession session){
+        Contacts Contacts=new Contacts();
         Map<String,String[]> map0=request.getParameterMap();
         Map<String,Object> map=new HashMap<>();
         map0.forEach((key,value)->{
@@ -73,10 +84,11 @@ public class ContactsController {
             }
 
         });
-        BeanUtil.mapTOBean(contracts,map);
-        System.out.println(contracts.getNextContactTime());
-        int num=contractsService.insert(contracts);
+        BeanUtil.mapTOBean(Contacts,map);
+        int num= contactsService.insert(Contacts);
         if(num!=0){
+
+            session.setAttribute("onlyone",Contacts.getName());
             return true;
         }
         return false;
@@ -84,10 +96,10 @@ public class ContactsController {
 
     @RequestMapping("/add.cns")
     public String add(){
-        return "manage/contracts/add_contracts";
+        return "contacts/add_contacts";
     }
     @RequestMapping("/list.cns")
     public String list(){
-        return "manage/contracts/list_contracts";
+        return "contacts/list_contacts";
     }
 }

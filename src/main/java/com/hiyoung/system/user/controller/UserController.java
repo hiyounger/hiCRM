@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class UserController {
@@ -32,10 +34,15 @@ public class UserController {
         }
     }
 
-    @GetMapping("/system/user/list")
-    public List<User> getUsers(){
-        List<User> users = new ArrayList<>();
-
-        return users;
+    @PostMapping("/system/user/list")
+    @ResponseBody
+    public Map<String,Object> getUsers(int page,int rows){
+        Map<String, Object> map = new HashMap<>();
+        List<User> users = userService.listUsers(page, rows);
+        int total=userService.getCount();
+        map.put("total",total );
+        map.put("rows",users );
+        System.out.println(users);
+        return map;
     }
 }

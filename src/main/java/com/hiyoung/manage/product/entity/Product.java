@@ -1,5 +1,6 @@
 package com.hiyoung.manage.product.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
@@ -19,6 +20,7 @@ public class Product implements Serializable {
 
     private Integer leaderId;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     private Date updateTime;

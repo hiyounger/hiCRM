@@ -22,7 +22,7 @@ public class ProductImp implements ProductIf {
     public List<Product> listProductByPage(String pageStr, String rowsStr) {
         //判断合法性
         int page=pageStr == null?1:Integer.parseInt(pageStr);
-        int rows=rowsStr == null?15:Integer.parseInt(rowsStr);
+        int rows=rowsStr == null?20:Integer.parseInt(rowsStr);
         //最大页数
         double count=productMapper.getCount();  //为什么count数据类型是double？
         int pageCount=(int) Math.ceil(count/rows);

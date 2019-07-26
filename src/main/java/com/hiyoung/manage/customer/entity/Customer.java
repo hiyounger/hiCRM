@@ -21,6 +21,7 @@ public class Customer {
 
     private Date updateTime;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     private String leader;
