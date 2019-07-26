@@ -154,13 +154,13 @@
                url:'jsp/customer/list.jsp'
            },{
                text: '联系人',
-               url:'jsp/contracts/list_contracts.jsp'
+               url:'jsp/contacts/list_contacts.jsp'
            },{
                text: '商机',
                url:'jsp/bussiness/list_business.jsp'
            },{
                text: '合同',
-               url:'jsp/contracts/list_contracts.jsp'
+               url:'jsp/contract/list_contract.jsp'
            },{
                text: '产品',
                url:'jsp/product/listProduct.jsp'

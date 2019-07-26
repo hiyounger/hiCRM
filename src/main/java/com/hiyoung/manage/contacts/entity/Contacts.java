@@ -1,13 +1,8 @@
-package com.hiyoung.manage.contracts.entity;
-
-import org.springframework.stereotype.Repository;
+package com.hiyoung.manage.contacts.entity;
 
 import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-@Repository
-public class Contracts implements Serializable {
+public class Contacts implements Serializable {
     private Integer id;
 
     private String name;
@@ -157,7 +152,7 @@ public class Contracts implements Serializable {
 
     @Override
     public String toString() {
-        return "Contracts{" +
+        return "Contacts{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", customerName='" + customerName + '\'' +

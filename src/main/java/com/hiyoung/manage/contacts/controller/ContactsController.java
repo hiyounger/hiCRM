@@ -1,9 +1,8 @@
-package com.hiyoung.manage.contracts.controller;
+package com.hiyoung.manage.contacts.controller;
 
-import com.hiyoung.manage.contracts.entity.Contracts;
-import com.hiyoung.manage.contracts.service.ContractsService;
+import com.hiyoung.manage.contacts.entity.Contacts;
+import com.hiyoung.manage.contacts.service.ContactsService;
 import com.hiyoung.utils.BeanUtil;
-import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,16 +14,16 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
-@RequestMapping("/manage/contracts")
+@RequestMapping("/manage/Contacts")
 public class ContactsController {
     @Resource
-    ContractsService contractsService;
+    ContactsService contactsService;
     @RequestMapping("/list")
     @ResponseBody
     public Map<String,Object> getLIst( String page,String rows){
         //从请求中获取当前页面和每页展示的条数
-        List<Contracts> list=contractsService.listBYPage(page,rows);
-        Integer zs=contractsService.getCount();
+        List<Contacts> list= contactsService.listBYPage(page,rows);
+        Integer zs= contactsService.getCount();
         Map<String,Object> map=new HashMap<>();
         map.put("total",zs);
         map.put("rows",list);
@@ -35,11 +34,11 @@ public class ContactsController {
     @ResponseBody
     public Map<String,Object> getLIstOne(String name){
         name="联系人1";
-        List<Contracts> list=new ArrayList<>();
+        List<Contacts> list=new ArrayList<>();
         //从请求中获取当前页面和每页展示的条数
-        Contracts contracts=contractsService.selectByName(name);
-        System.out.println(contracts);
-        list.add(contracts);
+        Contacts Contacts= contactsService.selectByName(name);
+        System.out.println(Contacts);
+        list.add(Contacts);
         int zs=1;
         Map<String,Object> map=new HashMap<>();
         map.put("total",zs);
@@ -54,7 +53,7 @@ public class ContactsController {
         String ids0=request.getParameter("ids");
         String[] ids=ids0.split(",");
         for(String id:ids){
-         int num=contractsService.deleteById(Integer.parseInt(id));
+         int num= contactsService.deleteById(Integer.parseInt(id));
          if(num==0){
              return false;
          }
@@ -65,7 +64,7 @@ public class ContactsController {
     @RequestMapping("/add")
     @ResponseBody
  public Boolean addData(HttpServletRequest request){
-        Contracts contracts=new Contracts();
+        Contacts Contacts=new Contacts();
         Map<String,String[]> map0=request.getParameterMap();
         Map<String,Object> map=new HashMap<>();
         map0.forEach((key,value)->{
@@ -84,9 +83,9 @@ public class ContactsController {
             }
 
         });
-        BeanUtil.mapTOBean(contracts,map);
-        System.out.println(contracts.getNextContactTime());
-        int num=contractsService.insert(contracts);
+        BeanUtil.mapTOBean(Contacts,map);
+        System.out.println(Contacts.getNextContactTime());
+        int num= contactsService.insert(Contacts);
         if(num!=0){
             return true;
         }
@@ -95,10 +94,10 @@ public class ContactsController {
 
     @RequestMapping("/add.cns")
     public String add(){
-        return "contracts/add_contracts";
+        return "contacts/add_contacts";
     }
     @RequestMapping("/list.cns")
     public String list(){
-        return "contracts/list_contracts";
+        return "contacts/list_contacts";
     }
 }
