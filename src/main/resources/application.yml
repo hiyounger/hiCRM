@@ -1,4 +1,8 @@
 spring:
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
   mvc:
     view:
       prefix: /jsp/
@@ -35,3 +39,4 @@ logging:
       hiyoung: debug
 mybatis:
   type-aliases-package: com.hiyoung.*.*.entity
+

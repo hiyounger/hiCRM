@@ -21,9 +21,9 @@ public class ContactsController {
     ContractsService contractsService;
     @RequestMapping("/list")
     @ResponseBody
-    public Map<String,Object> getLIst( String pageStr,String rowsStr){
+    public Map<String,Object> getLIst( String page,String rows){
         //从请求中获取当前页面和每页展示的条数
-        List<Contracts> list=contractsService.listBYPage(pageStr,rowsStr);
+        List<Contracts> list=contractsService.listBYPage(page,rows);
         Integer zs=contractsService.getCount();
         Map<String,Object> map=new HashMap<>();
         map.put("total",zs);
