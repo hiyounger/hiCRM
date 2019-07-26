@@ -4,23 +4,25 @@
   <resultMap id="BaseResultMap" type="com.hiyoung.manage.leads.entity.Leads">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="mobil" jdbcType="INTEGER" property="mobil" />
-    <result column="update_time" jdbcType="DATE" property="updateTime" />
-    <result column="create_time" jdbcType="DATE" property="createTime" />
+    <result column="leadsname" jdbcType="VARCHAR" property="leadsname" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
     <result column="blame" jdbcType="VARCHAR" property="blame" />
     <result column="address" jdbcType="VARCHAR" property="address" />
-    <result column="next_contacttime" jdbcType="DATE" property="nextContacttime" />
+    <result column="next_contacttime" jdbcType="VARCHAR" property="nextContacttime" />
     <result column="create_person" jdbcType="VARCHAR" property="createPerson" />
     <result column="leads_orgin" jdbcType="VARCHAR" property="leadsOrgin" />
     <result column="Customer_level" jdbcType="INTEGER" property="customerLevel" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
-      <result column="telephone" jdbcType="INTEGER" property="telephone" />
+    <result column="telephone" jdbcType="INTEGER" property="telephone" />
+    <result column="state" jdbcType="INTEGER" property="state" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, mobil, update_time, create_time, blame, address, next_contacttime, create_person, 
-    leads_orgin, Customer_level, remark,telephone
+    id, mobil, leadsname,update_time, create_time, blame, address, next_contacttime, create_person,
+    leads_orgin, Customer_level, remark,telephone,state
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from tb_leads
     where id = #{id,jdbcType=INTEGER}
@@ -46,102 +48,19 @@
   </select>
 
 
-    <insert id="addLeads"  parameterType="com.hiyoung.manage.leads.entity.Leads">
-         insert into tb_leads (id, mobil, update_time,
+
+  <insert id="addLeads" >
+    insert into tb_leads (id, mobil,leadsname,update_time,
       create_time, blame, address,
       next_contacttime, create_person, leads_orgin,
-      Customer_level,remark,telephone)
-    values (#{id,jdbcType=INTEGER}, #{mobil,jdbcType=INTEGER}, #{updateTime,jdbcType=DATE},
-      #{createTime,jdbcType=DATE}, #{blame,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
-      #{nextContacttime,jdbcType=DATE}, #{createPerson,jdbcType=VARCHAR}, #{leadsOrgin,jdbcType=VARCHAR},
-
-
-
-    </insert>
-  <insert id="insert" parameterType="com.hiyoung.manage.leads.entity.Leads">
-    insert into tb_leads (id, mobil, update_time, 
-      create_time, blame, address, 
-      next_contacttime, create_person, leads_orgin, 
-      Customer_level,remark,telephone)
-    values (#{id,jdbcType=INTEGER}, #{mobil,jdbcType=INTEGER}, #{updateTime,jdbcType=DATE}, 
-      #{createTime,jdbcType=DATE}, #{blame,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
-      #{nextContacttime,jdbcType=DATE}, #{createPerson,jdbcType=VARCHAR}, #{leadsOrgin,jdbcType=VARCHAR}, 
-      #{customerLevel,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR},#{telephone.jdbcType=INTEGER})
+      Customer_level,remark,telephone,state)
+    values (#{id,jdbcType=INTEGER}, #{mobil,jdbcType=INTEGER},#{leadsname,jdbcType=VARCHAR},#{updateTime,jdbcType=VARCHAR},
+      #{createTime,jdbcType=VARCHAR}, #{blame,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
+      #{nextContacttime,jdbcType=VARCHAR}, #{createPerson,jdbcType=VARCHAR}, #{leadsOrgin,jdbcType=VARCHAR},
+      #{customerLevel,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR},#{telephone.jdbcType=INTEGER},#{state.jdbcType=INTEGER})
   </insert>
 
 
 
-  <insert id="insertSelective" parameterType="com.hiyoung.manage.leads.entity.Leads">
-    insert into tb_leads
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="mobil != null">
-        mobil,
-      </if>
-      <if test="updateTime != null">
-        update_time,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="blame != null">
-        blame,
-      </if>
-      <if test="address != null">
-        address,
-      </if>
-      <if test="nextContacttime != null">
-        next_contacttime,
-      </if>
-      <if test="createPerson != null">
-        create_person,
-      </if>
-      <if test="leadsOrgin != null">
-        leads_orgin,
-      </if>
-      <if test="customerLevel != null">
-        Customer_level,
-      </if>
-      <if test="remark != null">
-        remark,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="mobil != null">
-        #{mobil,jdbcType=INTEGER},
-      </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=DATE},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=DATE},
-      </if>
-      <if test="blame != null">
-        #{blame,jdbcType=VARCHAR},
-      </if>
-      <if test="address != null">
-        #{address,jdbcType=VARCHAR},
-      </if>
-      <if test="nextContacttime != null">
-        #{nextContacttime,jdbcType=DATE},
-      </if>
-      <if test="createPerson != null">
-        #{createPerson,jdbcType=VARCHAR},
-      </if>
-      <if test="leadsOrgin != null">
-        #{leadsOrgin,jdbcType=VARCHAR},
-      </if>
-      <if test="customerLevel != null">
-        #{customerLevel,jdbcType=INTEGER},
-      </if>
-      <if test="remark != null">
-        #{remark,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
+
 </mapper>

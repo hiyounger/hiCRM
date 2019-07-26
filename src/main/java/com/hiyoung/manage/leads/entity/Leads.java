@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class Leads implements Serializable {
     private Integer id;
-    private String leadsName;
+    private String leadsname;
     private Integer mobil;
     private Integer telephone;
     private Date updateTime;
@@ -26,8 +26,14 @@ public class Leads implements Serializable {
 
     private String remark;
 
-    public String getLeadsName() {
-        return leadsName;
+   private int state;
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
     }
 
     public Integer getTelephone() {
@@ -38,8 +44,12 @@ public class Leads implements Serializable {
         this.telephone = telephone;
     }
 
-    public void setLeadsName(String leadsName) {
-        this.leadsName = leadsName;
+    public String getLeadsname() {
+        return leadsname;
+    }
+
+    public void setLeadsname(String leadsname) {
+        this.leadsname = leadsname;
     }
 
     public Integer getId() {

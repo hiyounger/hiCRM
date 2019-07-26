@@ -47,7 +47,7 @@
         function addContracts(){
            window.open(
                'manage/contracts/add.cns',
-               '联系人添加页面',
+                '联系人添加页面',
                'height=600, width=800, top=100, left=350, toolbar=no, menubar=no, scrollbars=yes, resizable=no, location=no, status=no'
            )
         }

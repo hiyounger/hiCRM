@@ -30,7 +30,7 @@ public class LeadsServiceImp implements LeadsServiceIf {
             currentPage=pageCount;
         }
 
-       return leadsMapper.getLeadsList((currentPage-1)*currentCount,currentCount);
+        return leadsMapper.getLeadsList((currentPage-1)*currentCount,currentCount);
 
 
 
@@ -43,7 +43,7 @@ public class LeadsServiceImp implements LeadsServiceIf {
      */
     @Override
     public int getCount() {
-         return leadsMapper.getCount();
+        return leadsMapper.getCount();
     }
 
     /**
@@ -58,11 +58,11 @@ public class LeadsServiceImp implements LeadsServiceIf {
     }
 
     @Override
-    public Leads addLeads(Leads leads) {
-        String leadsName = leads.getLeadsName();
-
-        Leads leads1 = leadsMapper.addLeads(leads);
-
-        return leads;
+    public int addLeads(Leads leads) {
+        // String leadsName = leads.getLeadsname();
+//        System.out.println("线索名"+leadsName);
+        int num = leadsMapper.addLeads(leads);
+        System.out.println(num);
+        return num;
     }
 }

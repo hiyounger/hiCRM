@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -68,8 +69,19 @@ public class LeadsController {
     }
  @RequestMapping("/addleads.action")
   public String addLeads(Leads leads){
-           leadsServiceIf.addLeads(leads);
-         return "addleads";
+     System.out.println("leads="+leads);
+     Integer num = leadsServiceIf.addLeads(leads);
+     System.out.println("numersdf"+num);
+     ModelAndView modelAndView=new ModelAndView();
+     //  ModelAndView modelAndView1 = modelAndView.addObject("lead/load", leads1);
+     // modelAndView.setViewName("page/listTaxPayer");
+     modelAndView.addObject(leads);
+     return "redirect:load";
 
 }
+@RequestMapping("/addleads.page")
+ public String addleads(){
+        return "leads/addleads";
+ }
+
 }
