@@ -1,5 +1,6 @@
 package com.hiyoung.system.user.controller;
 
+import com.hiyoung.system.user.dao.UserMapper;
 import com.hiyoung.system.user.service.UserServiceIf;
 import com.hiyoung.system.user.entity.User;
 import org.apache.shiro.SecurityUtils;
@@ -15,13 +16,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Controller
+@RestController
 public class UserController {
 
     @Resource
     UserServiceIf userService;
-    @RequestMapping(value = "/login",method = RequestMethod.POST)
-    @ResponseBody
+    @Resource
+    UserMapper userMapper;
+    @PostMapping(value = "/login")
     public boolean user( String username, String password){
         System.out.println("登录");
         Subject subject= SecurityUtils.getSubject();
@@ -35,7 +37,6 @@ public class UserController {
     }
 
     @PostMapping("/system/user/list")
-    @ResponseBody
     public Map<String,Object> getUsers(int page,int rows){
         Map<String, Object> map = new HashMap<>();
         List<User> users = userService.listUsers(page, rows);
@@ -44,5 +45,12 @@ public class UserController {
         map.put("rows",users );
         System.out.println(users);
         return map;
+    }
+
+    @GetMapping("/system/user/insert")
+    public int insert(User user){
+        userMapper.insert(user);
+        System.out.println(user);
+        return user.getId();
     }
 }
