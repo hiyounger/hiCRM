@@ -26,6 +26,31 @@
 
     <style type="text/css">
 
+        .right h4{
+            font-size: 1.5em;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        #easyui-searchbox{
+            width: 200px;
+            height: 8px;
+            display: inline-block;
+
+        }
+
+        #addProduct{
+            display: inline-block;
+            float: right;
+            margin-right: 10px;
+            margin-top: 20px;
+            background-color: dodgerblue;
+        }
+
+        #dg{
+            width: 100%;
+            height: 80%;
+        }
 
     </style>
 
@@ -35,11 +60,17 @@
             //用datagrid分页展示产品信息
             $('#dg').datagrid({
                 url:'manage/product/listProductByPage.do',
-                toolbar:"#tb",
-                striped:true,
-                pagination:true,
-                singleSelect:true,
                 resizable:true,
+                toolbar:"#tb",//设置工具条
+                striped:true,//将行的展示条纹化
+                //nowrap:false,//设置内容过多时是否换行，false是换行，true是不换行
+                loadMsg:"正在加载，请稍等.....",//设置加载数据时的提示信息
+                pagination:true,//设置显示分页工具条
+                rownumbers:true,//设置是否显示行号
+                singleSelect:true,//设置是否只能选中一行
+                pageNumber:1,//设置起始页码
+                pageSize:15,//设置每页展示的条数
+                pageList:[15,30,45],//设置每页展示展示的条数的下拉列表
                 columns:[[
                     {field:'ck',checkbox:'true'},
                     {field:'productName',title:'产品名称'},
@@ -66,9 +97,33 @@
             loadData();
         })
 
+        //添加产品
+        /* window.open 弹出新窗口的命令；
+     　　'page.html' 弹出窗口的文件名；
+     　　'新建产品' 弹出窗口的名字（不是文件名），非必须，可用空''代替；
+     　　height=400 窗口高度；
+     　　width=600 窗口宽度；
+     　　top=350 窗口距离屏幕上方的象素值；
+     　　left=350 窗口距离屏幕左侧的象素值；
+     　　toolbar=no 是否显示工具栏，yes为显示；
+     　　menubar，scrollbars 表示菜单栏和滚动栏。
+     　　resizable=no 是否允许改变窗口大小，yes为允许；
+     　　location=no 是否显示地址栏，yes为允许；
+     　　status=no 是否显示状态栏内的信息（通常是文件已经打开），yes为允许；*/
+
+        function addProduct(){
+            //alert("1111");
+            window.open('jsp/product/addProduct.jsp', '新建产品', 'height=400, width=600, top=350, left=350, toolbar=no, menubar=no, scrollbars=yes, resizable=no, location=no, status=no')
+        }
+
     </script>
 </head>
 <body>
+    <div class="right">
+        <h4>产品管理</h4>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+        <input class="easyui-searchbox" data-options="prompt:'请输入值'"  style="padding-top: 15px"/>
+        <button id="addProduct" onClick='addProduct()'>新建产品</button>
+    </div>
 
     <table id="dg"></table>
 

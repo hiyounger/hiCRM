@@ -106,7 +106,7 @@
 
   <!--分页展示产品信息-->
   <select id="listProductByPage" resultMap="BaseResultMap">
-    select <include refid="Base_Column_List" /> from tb_crm_product limit #{offset},#{rows}
+    select <include refid="Base_Column_List" /> from tb_crm_product order by tb_crm_product.create_time desc  limit #{offset},#{rows}
   </select>
 
   <!--获得总条数-->
