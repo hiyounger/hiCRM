@@ -48,4 +48,9 @@
   <update id="deleteById" >
     update tb_contracts set delete_state=1 where id=#{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectByName" resultType="com.hiyoung.manage.contracts.entity.Contracts">
+    select
+    <include refid="columns"/> from tb_contracts where delete_state=0 and name= #{name,jdbcType=VARCHAR}
+  </select>
 </mapper>

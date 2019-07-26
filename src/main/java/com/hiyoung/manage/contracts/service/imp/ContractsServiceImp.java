@@ -17,13 +17,17 @@ public class ContractsServiceImp implements ContractsService {
     }
 
     @Override
-    public int insert(Contracts record) {
-        return contractsMapper.insert(record);
+    public Contracts selectByName(String name) {
+        return contractsMapper.selectByName(name);
     }
 
     @Override
+    public int insert(Contracts record) {
+        return contractsMapper.insert(record);
+    }
+    @Override
     public List<Contracts> listBYPage(String pageStr, String rowStr) {
-        int page=pageStr==null?1:Integer.parseInt(pageStr);
+        int page = pageStr==null?1:Integer.parseInt(pageStr);
         int rows =rowStr==null?10:Integer.parseInt(rowStr);
         double count=getCount();
         int pageCount=(int)Math.ceil(count/rows);

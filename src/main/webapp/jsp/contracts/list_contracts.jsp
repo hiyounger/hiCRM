@@ -46,15 +46,15 @@
         //打开添加窗口
         function addContracts(){
            window.open(
-               'cns/add.cns',
+               'manage/contracts/add.cns',
                '联系人添加页面',
                'height=600, width=800, top=100, left=350, toolbar=no, menubar=no, scrollbars=yes, resizable=no, location=no, status=no'
            )
         }
 
-        function loadData(){
+        function loadData(url){
             $("#dg").datagrid({
-                url:"manage/contracts/list",
+                url:url,
                 checkOnSelect:true,
                 pagination:true,
                 pageSize:4,
@@ -92,14 +92,14 @@
         }
 
         $(function(){
-            loadData();
+            loadData("manage/contracts/listone");
 
             $('#topWindow').window({
                 onBeforeClose: function () { //当面板关闭之前触发的事件
                     if (confirm('窗口正在关闭，请确认您当前的操作已保存。\n 是否继续关闭窗口？')) {
-                        loadData();
-                        $('#topWindow').window('close', true); //这里调用close 方法，true 表示面板被关闭的时候忽略onBeforeClose 回调函数。
 
+                        $('#topWindow').window('close', true); //这里调用close 方法，true 表示面板被关闭的时候忽略onBeforeClose 回调函数。
+                        loadData("manage/contracts/listone");
                     } else
                         alert("欢迎回来");
                         return false;
@@ -136,7 +136,7 @@
                     //提交
                     //使用ajax提交
                     $.get(
-                        "cns/delete",
+                        "manage/contracts/delete",
                         {ids:temID},
                         function(data) {
                             if(data){
@@ -160,8 +160,8 @@
     场景：<select name="">
     <option value="">全部联系人</option>
     <option></option>
-</select> &ensp;&ensp;<img src="static/images/login_logo.png" id="img1" />&ensp; <a href="javascript:void(0)">高级筛选</a> &ensp;
-            <img src="static/images/login_logo.png" id="img2" /> <a href="javascript:deleteData()">删除</a>
+</select> &ensp;&ensp;<img src="static/img/logo.png" id="img1" />&ensp; <a href="javascript:void(0)">高级筛选</a> &ensp;
+            <img src="static/img/logo.png" id="img2" /> <a href="javascript:deleteData()">删除</a>
 </div>
 <div id="d2">
     <table id="dg" style="width:100%;" ></table>

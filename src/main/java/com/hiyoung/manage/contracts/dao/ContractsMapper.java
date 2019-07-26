@@ -37,4 +37,11 @@ public interface ContractsMapper {
      * @return
      */
     List<Contracts> listBYPage(@Param("offerset") Integer offerset, @Param("rows") Integer rows);
+
+    /**
+     * 通过联系人姓名查一条数据
+     * @param name
+     * @return
+     */
+    public Contracts selectByName(String name);
 }

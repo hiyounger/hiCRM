@@ -33,4 +33,11 @@ public interface ContractsService {
      * @return
      */
     List<Contracts> listBYPage(String pageStr, String rowStr);
+
+    /**
+     * 通过联系人姓名查一条数据
+     * @param name
+     * @return
+     */
+    public Contracts selectByName(String name);
 }

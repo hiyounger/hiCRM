@@ -12,22 +12,16 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/manage/contracts")
 public class ContactsController {
-    private Contracts contracts=new Contracts();
     @Resource
     ContractsService contractsService;
     @RequestMapping("/list")
     @ResponseBody
-    public Map<String,Object> getLIst(HttpServletRequest request){
-        String pageStr=request.getParameter("page");
-        String rowsStr=request.getParameter("rows");
+    public Map<String,Object> getLIst( String pageStr,String rowsStr){
         //从请求中获取当前页面和每页展示的条数
         List<Contracts> list=contractsService.listBYPage(pageStr,rowsStr);
         Integer zs=contractsService.getCount();
@@ -37,12 +31,28 @@ public class ContactsController {
         return map;
     }
 
+    @RequestMapping("/listone")
+    @ResponseBody
+    public Map<String,Object> getLIstOne(String name){
+        name="联系人1";
+        List<Contracts> list=new ArrayList<>();
+        //从请求中获取当前页面和每页展示的条数
+        Contracts contracts=contractsService.selectByName(name);
+        System.out.println(contracts);
+        list.add(contracts);
+        int zs=1;
+        Map<String,Object> map=new HashMap<>();
+        map.put("total",zs);
+        map.put("rows",list);
+        return map;
+    }
+
+
     @RequestMapping("/delete")
     @ResponseBody
     public Boolean deleteById(HttpServletRequest request){
         String ids0=request.getParameter("ids");
         String[] ids=ids0.split(",");
-        System.out.println(ids0);
         for(String id:ids){
          int num=contractsService.deleteById(Integer.parseInt(id));
          if(num==0){
@@ -55,6 +65,7 @@ public class ContactsController {
     @RequestMapping("/add")
     @ResponseBody
  public Boolean addData(HttpServletRequest request){
+        Contracts contracts=new Contracts();
         Map<String,String[]> map0=request.getParameterMap();
         Map<String,Object> map=new HashMap<>();
         map0.forEach((key,value)->{
@@ -84,10 +95,10 @@ public class ContactsController {
 
     @RequestMapping("/add.cns")
     public String add(){
-        return "manage/contracts/add_contracts";
+        return "contracts/add_contracts";
     }
     @RequestMapping("/list.cns")
     public String list(){
-        return "manage/contracts/list_contracts";
+        return "contracts/list_contracts";
     }
 }
