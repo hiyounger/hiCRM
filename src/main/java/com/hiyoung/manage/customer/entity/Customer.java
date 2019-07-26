@@ -1,5 +1,7 @@
 package com.hiyoung.manage.customer.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class Customer {
