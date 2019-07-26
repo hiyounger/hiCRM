@@ -25,6 +25,7 @@ public class ContractsServiceImp implements ContractsService {
     public int insert(Contracts record) {
         return contractsMapper.insert(record);
     }
+
     @Override
     public List<Contracts> listBYPage(String pageStr, String rowStr) {
         int page = pageStr==null?1:Integer.parseInt(pageStr);

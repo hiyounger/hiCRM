@@ -4,13 +4,15 @@ package com.hiyoung.manage.product.controller;
 import com.hiyoung.manage.product.entity.Product;
 import com.hiyoung.manage.product.service.ProductIf;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,12 +32,13 @@ public class ProductController {
      */
     @RequestMapping("/listProductByPage.do")
     @ResponseBody
-    public Map<String,Object>  listProductByPage(String pageStr,String rowsStr){
+    public Map<String,Object>  listProductByPage(@RequestParam("page") String pageStr, @RequestParam("rows") String rowsStr){
         int total = productService.getCount();
         List<Product> products = productService.listProductByPage(pageStr, rowsStr);
         Map<String,Object> map = new HashMap<>();
         map.put("total",total);
         map.put("rows",products);
+        System.out.println(map);
         return map;
     }
 
@@ -71,4 +74,34 @@ public class ProductController {
         map.put("success",success);
         return map;
     }
+
+    /**
+     * 展示单条产品信息
+     * @param pageStr
+     * @param rowsStr
+     * @return
+     */
+    @RequestMapping("/listSingleProduct.do")
+    @ResponseBody
+    public Map<String,Object>  listSingleProduct(@RequestParam("page") String pageStr, @RequestParam("rows") String rowsStr){
+        int total = productService.getCount();
+        List<Product> products = productService.listProductByPage(pageStr, rowsStr);
+        Product product = products.get(0);
+        Map<String,Object> map = new HashMap<>();
+        map.put("total",total);
+        map.put("rows",product);
+        System.out.println(map);
+        return map;
+
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        //转换日期 注意这里的转化要和传进来的字符串的格式一直 如2015-9-9 就应该为yyyy-MM-dd/yyyy-MM-dd HH:mm:ss
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        dateFormat.setLenient(false);
+        // CustomDateEditor为自定义日期编辑器
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    }
+
 }

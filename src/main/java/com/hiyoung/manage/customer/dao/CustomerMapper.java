@@ -1,12 +1,13 @@
 package com.hiyoung.manage.customer.dao;
 
 import com.hiyoung.manage.customer.entity.Customer;
+import com.hiyoung.manage.product.entity.Product;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 public interface CustomerMapper {
-    int insert(Customer record);
+   // int insert(Product record);
 
     List<Customer> selectAll();
 

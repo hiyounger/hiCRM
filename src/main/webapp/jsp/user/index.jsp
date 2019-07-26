@@ -154,7 +154,7 @@
                url:'jsp/customer/list.jsp'
            },{
                text: '联系人',
-               url:'jsp/contact/index.html'
+               url:'jsp/contracts/list_contracts.jsp'
            },{
                text: '商机',
                url:'jsp/bussiness/list_business.jsp'

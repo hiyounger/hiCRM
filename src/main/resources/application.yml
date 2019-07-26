@@ -39,4 +39,3 @@ logging:
       hiyoung: debug
 mybatis:
   type-aliases-package: com.hiyoung.*.*.entity
-

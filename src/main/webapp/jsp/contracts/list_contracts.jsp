@@ -60,7 +60,6 @@
                 pageSize:4,
                 pageList:[2,4,6,8],
                 singleSelect:false,checkOnSelect: true, selectOnCheck: true,
-                rownumbers:true,
                 striped:true,
                 frozenColumns:[[
                     {field:'id',checkbox:true,width:20},
@@ -92,14 +91,15 @@
         }
 
         $(function(){
-            loadData("manage/contracts/listone");
+            loadData("manage/contracts/list");
 
             $('#topWindow').window({
                 onBeforeClose: function () { //当面板关闭之前触发的事件
                     if (confirm('窗口正在关闭，请确认您当前的操作已保存。\n 是否继续关闭窗口？')) {
-
-                        $('#topWindow').window('close', true); //这里调用close 方法，true 表示面板被关闭的时候忽略onBeforeClose 回调函数。
+                        alert("再见");
                         loadData("manage/contracts/listone");
+                        $('#topWindow').window('close', true);
+
                     } else
                         alert("欢迎回来");
                         return false;
