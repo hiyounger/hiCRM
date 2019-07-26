@@ -150,7 +150,6 @@
 </div>
 <div id="d2">
     <table id="dg" style="width:100%;" ></table>
-
 </div>
 </body>
 </html>

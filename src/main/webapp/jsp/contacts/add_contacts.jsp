@@ -59,7 +59,7 @@
                     <option value="否">否</option>
                 </select>
             </td>
-            <td><input class="easyui-textbox"  type="text" name="name" style="width:300px;height: 40px;"/></td>
+            <td><input id="name" class="easyui-textbox"  type="text" name="name" style="width:300px;height: 40px;"/></td>
         </tr>
         <tr>
             <td>客户名称</td>
@@ -124,6 +124,8 @@
                 if(data){
                     alert("添加成功");
                    window.close();
+                   var name=$("#name").val();
+                   window.opener.loadData("manage/Contacts/listone?name="+name);
                 }else{
                     alert("添加失败");
                 }
