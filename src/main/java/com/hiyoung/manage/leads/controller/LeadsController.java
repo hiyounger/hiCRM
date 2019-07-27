@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.xml.transform.Source;
 import java.util.HashMap;
 import java.util.List;
@@ -22,19 +23,32 @@ public class LeadsController {
     private LeadsServiceIf leadsServiceIf;
     @ResponseBody
     @RequestMapping("/list.do")
-    public Map<String,Object> list(@RequestParam("page") int page, @RequestParam("rows") int rows){
+    public Map<String,Object> list(@RequestParam("page") int page, @RequestParam("rows") int rows, HttpSession session){
+         int total=1;
         System.out.println("page="+page+"rows11="+rows);
         HashMap<String,Object>map=new HashMap<>();
-        //获取总记录数
-        int count = leadsServiceIf.getCount();
-        System.out.println("count="+count);
-        //计算出总jilu数
-        List<Leads> leadslist = leadsServiceIf.getLeadslist(page, rows);
-        System.out.println("rows"+leadslist.size());
-        map.put("rows",leadslist);
-        map.put("total",count);
+        Object leadsId11 = session.getAttribute("leadsId");
+        if (leadsId11==null){
+            //获取总记录数
+            int count = leadsServiceIf.getCount();
+            List<Leads> leadslist = leadsServiceIf.getLeadslist(page, rows,0);
+            map.put("rows",leadslist);
+            map.put("total",count);
+            return map;
 
-        return  map;
+        }
+
+        int leadsId= (Integer) leadsId11;
+        System.out.println("添加的线索编号"+leadsId11);
+        //计算出总jilu数
+        List<Leads> leadslist = leadsServiceIf.getLeadslist(page, rows,leadsId);
+        System.out.println("一共有多少条数"+leadslist);
+          map.put("rows",leadslist);
+          map.put("total",total);
+          return map;
+
+
+
 
     }
     @RequestMapping("/load")
@@ -65,41 +79,24 @@ public class LeadsController {
 
     }
 
-    /**
-     * 删除
-     * @return
-     */
-    @ResponseBody
-   @RequestMapping("/delUser.action")
-      public boolean delete(HttpServletRequest request){
-       String fuserids = request.getParameter("fuserids");
-        System.out.println("fuserids"+fuserids);
-      // fuserids = fuserids.substr(0, fuserids.length - 1);
-       // String subs = fuserids.substring(0, fuserids.length() - 1);
-        String[] ids= fuserids.split(",");
-        System.out.println("有几个编号"+ids.length);
-       for (int i = 0; i < ids.length; i++) {
-           int i1 = Integer.parseInt(ids[i]);
-           int num1 = leadsServiceIf.deleteLeadsById(i1);
-           System.out.println("返回json的数据是"+num1);
-          if (num1==0){
-              return  false;
-          }
-       }
 
-        return true;
-    }
 
     /**
      * 创建线索
      * @param leads
      * @return
      */
- @RequestMapping("/addleads.action")
+ @RequestMapping("/addleadsSingle.action")
  @ResponseBody
-  public String addLeads(Leads leads){
+  public String addLeads(Leads leads,HttpSession session){
      System.out.println("leads="+leads);
      Integer num = leadsServiceIf.addLeads(leads);
+
+     int id=leads.getId();
+     session.setAttribute("leadsId",id);
+      System.out.println("id编号为"+id);
+
+
        if (num==1){
            return "success";
        }else {
@@ -114,5 +111,30 @@ public class LeadsController {
  public String addleads(){
         return "leads/addleads";
  }
+
+    /**
+     * 删除
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/delUser.action")
+    public boolean delete(HttpServletRequest request){
+        String fuserids = request.getParameter("fuserids");
+        System.out.println("fuserids"+fuserids);
+        // fuserids = fuserids.substr(0, fuserids.length - 1);
+        // String subs = fuserids.substring(0, fuserids.length() - 1);
+        String[] ids= fuserids.split(",");
+        System.out.println("有几个编号"+ids.length);
+        for (int i = 0; i < ids.length; i++) {
+            int i1 = Integer.parseInt(ids[i]);
+            int num1 = leadsServiceIf.deleteLeadsById(i1);
+            System.out.println("返回json的数据是"+num1);
+            if (num1==0){
+                return  false;
+            }
+        }
+
+        return true;
+    }
 
 }

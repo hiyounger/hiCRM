@@ -19,7 +19,7 @@ public class LeadsServiceImp implements LeadsServiceIf {
      */
 
     @Override
-    public List<Leads> getLeadslist(int currentPage, int currentCount) {
+    public List<Leads> getLeadslist(int currentPage, int currentCount,int leadsId) {
         System.out.println("当前页"+currentPage+"当前页条数"+currentCount);
         if (currentPage<1){
             currentPage=1;
@@ -30,7 +30,7 @@ public class LeadsServiceImp implements LeadsServiceIf {
             currentPage=pageCount;
         }
 
-        return leadsMapper.getLeadsList((currentPage-1)*currentCount,currentCount);
+        return leadsMapper.getLeadsList((currentPage-1)*currentCount,currentCount,leadsId);
 
 
 

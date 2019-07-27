@@ -32,11 +32,25 @@
   </select>
 
 <!--分页查询-->
-  <select id="getLeadsList" resultMap="BaseResultMap">
+<!--  <select id="getLeadsList" resultMap="BaseResultMap">
     select  * from  tb_leads WHERE state=1  limit #{page},#{size}
+  </select>-->
+  <select id="getLeadsList" resultMap="BaseResultMap">
+      select * from tb_leads  where  state=1
+
+
+          <choose>
+              <when test="leadsId>0  and leadsId!=null">
+                 and id =#{leadsId}
+              </when>
+              <otherwise>
+                 limit #{page},#{size}
+              </otherwise>
+          </choose>
 
 
   </select>
+
 
 <!--删除语句-->
   <delete id="getDelleads" >
@@ -55,7 +69,7 @@
 
 
 <!--添加联系人-->
-  <insert id="addLeads" parameterType="com.hiyoung.manage.leads.entity.Leads" >
+  <insert id="addLeads" useGeneratedKeys="true" keyProperty="id" parameterType="com.hiyoung.manage.leads.entity.Leads" >
      insert into tb_leads (id, leads_name, mobil,
       update_time, create_time, blame,
       address, next_contact_time, create_person,
