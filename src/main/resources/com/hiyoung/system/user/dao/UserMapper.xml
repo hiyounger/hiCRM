@@ -77,7 +77,7 @@
 
   </select>
 
-    <insert id="insert" parameterType="user" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insert" parameterType="com.hiyoung.system.user.entity.User" useGeneratedKeys="true" keyProperty="id">
         insert into tb_user ( <include refid="Base_Column_List"></include> ,password,status ) VALUES
         (#{username},#{sex},#{email},#{department},#{position},#{supervisor},#{phone},#{password},1)
 
