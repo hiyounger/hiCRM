@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface UserServiceIf {
     User getUser(String username,String password);
-    List<User> listUsers(Integer page,Integer count);
-    int getCount();
+    List<User> listUsers(Integer page,Integer count ,int id);
+    int getCount(int id);
 }

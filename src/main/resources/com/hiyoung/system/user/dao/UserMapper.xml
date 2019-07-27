@@ -57,11 +57,24 @@
 
   <select id="listUsers" resultMap="BaseResultMap">
   select id, <include refid="Base_Column_List"></include> ,role
-  from tb_user where status =1 limit #{offset},#{count}
+  from tb_user where status =1
+  <choose>
+       <when test="id>0">
+           and id=#{id}
+       </when>
+       <otherwise>
+           limit #{offset},#{count}
+       </otherwise>
+  </choose>
+
 </select>
   
   <select id="getCount" resultType="integer">
     select count(id) from tb_user where status =1
+    <if test="id>0">
+        and id =#{id}
+    </if>
+
   </select>
 
     <insert id="insert" parameterType="user" useGeneratedKeys="true" keyProperty="id">
