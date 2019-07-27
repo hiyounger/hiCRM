@@ -43,4 +43,19 @@ public interface ProductIf {
      * @return
      */
     List<Product> listByPageByCondition(String pageStr,String rowsStr,String productName);
+
+    /**
+     * 根据条件查询分页展示产品信息
+     * @param pageStr
+     * @param rowsStr
+     * @param productName
+     * @return
+     */
+    List<Product> listProductCondition(String pageStr,String rowsStr,String productName);
+
+    /**
+     * 条件查询获得总条数
+     * @return
+     */
+    int getCount2(String productName);
 }

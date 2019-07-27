@@ -180,31 +180,65 @@
             $('#dlg').dialog('open');
         }
 
+
         //搜索框 条件查询
         function doSearch(){
-            //alert("111111");
-           $("#dg").datagrid('reload', {
-                bobject: $(".searchbox-button").val(),
-                bscore: '90'
+            //获得参数
+            var productName=$("#search").val().trim();
+            //判断合法性
+            if(productName == ""){
+                alert("产品名称为空了！");
+                return;
+            }
+            //alert(productName);
+            //用datagrid分页展示产品信息
+            $('#dg').datagrid({
+                url:'manage/product/listProductCondition.do?productName='+productName,
+                resizable:true,
+                toolbar:"#tb",//设置工具条
+                striped:true,//将行的展示条纹化
+                //nowrap:false,//设置内容过多时是否换行，false是换行，true是不换行
+                loadMsg:"正在加载，请稍等.....",//设置加载数据时的提示信息
+                pagination:true,//设置显示分页工具条
+                rownumbers:true,//设置是否显示行号
+                singleSelect:true,//设置是否只能选中一行
+                pageNumber:1,//设置起始页码
+                pageSize:15,//设置每页展示的条数
+                pageList:[15,30,45],//设置每页展示展示的条数的下拉列表
+                columns:[[
+                    {field:'ck',checkbox:'true'},
+                    {field:'productName',title:'产品名称'},
+                    {field:'productId',title:'产品编码'},
+                    {field:'productType',title:'产品类别'},
+                    {field:'standardPrice',title:'标准价格'},
+                    {field:'description',title:'产品描述'},
+                    {field:'creatorUserId',title:'创建人'},
+                    {field:'updateTime',title:'更新时间'},
+                    {field:'createTime',title:'创建时间'},
+                    {field:'leaderId',title:'负责人'},
+                    {field:'productState',title:'是否下架'}
+                    /*{field:'  ',title:'操作',formatter: function(value,row,index){
+                            return "<a href='javascript:updateStudent(\""+row.stuNo+"\");'>修改</a>&emsp;"+
+                                "<a href='javascript:deleteStudent(\""+row.stuNo+"\");'>删除</a>&emsp;"
+                        }
+                    }*/
+                ]]
             });
-
         }
-
-
 
 
     </script>
 </head>
 <body>
 
-    <div id="dlg" class="easyui-dialog" style="width: 600px;height: 400px;display: none" title="新建产品"
-         data-options="closed:true"  href="jsp/product/addProduct.jsp" onClose="loadSingle()"}>
+    <div id="dlg" class="easyui-dialog"  title="新建产品" style="width: 500px;height: 400px"
+         data-options="closed:true"  href="jsp/product/addProduct.jsp">
 
     </div>
 
     <div class="right">
         <h4>产品管理</h4>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-        <input class="easyui-searchbox" data-options="prompt:'请输入值',searcher:doSearch"  style="padding-top: 15px"/>
+        <input id="search" class="easyui-searchbox" data-options="prompt:'请输入值',searcher:doSearch"  style="padding-top: 15px" />
         <button id="addProduct" onClick='addProduct()'>新建产品</button>
     </div>
 
