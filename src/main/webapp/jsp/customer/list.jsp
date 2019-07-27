@@ -90,7 +90,7 @@
 		<div id="xs">
             <span id="tx">客户管理 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
                 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
-			<input id="ss" class="easyui-searchbox" data-options="prompt:'请输入客户名称/手机/电话'" style="width:300px"></input>
+			<input id="ss" class="easyui-searchbox" data-options="prompt:'请输入姓名/手机号/电话'"  style="width:300px"></input>
 			<a href="javascript:void(0);" id="addBtn" onclick="openWindow()" class="easyui-linkbutton">新建客户</a>
 			<select name="more" id="more" class="easyui-combobox" style="width:65px">
 				<option value="-1">更多</option>
@@ -119,17 +119,19 @@
 
 <script type="text/javascript">
 
+	//给搜索框建立点击事件
+	/*function search() {
+		var words=$("#ss").val();
+		alert(words)
+		loadData("manage/customer/listCustomerByPage?words="+words);
+	}*/
 
-	$('#ss').searchbox({
-		searcher:function(value,name){
-			alert(value + "," + name)
-		},
-		prompt:'请输入客户名称/手机/电话'
-	});
-
+	//给选中条数赋值
 	var num=0;
 
+	//给第一次分页查询id赋值
 	var id=0;
+	//获取请求头的参数id，通过id查询，id=0分页查询，id！=0单条查询
 	if('${param.id}'){
 		id='${param.id}';
 	}
@@ -170,21 +172,38 @@
 				{field:"customerSource",title:"客户来源"},
 				{field:"customerIndustry",title:"客户行业"},
 				{field:"deleteStatus",title:"状态"}
-			]],onCheck:function(rowIndex,rowData){
-				num=num+1;
-				$("#num").text(num)
-			},onUncheck:function () {
-				num=num-1;
-				$("#num").text(num)
-			},queryParams:{
+			]],onCheck:function(rowIndex,rowData){//选中一行行数加一
+				/*num=num+1;
+				$("#num").text(num)*/
+				$("#num").text($('#dg').datagrid('getChecked').length)
+			},onUncheck:function () {//取消选中一行行数减一
+			/*	num=num-1;
+				$("#num").text(num)*/
+
+				$("#num").text($('#dg').datagrid('getChecked').length)
+			},queryParams:{//传参
 				"id":id
+			},onCheckAll:function(){
+				$("#num").text($('#dg').datagrid('getChecked').length)
+			},onUncheckAll:function(){
+				$("#num").text($('#dg').datagrid('getChecked').length)
 			}
 
 		});
-	};
+
+		var pager=$('#dg').datagrid().datagrid('getPager');// get the pager of datagrid
+		pager.pagination({
+			displayMsg:'显示 {from} 到 {to}  共{total}记录 ',onBeforeRefresh:function(){
+				loadData(0);
+				return true;
+			},showPageList:true,links:2,beforePageText:'第',afterPageText:'页'
+		});
+
+	}
 	loadData(id);
 
-	$("#num").text(num)
+	//$("#num").text(num)//获取到最后选中行数的数量
+	$("#num").text($('#dg').datagrid('getChecked').length)
 
 	//跳转到添加页面
 	function openWindow(){
@@ -229,7 +248,10 @@
 						if (result) {
 
 							$.messager.alert("提示", "恭喜您，信息删除成功！", "info");
-							loadData();
+							loadData(0);
+							// num=0
+							// $("#num").text(num)
+							$("#num").text($('#dg').datagrid('getChecked').length)
 						} else {
 							$.messager.alert("提示", "删除失败，请重新操作！", "info");
 

@@ -47,7 +47,7 @@ id, name, transaction_status, tel, phone, next_contect_time, creator, update_tim
   </select>
 
   <select id="getCount" resultType="java.lang.Integer">
-  	select count(id) from customer
+  	select count(id) from customer where delete_status=0
   </select>
 
 <update id="delCustomer" parameterType="java.lang.Integer">
