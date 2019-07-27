@@ -9,7 +9,7 @@ public class Customer {
 
     private String name;
 
-    private Integer transactionStatus;
+    private String transactionStatus;
 
     private String tel;
 
@@ -52,11 +52,11 @@ public class Customer {
         this.name = name == null ? null : name.trim();
     }
 
-    public Integer getTransactionStatus() {
+    public String getTransactionStatus() {
         return transactionStatus;
     }
 
-    public void setTransactionStatus(Integer transactionStatus) {
+    public void setTransactionStatus(String transactionStatus) {
         this.transactionStatus = transactionStatus;
     }
 

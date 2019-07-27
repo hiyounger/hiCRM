@@ -130,9 +130,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="right">
             <div class="right_top">
                 <h4>合同管理</h4>
+
                 <input class="easyui-searchbox" name="condition" data-options="prompt:'请输入合同名称'"  style="padding-top: 15px"/>
 
                 <button id="add" class="easyui-linkbutton" onclick="$('#dlg').dialog('open')">添加</button>
+            </div>
+            <div id="tb">
+                <a class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="javascript:alert('Add')">添加</a>
+                <a id="del"  class="easyui-linkbutton" iconCls="icon-cut" plain="true" onclick="javascript:void(0)">删除</a>
+                <a  class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="javascript:alert('Save')">保存</a>
             </div>
 
             <table id="dg"></table>
@@ -144,10 +150,61 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 </body>
 <script type="text/javascript">
+    //批量删除
+    function deletedata() {
+        //返回选中多行
+        var selRow = $('#dg').datagrid('getSelections')
+        //判断是否选中行
+        if (selRow.length==0) {
+            $.messager.alert("提示", "请选择要删除的行！", "info");
+            return;
+        }else{
+            var temID="";
+            //批量获取选中行的评估模板ID
+            for (i = 0; i < selRow.length;i++) {
+                if (temID =="") {
+                    temID = selRow[i].id;
+                } else {
+                    temID = selRow[i].id + "," + temID;
+                }
+            }
+
+            $.messager.confirm('提示', '是否删除选中数据?', function (r) {
+
+                if (!r) {
+                    return;
+                }
+                /*alert(temID);*/
+                //提交
+                $.ajax({
+                    type: "POST",
+                    async: false,
+                    url: "manage/contract/delete?id=" + temID,
+                    data: temID,
+                    success: function (result) {
+                        if (result) {
+
+                            $.messager.alert("提示", "恭喜您，信息删除成功！", "info");
+                            loadData();
+                        } else {
+                            $.messager.alert("提示", "删除失败，请重新操作！", "info");
+
+                        }
+                    }
+                });
+            });
+
+        }
+    };
+
+    $("#del").click(function () {
+
+        deletedata();
+    });
     $(function () {
 loadData();
 var param=null;
- var isSingle=false;
+ var isSingle="f";
 $(".searchbox-button").click(function () {
     alert($(".easyui-searchbox").val());
     param=$(".easyui-searchbox").val();
@@ -160,10 +217,14 @@ $("#dlg").dialog({
         // if($.cookie('isSingle')!=null){
         //     isSingle=true;
         // };
-        isSingle=true;
-        alert(isSingle);
+        isSingle="t";
+        console.log(typeof isSingle+":"+isSingle);
+        param=$(".easyui-searchbox").val();
+
+        console.log(isSingle+","+param);
         loadData(param,isSingle);
-        isSingle=false;
+        isSingle="f";
+        console.log(isSingle+","+param);
     }
 });
 
@@ -180,12 +241,16 @@ $("#dlg").dialog({
             url:'manage/contract/listByPage',
             queryParams:{
                 contactName:param,
-                isSingle:isSingle
+                isSingle:isSingle,
             },
+            frozenColumns:[[
+                {field:'id',title:'id',width:80},
+              //  {field:'status',title:'状态',width:80},
+            ]],
             toolbar:"#tb",
             striped:true,
             pagination:true,
-            singleSelect:true,
+            singleSelect:false,
             rownumbers:true,
             pageNumber:1,
             pageSize:5,
@@ -227,7 +292,10 @@ $("#dlg").dialog({
                             new Date(value).getMonth()+"-"+
                             new Date(value).getDate();
                     }},
-                {field:'personincharge',title:' 负责人'}
+                {field:'personincharge',title:' 负责人'},
+                {field:'status',title:' 状态',formatter:function (value) {
+                    return "待审核";
+                    }}
             ]]
         });
     }

@@ -12,9 +12,11 @@ public interface IContacts1 {
 
     int getCount(String contactName);
 
-    List<Contacts1> listByPage(Integer page, Integer rows, String contactName, Boolean isSingle);
+    List<Contacts1> listByPage(Integer page, Integer rows, String contactName, String isSingle);
 
     Integer addContacts1(Contacts1 contacts1);
+
+    Integer deleteById(Integer i);
 
 
 

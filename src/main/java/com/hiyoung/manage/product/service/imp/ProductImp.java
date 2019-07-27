@@ -145,4 +145,25 @@ public class ProductImp implements ProductIf {
         }
         return productMapper.getCount2(productName);
     }
+
+    /**
+     * 批量下架  伪删除
+     * @param id  待下架产品的id
+     * @return
+     */
+    @Override
+    public int downProduct(Integer id) {
+        return productMapper.downProduct(id);
+    }
+
+    /**
+     * 据id添加产品的下架原因
+     * @param id   待下架产品的id
+     * @param downReason  下架原因
+     * @return
+     */
+    @Override
+    public int addDownReasonById(Integer id, String downReason) {
+        return productMapper.addDownReasonById(id, downReason);
+    }
 }

@@ -152,6 +152,12 @@ function loadData(param){
             }else{
                 $("#remove").css("background-color","darkgrey")
             }
+        },rowStyler: function(index,row){
+            if (row.listprice>80){
+                return 'background-color:#6293BB;color:#fff;'; // return inline style
+                // the function can return predefined css class and inline style
+                // return {class:'r1', style:{'color:#fff'}};
+            }
         }
     });
     var pager=$('#pp').datagrid().datagrid('getPager');// get the pager of datagrid
@@ -159,7 +165,7 @@ function loadData(param){
         displayMsg:'共{total}条 从 {from}条 到 {to}条 ',onBeforeRefresh:function(){
             loadData(0);
             return true;
-        },showRefresh:true,showPageList:true,links:2,beforePageText:'前往',afterPageText:'页'
+        },showPageList:true,links:2,beforePageText:'前往',afterPageText:'页'
     });
 
 }
@@ -176,9 +182,41 @@ function loadData(param){
         if(checked.length==0){
             return;
         }
-        $.messager.alert('Warning','你确定要删除这'+checked.length+'个用户吗？',function (r) {
-            if(r){
-                alert('Ok!')
+        $.messager.defaults.cancel='取消';
+        $.messager.defaults.ok='确定'
+        $.messager .confirm('确认', '您确定要删除这'+checked.length+'位用户?', function(r){
+            if (r){
+                var idArray=new Array()
+                $.each(checked,function (i,val) {
+                    idArray[i]=val.id
+                })
+                console.info(checked)
+                console.info(idArray)
+                $.ajax({
+                    url:'system/user/deleteByIds',
+                    type:'POST',
+                    data:{'ids':JSON.stringify(idArray)},
+                    async:true,
+                    dataType:'json',
+                    success:function(data){
+                        if(data>0){
+                            $.messager.show({
+                                msg:'删除成功',
+                                timeout:1000,
+                                showType:'null',
+                                style:{
+                                    right:'',
+                                    top:150
+                                }
+                                ,height:'100',
+                                width:'200'
+                            });
+                            loadData(0)
+
+                        }
+                    }
+                })
+
             }
         });
     })

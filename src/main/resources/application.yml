@@ -38,7 +38,7 @@ logging:
     com:
       hiyoung: debug
 mybatis:
-  type-aliases-package: com.hiyoung.*.*.entity
+  type-aliases-package: com.hiyoung
   configuration:
     map-underscore-to-camel-case: true
     default-fetch-size: 100

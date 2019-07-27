@@ -247,9 +247,106 @@
         }
 
         //产品上下架
-        function modifyState() {
+        function onProduct() {
             $('#dlg01').dialog('open');
         }
+
+        //上/下架原因的提交按钮绑定事件
+        //就是逻辑删除，伪删除
+        /*$("#submit").on("click",function () {
+            event.preventDefault();
+            $.post("manage/product/addProduct.do",
+                $("#ff").serialize(),
+                function(data) {
+                    if(data.success){
+                        //alert(data.success);
+                        $(".panel-tool-close").click();  //对话框的右上角的关闭按钮默认的class 是panel-tool-close
+                        loadSingle();
+                    }else{
+                        alert("添加失败");
+                    }
+                },
+                'json')
+        })*/
+
+        //批量删除 下架产品
+        function downProduct() {
+            //返回选中多行
+            var selectRow = $('#dg').datagrid('getSelections')
+            //判断是否选中行
+            if (selectRow.length==0) {
+                //没有选择下架产品
+                $.messager.alert("提示", "请选择要下架的产品！", "info");
+                return;
+            }else{
+                //选择了下架产品
+                var temID="";
+                //批量获取选中行的评估模板ID
+                for (i = 0; i < selectRow.length;i++) {
+                    if (temID =="") {
+                        temID = selectRow[i].id;
+                    }
+                    else {
+                        temID = selectRow[i].id + "," + temID;
+                    }
+                }
+
+               /* //提交
+                $.ajax({
+                    type: "POST",
+                    async: false,
+                    url: "manage/product/downProduct.do?id=" + temID,   //选择多行的id 字符串
+                    data: temID,
+                    success: function (result) {
+                        if (result) {
+                            $.messager.alert("提示", "恭喜您，信息删除成功！", "info");
+                            loadData();
+                        } else {
+                            $.messager.alert("提示", "删除失败，请重新操作！", "info");
+
+                        }
+                    }
+                });*/
+                //提交
+                //var downReason = $("#downReason").text()  //获取下架原因
+                $.ajax({
+                    type: "POST",
+                    async: false,
+                    url: "manage/product/downProduct.do?id=" + temID,   //选择多行的id 字符串
+                    data:temID,
+                    success: function (result) {
+                        if (result) {
+                            //  逻辑删除成功/下架产品成功
+                           // $.messager.alert("提示", "恭喜您，下架产品成功！", "info");
+                            //loadData();
+                            $('#dlg02').dialog('open');
+
+                        } else {
+                            $.messager.alert("提示", "下架产品失败，请重新操作！", "info");
+
+                        }
+                    }
+                });
+
+                //点击下架的对话框的提交按钮
+                $("#submit2").on("click",function () {
+                    event.preventDefault();
+                    $.post("manage/product/addDownReasonById.do",
+                       // $("#ff").serialize(),
+                        function(data) {
+                            if(data.success){
+                                alert(data.success);
+                               // $(".panel-tool-close").click();  //对话框的右上角的关闭按钮默认的class 是panel-tool-close
+                               // loadSingle();
+                            }else{
+                                alert("添加失败");
+                            }
+                        },
+                        'json')
+                })
+
+            }
+        };
 
 
     </script>
@@ -274,8 +371,8 @@
 
         </span>
         <span style="margin-bottom: 8px">项</span>&emsp;&emsp;
-        <input type="radio" name="productState1" id="on" style="margin-bottom: 8px" onclick="modifyState()">上架&emsp;&emsp;
-        <input type="radio" name="productState1" id="down" style="margin-bottom: 8px">下架
+        <input type="radio" name="productState1" id="on" style="margin-bottom: 8px" onclick="onProduct()">上架&emsp;&emsp;
+        <input type="radio" name="productState1" id="down" style="margin-bottom: 8px" onclick="downProduct()">下架
     </div>
 
     <%--点击上架按钮后，弹出上架原因输入对话框--%>
@@ -283,8 +380,17 @@
          data-options="closed:true" >
         <%--<div style="font-size: 1.5em">上架原因是：</div>--%>
         <textarea rows="17" cols="58" style="font-size: 1.2em"></textarea><br />
-            <input type="reset"  name="reset" value="取消" id="reset" style="margin-top: 16px;font-size: 1.25em;float: right;margin-right: 8px"/>
-            <input type="submit"  name="submit1" value="保存" id="submit" style="margin-top: 16px;font-size: 1.25em;float: right;margin-right: 8px"/>
+            <input type="reset"  name="reset1" value="取消" id="reset1" style="margin-top: 16px;font-size: 1.25em;float: right;margin-right: 8px"/>
+            <input type="submit"  name="submit1" value="保存" id="submit1" style="margin-top: 16px;font-size: 1.25em;float: right;margin-right: 8px"/>
+
+    </div>
+
+    <%--点击下架按钮后，弹出下架原因输入对话框--%>
+    <div id="dlg02" class="easyui-dialog"  title="下架原因" style="width: 500px;height: 400px"
+         data-options="closed:true" >
+        <textarea rows="17" cols="58" style="font-size: 1.2em" id="downReason"></textarea><br />
+        <input type="reset"  name="reset2" value="取消" id="reset2" style="margin-top: 16px;font-size: 1.25em;float: right;margin-right: 8px"/>
+        <input type="submit"  name="submit2" value="保存" id="submit2" style="margin-top: 16px;font-size: 1.25em;float: right;margin-right: 8px"/>
 
     </div>
 
