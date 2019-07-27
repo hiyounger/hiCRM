@@ -126,7 +126,7 @@
                         function(data) {
                             if(data){
                                 alert("删除成功");
-                                loadData();
+                                loadData("manage/Contacts/list");
                             }else{
                                 alert("删除失败");
                             }
