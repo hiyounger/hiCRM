@@ -152,6 +152,12 @@ function loadData(param){
             }else{
                 $("#remove").css("background-color","darkgrey")
             }
+        },rowStyler: function(index,row){
+            if (row.listprice>80){
+                return 'background-color:#6293BB;color:#fff;'; // return inline style
+                // the function can return predefined css class and inline style
+                // return {class:'r1', style:{'color:#fff'}};
+            }
         }
     });
     var pager=$('#pp').datagrid().datagrid('getPager');// get the pager of datagrid
