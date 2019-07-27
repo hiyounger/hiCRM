@@ -25,6 +25,14 @@
             font-size:x-large;
 
         }
+        #d10{
+            width: 50%;
+            height: 80px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+
+        }
         #d2{
             margin-left: auto;
             margin-right: auto;
@@ -33,13 +41,17 @@
 
 
         }
-        #img1,#img2,#img3{
+
+        #img1,#img2,#img3,#img4{
             width: 15px;
             height: 15px;
         }
-        #bt1{
+        #d12{
+            width: 200px;
+            height: 100%;
             float: right;
         }
+
     </style>
     <script>
 
@@ -61,6 +73,7 @@
                 pageList:[2,4,6,8],
                 singleSelect:false,checkOnSelect: true, selectOnCheck: true,
                 striped:true,
+                rownumbers:true,//设置是否显示行号
                 frozenColumns:[[
                     {field:'id',checkbox:true,width:20},
                     {field:'name',title:'姓名',width:100},
@@ -125,7 +138,7 @@
                         function(data) {
                             if(data){
                                 alert("删除成功");
-                                loadData();
+                                loadData("manage/Contacts/list");
                             }else{
                                 alert("删除失败");
                             }
@@ -135,11 +148,20 @@
 
             }
         }
+        function search() {
+            var word=$("#ss").val();
+            loadData("manage/Contacts/listpart?word="+word);
+        }
 
     </script>
 </head>
 <body>
-<div id="d1">&ensp;&ensp;&ensp;联系人管理<span><button id="bt1" onclick="addContacts()">新建联系人</button></span></div>
+<div id="d1">&ensp;&ensp;&ensp;联系人管理
+    <div id="d10">
+        <input id="ss" class="easyui-searchbox" style="width:250px;"
+               data-options="searcher:search,prompt:'请输入联系人姓名或手机号'"/>
+    </div>
+</div>
 <div id="d11">
     场景：<select name="">
     <option value="">全部联系人</option>
@@ -147,7 +169,11 @@
 </select> &ensp;&ensp;<img src="static/img/logo.png" id="img1" />&ensp; <a href="javascript:void(0)">高级筛选</a> &ensp;
             <img src="static/img/logo.png" id="img2" /> <a href="javascript:deleteData()">删除</a>&ensp;
             <img src="static/img/logo.png" id="img3" /> <a href="javascript:loadData('manage/Contacts/list')">刷新</a>
+          <div id="d12">
+              <img src="static/easyui/themes/black/images/slider_handle.png" id="img4" /> <a href="javascript:addContacts()">新建联系人</a>&ensp;
+          </div>
 </div>
+<br/>
 <div id="d2">
     <table id="dg" style="width:100%;" ></table>
 </div>

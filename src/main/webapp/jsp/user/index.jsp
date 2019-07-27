@@ -141,6 +141,9 @@
         .star{
             color: red;
         }
+        .easyui-textbox{
+            width: 200px;
+        }
     </style>
 </head>
 <body>
@@ -171,7 +174,7 @@
 </div>
 
 
-<body>
+
 <div id="win" class="easyui-window" title="新建员工"  maximizable=false closed=true resizable=false style="width:600px;height:500px;padding:5px;">
     <div id="basic">&nbsp;&nbsp;基本信息</div>
 
@@ -180,27 +183,24 @@
             <tr >
                 <td>
                     <div><span class="star">*</span>手机号（登录名）</div>
-                    <div class="second" ><input class="easyui-textbox" type="text"/></div>
+                    <div class="second" ><input name="phone" class="easyui-textbox" type="text"/></div>
                 </td>
                 <td >
                     <div><span class="star">*</span>登录密码</div>
-                    <div class="second"><input class="easyui-textbox" type="text"/></div>
+                    <div class="second"><input name="password" class="easyui-textbox" type="text"/></div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div><span class="star">*</span>姓名</div>
-                    <div class="second"><input class="easyui-textbox" type="text"/></div>
+                    <div class="second"><input name="username" class="easyui-textbox" type="text"/></div>
                 </td>
                 <td>
                     <div>性别</div>
                     <div class="second">
-                        <select id="cc" class="easyui-combobox" name="dept" style="width:200px;">
-                            <option value="aa" selected>aitem1</option>
-                            <option>bitem2</option>
-                            <option>bitem3</option>
-                            <option>ditem4</option>
-                            <option>eitem5</option>
+                        <select  class="easyui-combobox" name="sex" style="width:200px;">
+                            <option value="aa" selected>男</option>
+                            <option>女</option>
                         </select>
                     </div>
                 </td>
@@ -208,34 +208,31 @@
             <tr>
                 <td>
                     <div>邮箱</div>
-                    <div><input class="easyui-textbox" type="text"/></div>
+                    <div><input class="easyui-textbox" name="email" type="text"/></div>
                 </td>
                 <td>
                     <div><span class="star">*</span>部门</div>
-                    <div class="second"><select id="cc" class="easyui-combobox" name="dept" style="width:200px;">
-                        <option value="aa" selected>aitem1</option>
-                        <option>bitem2</option>
-                        <option>bitem3</option>
-                        <option>ditem4</option>
-                        <option>eitem5</option>
+                    <div class="second"><select class="easyui-combobox" name="department" style="width:200px;">
+                        <option value="aa" selected>开发部</option>
+                        <option>测试部</option>
+                        <option>研发部</option>
+                        <option>吃瓜不</option>
                     </select></div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div>岗位</div>
-                    <div><input  class="easyui-textbox"type="text"/></div>
+                    <div><input name="position" class="easyui-textbox"type="text"/></div>
 
                 </td>
                 <td>
                     <div>直属上级</div>
                     <div class="second">
-                        <select id="cc" class="easyui-combobox" name="dept" style="width:200px;">
-                            <option value="aa" selected>aitem1</option>
-                            <option>bitem2</option>
-                            <option>bitem3</option>
-                            <option>ditem4</option>
-                            <option>eitem5</option>
+                        <select  class="easyui-combobox" name="supervisor" style="width:200px;">
+                            <option value="aa" selected>李刚</option>
+                            <option>刘达</option>
+                            <option>马克</option>
                         </select>
                     </div>
                 </td>
@@ -272,30 +269,20 @@
                url:'jsp/bussiness/list_business.jsp'
            },{
                text: '合同',
-               url:'jsp/contract/list_contract.jsp'
+               url:'jsp/contact/index.jsp'
            },{
                text: '产品',
                url:'jsp/product/listProduct.jsp'
            },{
-               text: '产品',
-               url:'jsp/product/listProduct.jsp'
-           },{
-               text: '产品',
-               url:'jsp/product/listProduct.jsp'
-           },{
-               text: '产品',
-               url:'jsp/product/listProduct.jsp'
-           },{
-               text: '产品',
-               url:'jsp/product/listProduct.jsp'
-           },{
-               text: '产品',
-               url:'jsp/product/listProduct.jsp'
+               text: '用户',
+               url:'jsp/user/user.jsp'
            }]
        }],onSelect:function (item) {
           $("#iframe").attr('src',item.url+'');
        }
    })
+
+
 
    $(".button").on('mouseover',function(){
        $(this).css("background-color","#95B8E7")
@@ -305,12 +292,26 @@
        $(this).css("color","black")
    })
    $("#save").on("click",function(){
-       $("#win").window('close');
+       $.ajax({
+           'url':'system/user/insert',
+           'type':'get',
+           'async':false,
+           'data':$('#form').serialize(),
+           'dataType':'json',
+           'success':function(data){
+               if(data>0){
+                   $("#iframe").attr('src','jsp/user/user.jsp?id='+data);
+                   $("#win").window('close');
+               }
+           }
+       })
+
    })
    $("#cancel").on('click',function(){
        $("#form").form('clear');
        $(".easyui-combobox").combobox('setValue','aa')
    })
+
 
 </script>
 

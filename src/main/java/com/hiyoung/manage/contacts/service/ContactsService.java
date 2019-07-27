@@ -24,7 +24,7 @@ public interface ContactsService {
      * 获得总条数
      * @return
      */
-    int getCount();
+    int getCount(String word);
 
     /**
      * 分页展示
@@ -32,7 +32,7 @@ public interface ContactsService {
      * @param rowStr
      * @return
      */
-    List<Contacts> listBYPage(String pageStr, String rowStr);
+    List<Contacts> listBYPage(String pageStr, String rowStr,String word);
 
     /**
      * 通过联系人姓名查一条数据

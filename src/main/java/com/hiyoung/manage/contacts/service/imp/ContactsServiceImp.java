@@ -12,8 +12,8 @@ public class ContactsServiceImp implements ContactsService {
     @Resource
     ContactsMapper ContactsMapper;
     @Override
-    public int getCount() {
-        return ContactsMapper.getCount();
+    public int getCount(String word) {
+        return ContactsMapper.getCount(word);
     }
 
     @Override
@@ -27,10 +27,10 @@ public class ContactsServiceImp implements ContactsService {
     }
 
     @Override
-    public List<Contacts> listBYPage(String pageStr, String rowStr) {
+    public List<Contacts> listBYPage(String pageStr, String rowStr,String word) {
         int page = pageStr==null?1:Integer.parseInt(pageStr);
         int rows =rowStr==null?10:Integer.parseInt(rowStr);
-        double count=getCount();
+        double count=getCount(word);
         int pageCount=(int)Math.ceil(count/rows);
         if(page>pageCount){
             page=pageCount;
@@ -38,7 +38,7 @@ public class ContactsServiceImp implements ContactsService {
         if(page<1){
             page=1;
         }
-        return ContactsMapper.listBYPage((page-1)*rows,rows);
+        return ContactsMapper.listBYPage((page-1)*rows,rows,word);
     }
 
     @Override

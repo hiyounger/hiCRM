@@ -39,7 +39,29 @@ public class LeadsController {
     }
     @RequestMapping("/load")
     public String  load(){
-        return "listTaxPayer";
+        return "leads/listTaxPayer";
+
+    }
+
+    /**
+     * 按条件搜索线索
+     * @param request
+     * @return
+     */
+    @RequestMapping("/fuzzyQuery.action")
+    @ResponseBody
+    public Map<String,Object> fuzzyQuery(HttpServletRequest request,@RequestParam("page")int page,@RequestParam("rows") int rows){
+       String fuzzy= request.getParameter("fuzzyQuery");
+        System.out.println("----------"+page+"============="+rows);
+        System.out.println("fuzzy"+fuzzy);
+        HashMap<String,Object>map=new HashMap<>();
+        List<Leads> leads = leadsServiceIf.fuzzyQueryByName(page, rows, fuzzy);
+        System.out.println("mimimiimi"+leads.size());
+        //获取模糊查询的总条数
+        int total = leadsServiceIf.getCountFuzzy(fuzzy);
+        map.put("rows",leads);
+        map.put("total",total);
+        return  map;
 
     }
 
@@ -67,18 +89,25 @@ public class LeadsController {
 
         return true;
     }
+
+    /**
+     * 创建线索
+     * @param leads
+     * @return
+     */
  @RequestMapping("/addleads.action")
+ @ResponseBody
   public String addLeads(Leads leads){
-
-
      System.out.println("leads="+leads);
      Integer num = leadsServiceIf.addLeads(leads);
-     System.out.println("numersdf"+num);
-     ModelAndView modelAndView=new ModelAndView();
-     //  ModelAndView modelAndView1 = modelAndView.addObject("lead/load", leads1);
-     // modelAndView.setViewName("page/listTaxPayer");
-     modelAndView.addObject(leads);
-     return "redirect:load";
+       if (num==1){
+           return "success";
+       }else {
+           return "error";
+       }
+
+
+
 
 }
 @RequestMapping("/addleads.page")

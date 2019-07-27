@@ -32,4 +32,36 @@ public interface ProductMapper {
      * @return
      */
     int  addProduct(Product product);
+
+    /**
+     * 条件查询获得总条数
+     * @return
+     */
+    int getCount1(String productName);
+
+
+    /**
+     * 根据条件查询分页展示产品信息
+     * @param offset
+     * @param rows
+     * @param productName
+     * @return
+     */
+    List<Product> listByPageByCondition(@Param("offset") Integer offset,@Param("rows") Integer rows,@Param("productName") String productName);
+
+
+    /**
+     * 根据条件查询分页展示产品信息
+     * @param offset
+     * @param rows
+     * @param productName
+     * @return
+     */
+    List<Product> listProductCondition(@Param("offset") Integer offset,@Param("rows") Integer rows,@Param("productName") String productName);
+
+    /**
+     * 条件查询获得总条数
+     * @return
+     */
+    int getCount2(String productName);
 }

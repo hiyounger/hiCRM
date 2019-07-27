@@ -12,7 +12,9 @@ public interface UserMapper {
 
     User getUser(@Param("username") String username, @Param("password") String password);
 
-    List<User> listUsers(@Param("offset")Integer offset,@Param("count") Integer count);
+    List<User> listUsers(@Param("offset")Integer offset,@Param("count") Integer count,@Param("id")int id);
 
-    int getCount();
+    int getCount(int id);
+
+    int deleteByIds(List<Integer> ids);
 }

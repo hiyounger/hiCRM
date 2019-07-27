@@ -30,7 +30,7 @@
 
 
   <resultMap id="BaseResultMap" type="com.hiyoung.system.user.entity.User">
-      <id column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <id column="id" javaType="java.lang.Integer" jdbcType="INTEGER" property="id"/>
       <result column="username" property="username" javaType="java.lang.String" jdbcType="VARCHAR" />
       <result column="password" property="password" javaType="java.lang.String" jdbcType="VARCHAR" />
       <result column="sex"  property="sex" javaType="java.lang.String" jdbcType="DATE" />
@@ -42,7 +42,7 @@
       <result column="role" property="role" javaType="java.lang.String" jdbcType="DATE" />
   </resultMap>
   <sql id="Base_Column_List">
-    id,username,sex,email,department,position,supervisor,phone
+    username,sex,email,department,position,supervisor,phone
   </sql>
 
 <!--<select id="getUser" resultMap="BaseResultMap2">
@@ -52,15 +52,41 @@
       user_role.userid left join tb_system_role as role on user_role.roleid = role.id where username =#{username} and password =#{password};
 </select>-->
 <select id="getUser" resultMap="BaseResultMap">
-  select <include refid="Base_Column_List"></include> ,role from tb_user where username =#{username} and password =#{password};
+  select id, <include refid="Base_Column_List"></include> ,role from tb_user where username =#{username} and password =#{password} and status =1;
 </select>
 
   <select id="listUsers" resultMap="BaseResultMap">
-  select <include refid="Base_Column_List"></include> ,role
-  from tb_user limit #{offset},#{count}
+  select id, <include refid="Base_Column_List"></include> ,role
+  from tb_user where status =1
+  <choose>
+       <when test="id>0">
+           and id=#{id}
+       </when>
+       <otherwise>
+           limit #{offset},#{count}
+       </otherwise>
+  </choose>
+
 </select>
   
   <select id="getCount" resultType="integer">
-    select count(id) from tb_user
+    select count(id) from tb_user where status =1
+    <if test="id>0">
+        and id =#{id}
+    </if>
+
   </select>
+
+    <insert id="insert" parameterType="user" useGeneratedKeys="true" keyProperty="id">
+        insert into tb_user ( <include refid="Base_Column_List"></include> ,password,status ) VALUES
+        (#{username},#{sex},#{email},#{department},#{position},#{supervisor},#{phone},#{password},1)
+
+    </insert>
+
+    <update id="deleteByIds" parameterType="java.util.List" >
+        update tb_user set status=0 where
+        <foreach collection="ids" item="item" open=" id=" separator="or id=" >
+            #{item}
+        </foreach>
+    </update>
 </mapper>
