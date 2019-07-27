@@ -137,7 +137,8 @@
             }
         }
         function search() {
-            alert("ds");
+            var word=$("#ss").val();
+            loadData("manage/Contacts/listpart?word="+word);
         }
 
     </script>
