@@ -90,6 +90,7 @@
 
 </div>
 <script>
+
     $('#username').textbox({
         iconCls:'icon-man',
         iconAlign:'left',
@@ -129,6 +130,9 @@
           }
        },"json")
     })
+
+    window.setTimeout (function(){ $('#username')[0].focus();},0 );
+
 </script>
 </body>
 </html>

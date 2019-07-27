@@ -15,7 +15,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script type="text/javascript" src="../../static/easyui/jquery.min.js"></script>
     <script type="text/javascript" src="../../static/easyui/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="../../static/easyui/easyui-lang-zh_CN.js"></script>
-    <script  src="../../static/js/jquery.cookie.js" ></script>
+
     <style>
         h5{
             font-size: 12px;
@@ -43,7 +43,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <tr>
                     <td>
                         <div>合同编号</div>
-                        <input class="easyui-textbox" type="text" name="number" data-options="required:true"></input>
+                        <input class="easyui-textbox" type="text" name="number" data-options="required:true,validType:'number'" ></input>
                     </td>
                     <td>
                         <div>合同名称</div>
@@ -109,7 +109,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     function submitForm(){
         //ajax提交
         alert("点击");
-      // var formdata=document.getElementById("ff");
         var data1=$("ff").serialize();
         console.log(data1);
         // $.ajax({
@@ -127,6 +126,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             // contentType: "application/json;charset=UTF-8",
              url:"manage/contract/add",
             onSubmit: function(){
+                return $(this).form('enableValidation').form('validate')
                 // do some check
                 // return false to prevent submit;
             },
@@ -135,7 +135,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                    if(data=="1"){
                        //关闭对话框
                        $(".panel-tool-close").click();
-                       $.cookie('isSingle', true, { expires: 1 });
+                      // $.cookie('isSingle', true, { expires: 1 });
                    }
             },
             dataType:"text"
@@ -144,6 +144,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     function clearForm(){
         $('#ff').form('clear');
     }
+
+    $(function(){
+        $.extend($.fn.validatebox.defaults.rules, {
+            number : {// 验证数字
+                validator : function(value){
+                    return /^[0-9]+$/i.test(value);
+                },
+                message : '请输入数字'
+            }
+        });
+
+    });
 </script>
 </body>
 </html>

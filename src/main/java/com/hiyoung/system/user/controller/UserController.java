@@ -37,10 +37,10 @@ public class UserController {
     }
 
     @PostMapping("/system/user/list")
-    public Map<String,Object> getUsers(int page,int rows){
+    public Map<String,Object> getUsers(int page,int rows,int id){
         Map<String, Object> map = new HashMap<>();
-        List<User> users = userService.listUsers(page, rows);
-        int total=userService.getCount();
+        List<User> users = userService.listUsers(page, rows,id);
+        int total=userService.getCount(id);
         map.put("total",total );
         map.put("rows",users );
         System.out.println(users);

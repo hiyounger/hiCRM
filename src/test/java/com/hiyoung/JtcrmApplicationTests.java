@@ -26,7 +26,7 @@ public class JtcrmApplicationTests {
         User user=userMapper.getUser("zhangsan","111");
         System.out.println(user);
 
-        List<User> users = userServiceImp.listUsers(1,2);
+        List<User> users = userServiceImp.listUsers(1,2,2);
         System.out.println(users);
 
     }

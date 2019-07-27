@@ -18,12 +18,12 @@ public class UserServiceImp implements UserServiceIf {
     }
 
     @Override
-    public List<User> listUsers(Integer page, Integer count) {
-        return userMapper.listUsers((page-1)*count,count);
+    public List<User> listUsers(Integer page, Integer count ,int id) {
+        return userMapper.listUsers((page-1)*count,count,id);
     }
 
     @Override
-    public int getCount() {
-        return userMapper.getCount();
+    public int getCount(int id) {
+        return userMapper.getCount(id);
     }
 }

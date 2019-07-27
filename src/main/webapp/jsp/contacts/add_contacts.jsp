@@ -54,7 +54,7 @@
         <tr>
             <td>
                 <select name="isKeyMaker" class="easyui-combobox"  style="width:300px;height: 40px;">
-                    <option value="">请选择</option>
+                    <option value="否">请选择(默认否)</option>
                     <option value="是">是</option>
                     <option value="否">否</option>
                 </select>
@@ -93,7 +93,7 @@
             <td><input type="text"  class="easyui-datetimebox" name="nextContactTime" data-options="prompt:'请选择日期'" style="width:300px;height: 40px;"></td>
             <td>
                 <select class="easyui-combobox" name="sex" style="width:300px;height: 40px;">
-                    <option value="">请选择</option>
+                    <option value="男">请选择性别(默认男)</option>
                     <option value="男">男</option>
                     <option value="女">女</option>
                 </select>
