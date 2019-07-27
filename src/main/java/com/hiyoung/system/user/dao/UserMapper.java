@@ -15,4 +15,6 @@ public interface UserMapper {
     List<User> listUsers(@Param("offset")Integer offset,@Param("count") Integer count,@Param("id")int id);
 
     int getCount(int id);
+
+    int deleteByIds(List<Integer> ids);
 }

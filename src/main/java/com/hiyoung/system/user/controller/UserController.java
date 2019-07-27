@@ -53,4 +53,9 @@ public class UserController {
         System.out.println(user);
         return user.getId();
     }
+
+    @DeleteMapping("/system/user/deleteByIds")
+    public int deleteById(List<Integer> ids){
+     return userMapper.deleteByIds(ids);
+    }
 }

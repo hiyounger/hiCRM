@@ -30,7 +30,7 @@
 
 
   <resultMap id="BaseResultMap" type="com.hiyoung.system.user.entity.User">
-      <id column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <id column="id" javaType="java.lang.Integer" jdbcType="INTEGER" property="id"/>
       <result column="username" property="username" javaType="java.lang.String" jdbcType="VARCHAR" />
       <result column="password" property="password" javaType="java.lang.String" jdbcType="VARCHAR" />
       <result column="sex"  property="sex" javaType="java.lang.String" jdbcType="DATE" />
@@ -82,4 +82,11 @@
         (#{username},#{sex},#{email},#{department},#{position},#{supervisor},#{phone},#{password},1)
 
     </insert>
+
+    <update id="deleteByIds" parameterType="java.util.List" >
+        update tb_user set status=0 where
+        <foreach collection="ids" item="item" open=" id=" separator="or id=" >
+            #{item}
+        </foreach>
+    </update>
 </mapper>

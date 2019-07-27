@@ -159,7 +159,7 @@ function loadData(param){
         displayMsg:'共{total}条 从 {from}条 到 {to}条 ',onBeforeRefresh:function(){
             loadData(0);
             return true;
-        },showRefresh:true,showPageList:true,links:2,beforePageText:'前往',afterPageText:'页'
+        },showPageList:true,links:2,beforePageText:'前往',afterPageText:'页'
     });
 
 }
@@ -176,9 +176,28 @@ function loadData(param){
         if(checked.length==0){
             return;
         }
-        $.messager.alert('Warning','你确定要删除这'+checked.length+'个用户吗？',function (r) {
-            if(r){
-                alert('Ok!')
+        $.messager.defaults.cancel='取消';
+        $.messager.defaults.ok='确定'
+        $.messager .confirm('确认', '您确定要删除这'+checked.length+'位用户?', function(r){
+            if (r){
+                var idArray=new Array()
+                $.each(checked,function (i,val) {
+                    idArray[i]=val.id
+                })
+
+                $.ajax({
+                    url:'system/user/deleteByIds',
+                    type:'POST',
+                    data:{'ids':idArray,'_method':'DELETE'},
+                    async:true,
+                    dataType:'json',
+                    success:function(data){
+                        if(!data){
+                            alert('成功删除'+data+'条数据')
+                        }
+                    }
+                })
+
             }
         });
     })
