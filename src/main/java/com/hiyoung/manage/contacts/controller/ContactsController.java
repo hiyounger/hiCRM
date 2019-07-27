@@ -21,10 +21,22 @@ public class ContactsController {
     ContactsService contactsService;
     @RequestMapping("/list")
     @ResponseBody
-    public Map<String,Object> getLIst( String page,String rows,String word){
+    public Map<String,Object> getLIst( String page,String rows){
         //从请求中获取当前页面和每页展示的条数
-        List<Contacts> list= contactsService.listBYPage(page,rows,word);
-        Integer zs= contactsService.getCount(word);
+        List<Contacts> list= contactsService.listBYPage(page,rows,null);
+        Integer zs= contactsService.getCount(null);
+        Map<String,Object> map=new HashMap<>();
+        map.put("total",zs);
+        map.put("rows",list);
+        return map;
+    }
+
+    @RequestMapping("/listpart")
+    @ResponseBody
+    public Map<String,Object> listPart( String page,String rows,String word){
+        //从请求中获取当前页面和每页展示的条数
+        List<Contacts> list= contactsService.listBYPage(page,rows,word.trim());
+        Integer zs= contactsService.getCount(word.trim());
         Map<String,Object> map=new HashMap<>();
         map.put("total",zs);
         map.put("rows",list);
@@ -88,7 +100,6 @@ public class ContactsController {
         int num= contactsService.insert(Contacts);
         if(num!=0){
 
-            session.setAttribute("onlyone",Contacts.getName());
             return true;
         }
         return false;

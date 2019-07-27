@@ -269,25 +269,13 @@
                url:'jsp/bussiness/list_business.jsp'
            },{
                text: '合同',
-               url:'jsp/contract/list_contract.jsp'
+               url:'jsp/contact/index.jsp'
            },{
                text: '产品',
                url:'jsp/product/listProduct.jsp'
            },{
-               text: '产品',
-               url:'jsp/product/listProduct.jsp'
-           },{
-               text: '产品',
-               url:'jsp/product/listProduct.jsp'
-           },{
-               text: '产品',
-               url:'jsp/product/listProduct.jsp'
-           },{
-               text: '产品',
-               url:'jsp/product/listProduct.jsp'
-           },{
-               text: '产品',
-               url:'jsp/product/listProduct.jsp'
+               text: '用户',
+               url:'jsp/user/user.jsp'
            }]
        }],onSelect:function (item) {
           $("#iframe").attr('src',item.url+'');

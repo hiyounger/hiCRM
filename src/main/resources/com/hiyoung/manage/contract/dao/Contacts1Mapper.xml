@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.hiyoung.manage.contact.dao.Contacts1Mapper">
-  <resultMap id="BaseResultMap" type="com.hiyoung.manage.contact.entity.Contacts1">
+<mapper namespace="com.hiyoung.manage.contract.dao.Contacts1Mapper">
+  <resultMap id="BaseResultMap" type="com.hiyoung.manage.contract.entity.Contacts1">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="customerName" jdbcType="VARCHAR" property="customername" />
     <result column="number" jdbcType="INTEGER" property="number" />
@@ -34,7 +34,7 @@
     delete from tb_crm_contracts
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.hiyoung.manage.contact.entity.Contacts1">
+  <insert id="insert" parameterType="com.hiyoung.manage.contract.entity.Contacts1">
     insert into tb_crm_contracts (id, customerName, number,
       contactName, businessName, orderTime,
       contractAmount, startingTimeContract, endTimeContract,
@@ -48,7 +48,7 @@
       #{remarks,jdbcType=VARCHAR}, #{founder,jdbcType=VARCHAR}, #{updatetime,jdbcType=DATE},
       #{creationtime,jdbcType=DATE}, #{personincharge,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.hiyoung.manage.contact.entity.Contacts1">
+  <insert id="insertSelective" parameterType="com.hiyoung.manage.contract.entity.Contacts1">
     insert into tb_crm_contracts
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -151,7 +151,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.hiyoung.manage.contact.entity.Contacts1">
+  <update id="updateByPrimaryKeySelective" parameterType="com.hiyoung.manage.contract.entity.Contacts1">
     update tb_crm_contracts
     <set>
       <if test="customername != null">
@@ -202,7 +202,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.hiyoung.manage.contact.entity.Contacts1">
+  <update id="updateByPrimaryKey" parameterType="com.hiyoung.manage.contract.entity.Contacts1">
     update tb_crm_contracts
     set customerName = #{customername,jdbcType=VARCHAR},
       number = #{number,jdbcType=INTEGER},
@@ -225,10 +225,29 @@
   <select id="getAll" resultMap="BaseResultMap">
     select <include refid="Base_Column_List"/> from tb_crm_contracts
   </select>
-  <select id="getCount" resultType="Integer">
+  <select id="getCount" resultType="Integer" parameterType="String">
     select count(id) from tb_crm_contracts
+    <where>
+      <if test="contactName!= null">
+        <bind value="'%'+contactName+'%'" name="cn" />
+        contactName like #{cn}
+      </if>
+    </where>
   </select>
+
   <select id="listByPage" resultMap="BaseResultMap" parameterType="Integer">
-    select <include refid="Base_Column_List"/> from tb_crm_contracts limit #{offset},#{rows}
-  </select>
+    select <include refid="Base_Column_List"/>
+
+    from tb_crm_contracts
+    <where>
+      <if test="isSingle==true">
+        creationTime=(SELECT MAX(creationTime) FROM tb_crm_contracts)
+      </if>
+      <if test="contactName!= null">
+      <bind value="'%'+contactName+'%'" name="cn" />
+        AND contactName like #{cn}
+      </if>
+    </where>
+    limit #{offset},#{rows}
+    </select>
 </mapper>

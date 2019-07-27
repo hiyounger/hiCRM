@@ -1,9 +1,8 @@
-package com.hiyoung.manage.contact.controller;
+package com.hiyoung.manage.contract.controller;
 
-import com.hiyoung.manage.contact.entity.Contacts1;
-import com.hiyoung.manage.contact.service.IContacts1;
+import com.hiyoung.manage.contract.entity.Contacts1;
+import com.hiyoung.manage.contract.service.IContacts1;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -12,8 +11,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 合同
+ */
 @Controller
-@RequestMapping("/manage/contact")
+@RequestMapping("/manage/contract")
 public class TestController {
 
     @Resource
@@ -40,7 +42,7 @@ public class TestController {
     @RequestMapping("/test4")
     @ResponseBody
     public int testData4(){
-        return iContacts1.getCount();
+        return iContacts1.getCount("合同");
     }
 
     /**
@@ -52,9 +54,10 @@ public class TestController {
     //用easyui实现分页展示信息:jsp传入参数为page和rows,controller返回参数为total和rows
     @RequestMapping("/listByPage")
     @ResponseBody
-    public Map<String, Object> listByPage(String page, String rows){
-        int total=iContacts1.getCount();
-        List<Contacts1> cs=iContacts1.listByPage(Integer.valueOf(page), Integer.valueOf(rows));
+    public Map<String, Object> listByPage(String page, String rows,String contactName,Boolean isSingle){
+        int total=iContacts1.getCount(contactName);
+System.out.println("c="+contactName);
+        List<Contacts1> cs=iContacts1.listByPage(Integer.valueOf(page), Integer.valueOf(rows),contactName,isSingle);
         Map<String, Object> map=new HashMap<>();
         map.put("total", total);
         map.put("rows", cs);
@@ -63,9 +66,11 @@ public class TestController {
 
     @RequestMapping("/add")
     @ResponseBody
-    public Contacts1 add(@RequestBody Contacts1 contacts1){
+    public Integer add( Contacts1 contacts1){
         System.out.println(contacts1);
-        return contacts1;
+        int num=iContacts1.addContacts1(contacts1);
+        System.out.println("合同修改行num="+num);
+        return num;
     }
 
 }

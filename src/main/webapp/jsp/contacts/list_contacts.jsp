@@ -126,7 +126,7 @@
                         function(data) {
                             if(data){
                                 alert("删除成功");
-                                loadData();
+                                loadData("manage/Contacts/list");
                             }else{
                                 alert("删除失败");
                             }
@@ -137,7 +137,8 @@
             }
         }
         function search() {
-            alert("ds");
+            var word=$("#ss").val();
+            loadData("manage/Contacts/listpart?word="+word);
         }
 
     </script>
