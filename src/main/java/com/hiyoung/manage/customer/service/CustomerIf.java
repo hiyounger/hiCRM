@@ -13,7 +13,7 @@ public interface CustomerIf {
      * @param rows 每页展示的数据的条数
      * @return
      */
-    List<Customer> getCustomerByPage(Integer page, Integer rows);
+    List<Customer> getCustomerByPage(Integer page, Integer rows,Integer id);
     /**
      * 获得总记录数
      * @return

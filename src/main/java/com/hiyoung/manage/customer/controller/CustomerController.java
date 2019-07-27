@@ -13,10 +13,7 @@ import org.springframework.web.context.request.WebRequest;
 import javax.annotation.Resource;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @SuppressWarnings("all")
 @Controller
@@ -28,17 +25,18 @@ public class CustomerController {
 
     @RequestMapping("/listCustomerByPage")
     @ResponseBody
-    public Map<String, Object>  getCustomerByPage(Integer page,Integer rows) {
+    public Map<String, Object>  getCustomerByPage(Integer page,Integer rows,Integer id) {
         Map<String, Object> map = new HashMap<>() ;
         Integer total = customerImp.getCount();
-        List<Customer> customers = customerImp.getCustomerByPage(page,rows);
+        List<Customer> customers = customerImp.getCustomerByPage(page,rows,id);
         map.put("total", total);
         map.put("rows", customers);
         System.out.println(map);
         return map ;
     }
 
-    //只需要加上下面这段即可，注意不能忘记注解
+
+    //不能转换Data格式的参数，只需要加上下面这段即可，注意不能忘记注解
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         //转换日期 注意这里的转化要和传进来的字符串的格式一直 如2015-9-9 就应该为yyyy-MM-dd/yyyy-MM-dd HH:mm:ss
@@ -50,25 +48,22 @@ public class CustomerController {
 
     @RequestMapping("/addCustomer")
     @ResponseBody
-    public  boolean addCustomer(Customer customer){
+    public  int addCustomer(Customer customer){
         System.out.println(customer);
-        Map<String,Object> map = new HashMap<>();
         int num = customerImp.addCustomer(customer);
-        boolean success=false; //默认没添加成功
+        int id=-1;//添加失败
         if(num != 0) {
             //添加成功
-           return true;
+             id= customer.getId();
+            System.out.println("id====="+id);
         }
-        map.put("success",success);
-        System.out.println(map);
-        return false;
+        return id;
     }
 
     @RequestMapping("/delCustomer")
     @ResponseBody
     public boolean delCustomer(String id){
         System.out.println(id);
-        Map<String,Object> map = new HashMap<>();
         String[] ids=id.split(",");
         boolean success=true;
         for (String i:ids){
@@ -80,5 +75,7 @@ public class CustomerController {
         //默认没删除成功
         return success;
     }
+
+
 
 }

@@ -27,16 +27,21 @@
         #left{
             background-color: lightcyan;
             width: 70%;
-            height: 600px;
+            height: 625px;
             float: left;
-            background-image: url(static/img/login.png);
-            background-position: 100%;
+            /*background-image: url(static/img/login.png);*/
+            /*background-position: center;*/
 
         }
+        #left .bgImg{
+            width: 100%;
+            height: 100%;
+        }
         #right{
-            width: 29%;
-            height: 600px;
+            width: 30%;
+            height: 625px;
             float: left;
+            /*background: linear-gradient(to bottom, #50baff, #b4ddfd);*/
         }
         #warn{
             height: 40px;
@@ -51,8 +56,8 @@
             cursor: pointer;
             border-radius:15px;
             color: white;
-            border: 10px white solid;
-            height: 60px;
+            /*border: 10px #00AAEE  solid;*/
+            height: 40px;
             text-align: center;
             line-height:40px;
         }
@@ -65,16 +70,23 @@
             background-color:#55AAEE ;
         }
         #copyright{
-            font-size:0.1em;
-            margin-top: 200px;
+            font-size:0.4em;
+            /*margin-top: 200px;*/
             text-align: center;
-            color: #DDDBDC;
+            color: purple;
+            /*background: red;*/
+            position: absolute;
+            bottom: 0;
+            height: 20px;
+            left: 30%;
         }
 
     </style>
 </head>
 <body style="margin: 0px;">
-<div id="left"></div>
+<div id="left">
+    <img class="bgImg" src="static/img/login.png" ></img>
+</div>
 <div id="right">
     <h1 align="center" style="font-family: '微软雅黑'; font-size: 1em;margin-top: 80px;">悟空CRM系统</h1>
     <form id="form">
@@ -86,10 +98,25 @@
         </table>
     </form>
 
-    <p id="copyright">&emsp;&emsp;悟空网, Copyright © 2014 - 2019, 粤ICP备14024044号, All Rights Reserved</p>
 
 </div>
+<p id="copyright">&emsp;&emsp;悟空网, Copyright © 2014 - 2019, 粤ICP备14024044号, All Rights Reserved</p>
+
 <script>
+    var t=1;
+    var timer1=null;
+
+   $("#right").hover(function () {
+       timer1=setInterval(function () {
+           t++;
+           //document.title=t;
+           $(this).css({"background":"linear-gradient(to right,"+"rgb(223,22,"+t+")"+",white)"});
+       },100);
+
+   },function () {
+       $(this).css({"background":""});
+   });
+
 
     $('#username').textbox({
         iconCls:'icon-man',

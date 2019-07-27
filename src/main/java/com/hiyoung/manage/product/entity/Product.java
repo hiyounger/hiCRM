@@ -8,6 +8,8 @@ import java.util.Date;
 
 @Repository
 public class Product implements Serializable {
+    private Integer id;    //
+
     private Integer productId;
 
     private String productType;
@@ -31,11 +33,16 @@ public class Product implements Serializable {
 
     private String productUnit;
 
+    private String onReason;
+
+    private String downReason;
+
     public Product() {
         super();
     }
 
-    public Product(Integer productId, String productType, String productName, Integer creatorUserId, Float standardPrice, Integer leaderId, Date createTime, Date updateTime, String description, Integer productState, String productUnit) {
+    public Product(Integer id,Integer productId, String productType, String productName, Integer creatorUserId, Float standardPrice, Integer leaderId, Date createTime, Date updateTime, String description, Integer productState, String productUnit, String onReason, String downReason) {
+        this.id = id;
         this.productId = productId;
         this.productType = productType;
         this.productName = productName;
@@ -47,6 +54,8 @@ public class Product implements Serializable {
         this.description = description;
         this.productState = productState;
         this.productUnit = productUnit;
+        this.onReason = onReason;
+        this.downReason = downReason;
     }
 
     public Integer getProductId() {
@@ -113,6 +122,30 @@ public class Product implements Serializable {
         this.updateTime = updateTime;
     }
 
+    public String getOnReason() {
+        return onReason;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setOnReason(String onReason) {
+        this.onReason = onReason;
+    }
+
+    public String getDownReason() {
+        return downReason;
+    }
+
+    public void setDownReason(String downReason) {
+        this.downReason = downReason;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -140,7 +173,8 @@ public class Product implements Serializable {
     @Override
     public String toString() {
         return "Product{" +
-                "productId=" + productId +
+                "id=" + id +
+                ", productId=" + productId +
                 ", productType='" + productType + '\'' +
                 ", productName='" + productName + '\'' +
                 ", creatorUserId=" + creatorUserId +
@@ -151,6 +185,8 @@ public class Product implements Serializable {
                 ", description='" + description + '\'' +
                 ", productState=" + productState +
                 ", productUnit='" + productUnit + '\'' +
+                ", onReason='" + onReason + '\'' +
+                ", downReason='" + downReason + '\'' +
                 '}';
     }
 }

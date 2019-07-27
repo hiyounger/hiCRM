@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.hiyoung.manage.customer.entity.Customer" >
     <result column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="transaction_status" property="transactionStatus" jdbcType="INTEGER" />
+    <result column="transaction_status" property="transactionStatus" jdbcType="VARCHAR" />
     <result column="tel" property="tel" jdbcType="VARCHAR" />
     <result column="phone" property="phone" jdbcType="VARCHAR" />
     <result column="next_contect_time" property="nextContectTime" jdbcType="TIMESTAMP" />
@@ -18,14 +18,14 @@
     <result column="customer_source" property="customerSource" jdbcType="VARCHAR" />
     <result column="customer_industry" property="customerIndustry" jdbcType="VARCHAR" />
   </resultMap>
-  <insert id="addCustomer" parameterType="com.hiyoung.manage.customer.entity.Customer" >
-    insert into customer (id, name, transaction_status, 
+  <insert id="addCustomer" useGeneratedKeys="true" keyProperty="id" parameterType="com.hiyoung.manage.customer.entity.Customer" >
+    insert into customer (name, transaction_status,
       tel, phone, next_contect_time, 
       creator, update_time, create_time, 
       leader, remarks, delete_status,
       customer_level, customer_source, customer_industry
       )
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{transactionStatus,jdbcType=INTEGER}, 
+    values (#{name,jdbcType=VARCHAR}, #{transactionStatus,jdbcType=VARCHAR},
       #{tel,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{nextContectTime,jdbcType=TIMESTAMP}, 
       #{creator,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, 
       #{leader,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR},0,
@@ -43,7 +43,7 @@ id, name, transaction_status, tel, phone, next_contect_time, creator, update_tim
   </sql>
 
   <select id="getCustomerByPage" resultMap="BaseResultMap">
-    select <include refid="Base_Column_List"></include> from customer where delete_status=0 limit #{offerset} , #{rows}
+    select <include refid="Base_Column_List"></include> from customer where delete_status=0 order by create_time desc limit #{offerset} , #{rows}
   </select>
 
   <select id="getCount" resultType="java.lang.Integer">
@@ -53,5 +53,11 @@ id, name, transaction_status, tel, phone, next_contect_time, creator, update_tim
 <update id="delCustomer" parameterType="java.lang.Integer">
     update customer set delete_status=1 where id=(#{id,jdbcType=INTEGER})
 </update>
+
+    <select id="selectById" resultMap="BaseResultMap">
+       select name, transaction_status, tel, phone, next_contect_time, creator, update_time,
+    create_time, leader, remarks, delete_status, customer_level, customer_source, customer_industry
+    from customer where delete_status=0 and id=(#{id,jdbcType=INTEGER})
+    </select>
 
 </mapper>

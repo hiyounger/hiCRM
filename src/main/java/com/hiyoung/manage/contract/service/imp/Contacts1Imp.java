@@ -25,7 +25,7 @@ public class Contacts1Imp implements IContacts1 {
     }
 
     @Override
-    public List<Contacts1> listByPage(Integer page, Integer rows,String contactName,Boolean isSingle) {
+    public List<Contacts1> listByPage(Integer page, Integer rows,String contactName,String isSingle) {
         //最大页码
         double count=contactsMapper1.getCount(contactName);
         int pageCount = (int)Math.ceil(count/rows);
@@ -47,6 +47,12 @@ public class Contacts1Imp implements IContacts1 {
 
     @Override
     public Integer addContacts1(Contacts1 contacts1) {
+
         return contactsMapper1.insert(contacts1);
+    }
+
+    @Override
+    public Integer deleteById(Integer i) {
+        return contactsMapper1.deleteById(i);
     }
 }
