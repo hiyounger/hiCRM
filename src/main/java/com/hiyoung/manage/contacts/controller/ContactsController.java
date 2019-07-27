@@ -100,7 +100,6 @@ public class ContactsController {
         int num= contactsService.insert(Contacts);
         if(num!=0){
 
-            session.setAttribute("onlyone",Contacts.getName());
             return true;
         }
         return false;
