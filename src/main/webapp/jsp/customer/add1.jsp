@@ -67,10 +67,10 @@
                 <td>
                     <select name="customerLevel" class="easyui-combobox"  style="width:300px;height: 40px;">
                         <option value="-1">请选择客户级别</option>
-                        <option value="1">青铜</option>
-                        <option value="2">白银</option>
-                        <option value="3">黄金</option>
-                        <option value="4">钻石</option>
+                        <option>青铜</option>
+                        <option>白银</option>
+                        <option>黄金</option>
+                        <option>钻石</option>
                     </select>
                 </td>
                 <td><input class="easyui-textbox"  type="text" name="name" placeholder="客户名称" style="width:300px;height: 40px;"/></td>
@@ -91,19 +91,19 @@
                 <td>
                     <select class="easyui-combobox" name="customerSource" style="width:300px;height: 40px;">
                         <option value="-1">请选择客户来源</option>
-                        <option value="1">上门推销</option>
-                        <option value="2">多媒体</option>
-                        <option value="3">广告</option>
-                        <option value="4">会展</option>
+                        <option>上门推销</option>
+                        <option>多媒体</option>
+                        <option>广告</option>
+                        <option>会展</option>
                     </select>
                 </td>
                 <td>
                     <select class="easyui-combobox" name="customerIndustry" style="width:300px;height: 40px;">
                         <option value="-1">请选择客户行业</option>
-                        <option value="1">房地产</option>
-                        <option value="2">汽车</option>
-                        <option value="3">电商</option>
-                        <option value="4">实体</option>
+                        <option>房地产</option>
+                        <option>汽车</option>
+                        <option>电商</option>
+                        <option>实体</option>
                     </select>
                 </td>
             </tr>
@@ -115,8 +115,8 @@
                 <td>
                     <select name="transactionStatus" class="easyui-combobox"  style="width:300px;height: 40px;">
                         <option value="-1">请选择成交状态</option>
-                        <option value="1">0</option>
-                        <option value="2">1</option>
+                        <option>已成交</option>
+                        <option>未成交</option>
                     </select>
                 </td>
                 <td><input class="easyui-datebox"   name="nextContectTime" placeholder="下次联系时间" style="width:300px;height: 40px;"/></td>
@@ -133,8 +133,8 @@
     </form>
     <div id="d4">
         <div id="d41">
-            <button id="submit" onclick="addCustomer()">保存</button>&ensp;
-            <button id="reset" onclick="clearForm()">取消</button>
+            <button id="submit">保存</button>&ensp;
+            <button id="reset">取消</button>
         </div>
     </div>
 
@@ -143,33 +143,36 @@
 </body>
 <script>
 
-    function clearForm(){
-        $("#form1").form("clear");
-    }
+    //为重置按钮设置点击事件
+    $("#reset").on("click",function(){
+        $("#form1").form('clear');
+        $(".easyui-combobox").combobox('setValue','-1')
+    })
 
-    // $(function(){
-    // $('#submit').click(addCustomer);
-    //为输入框绑定事件
 
-    function addCustomer() {
+    $("#submit").on("click",function(){
         var dataString = $('#form1').serialize();
-        /*alert("aa")*/
+
         $.post(
             "manage/customer/addCustomer",
             dataString,
             function(data){
-                /*alert(data)*/
-                if(data.success){
+                if(data==-1){
                     $.messager.alert("提示", "新建失败，请重新操作！", "info");
                 }
                 else {
                     //添加成功
                     window.close();
+                    var id=data;
+                    alert(id);
+                    //跳转到list页面，显示单条
+                    window.opener.location.href = window.opener.location.href+'?id='+id;
+
                 }
             },
             "json"
         );
 
-    }
+    })
 </script>
 </html>

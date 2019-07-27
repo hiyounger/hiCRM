@@ -32,7 +32,7 @@
       job, address, next_contact_time, 
       remarks, creater, update_time, 
       is_key_maker, sex)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{customerName,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{customerName,jdbcType=VARCHAR},
       #{telephone,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
       #{job,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{nextContactTime,jdbcType=TIMESTAMP}, 
       #{remarks,jdbcType=VARCHAR}, #{creater,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
