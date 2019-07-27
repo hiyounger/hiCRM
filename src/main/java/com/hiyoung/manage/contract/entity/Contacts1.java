@@ -1,9 +1,10 @@
-package com.hiyoung.manage.contact.entity;
+package com.hiyoung.manage.contract.entity;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
+
 @Repository
 public class Contacts1 {
 
@@ -172,8 +173,26 @@ public class Contacts1 {
         this.personincharge = personincharge == null ? null : personincharge.trim();
     }
 
+
     @Override
     public String toString() {
-        return super.toString();
+        return "Contacts1{" +
+                "id=" + id +
+                ", customername='" + customername + '\'' +
+                ", number=" + number +
+                ", contactname='" + contactname + '\'' +
+                ", businessname='" + businessname + '\'' +
+                ", ordertime=" + ordertime +
+                ", contractamount=" + contractamount +
+                ", startingtimecontract=" + startingtimecontract +
+                ", endtimecontract=" + endtimecontract +
+                ", customercontractor='" + customercontractor + '\'' +
+                ", companycontractor='" + companycontractor + '\'' +
+                ", remarks='" + remarks + '\'' +
+                ", founder='" + founder + '\'' +
+                ", updatetime=" + updatetime +
+                ", creationtime=" + creationtime +
+                ", personincharge='" + personincharge + '\'' +
+                '}';
     }
 }

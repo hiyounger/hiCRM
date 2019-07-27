@@ -43,4 +43,11 @@ public class CustomerImp implements CustomerIf {
     public Integer addCustomer(Customer customer) {
         return customerMapper.addCustomer(customer);
     }
+
+    @Override
+    public Integer delCustomer(Integer id) {
+        return customerMapper.delCustomer(id);
+    }
+
+
 }

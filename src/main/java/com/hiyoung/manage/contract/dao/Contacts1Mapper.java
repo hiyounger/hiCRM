@@ -1,10 +1,11 @@
-package com.hiyoung.manage.contact.dao;
+package com.hiyoung.manage.contract.dao;
 
-import com.hiyoung.manage.contact.entity.Contacts1;
+import com.hiyoung.manage.contract.entity.Contacts1;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+
 @Mapper
 public interface Contacts1Mapper {
     int deleteByPrimaryKey(Integer id);
@@ -21,8 +22,8 @@ public interface Contacts1Mapper {
 
     List<Contacts1> getAll();
 
-    int getCount();
+    int getCount(String contactName);
 
-    List<Contacts1> listByPage(@Param("offset") Integer offset, @Param("rows") Integer rows);
+    List<Contacts1> listByPage(@Param("offset") Integer offset, @Param("rows") Integer rows, @Param("contactName") String contactName, @Param("isSingle") Boolean isSingle);
 
 }

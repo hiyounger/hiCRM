@@ -49,10 +49,10 @@
             width: 100%;
             background-color:#00AAEE ;
             cursor: pointer;
-            border-radius:5px;
+            border-radius:15px;
             color: white;
-            border: 10 white solid;
-            height: 40px;
+            border: 10px white solid;
+            height: 60px;
             text-align: center;
             line-height:40px;
         }
@@ -82,7 +82,7 @@
             <tr><td><span id="warn" >请输入正确的用户名和密码</span></td></tr>
             <tr ><td height="50px"><input  id="username" type="text" name="username" /> </td></tr>
             <tr><td height="50px"><input id="password" type="password" name="password" /> </td></tr>
-            <tr><td height="50px"><div id="submit">登录</td></tr>
+            <tr><td height="50px"><div id="submit">登录</div></td></tr>
         </table>
     </form>
 
@@ -90,6 +90,7 @@
 
 </div>
 <script>
+
     $('#username').textbox({
         iconCls:'icon-man',
         iconAlign:'left',
@@ -106,7 +107,16 @@
         prompt:'请输入密码'
     })
 
+    function keyDown(e) {
+        if(e.keyCode==13){
+            $("#submit").trigger("click");
+
+        }
+    }
+    document.onkeydown = keyDown;
+
     $('#submit').on('click',function(){
+        $("#submit").text("正在登录...");
        if(!($("#username").val().trim()&&$("#password").val().trim())){
            $("#warn").css("visibility","display");
        }
@@ -114,11 +124,15 @@
        $.post("login",{"username":$("#username").val(),"password":$("#password").val()},function(data){
          if(!data){
               alert("登陆失败！");
+             $("#submit").text("登录");
           } else{
               location.href="jsp/user/index.jsp";
           }
        },"json")
     })
+
+    window.setTimeout (function(){ $('#username')[0].focus();},0 );
+
 </script>
 </body>
 </html>

@@ -16,7 +16,7 @@
 <html>
 <head>
     <title>展示产品信息</title>
-    <base href="<%=basePath%>">
+    <base href="<%=basePath%>" />
     <link rel="stylesheet" type="text/css" href="static/easyui/themes/default/easyui.css">
     <link rel="stylesheet" type="text/css" href="static/easyui/themes/icon.css">
 
@@ -52,9 +52,15 @@
             height: 80%;
         }
 
+        .panel-title{
+            font-size: 1.33em;
+        }
+
     </style>
 
     <script type="text/javascript">
+
+        var num=0;   //默认选择0条数据
 
         function loadData(){
             //用datagrid分页展示产品信息
@@ -67,7 +73,98 @@
                 loadMsg:"正在加载，请稍等.....",//设置加载数据时的提示信息
                 pagination:true,//设置显示分页工具条
                 rownumbers:true,//设置是否显示行号
-                singleSelect:true,//设置是否只能选中一行
+                singleSelect:false,//设置是否只能选中一行
+                selectOnCheck: true,//true勾选会选择行，false勾选不选择行, 1.3以后有此选项。重点在这里
+                checkOnSelect: true, //true选择行勾选，false选择行不勾选, 1.3以后有此选项
+                pageNumber:1,//设置起始页码
+                pageSize:15,//设置每页展示的条数
+                pageList:[15,30,45],//设置每页展示展示的条数的下拉列表
+                columns:[[
+                    {field:'ck',checkbox:'true'},
+                    {field:'productName',title:'产品名称'},
+                    {field:'productId',title:'产品编码'},
+                    {field:'productType',title:'产品类别'},
+                    {field:'standardPrice',title:'标准价格'},
+                    {field:'description',title:'产品描述'},
+                    {field:'creatorUserId',title:'创建人'},
+                    {field:'updateTime',title:'更新时间'},
+                    {field:'createTime',title:'创建时间'},
+                    {field:'leaderId',title:'负责人'},
+                    {field:'productState',title:'是否下架'},
+                    /*{field:'  ',title:'操作',formatter: function(value,row,index){
+                            return "<a href='javascript:updateStudent(\""+row.stuNo+"\");'>修改</a>&emsp;"+
+                                "<a href='javascript:deleteStudent(\""+row.stuNo+"\");'>删除</a>&emsp;"
+                        }
+                    }*/
+                ]],
+                onCheck:function(rowIndex,rowData){
+                    num=num + 1;             //选中多少项
+                    $("#num").text(num)
+                },onUncheck:function () {
+                    num=num -1;
+                    $("#num").text(num)
+                }
+            });
+        }
+
+        function loadSingle(){
+            //用datagrid分页展示产品信息
+            $('#dg').datagrid({
+                url:'manage/product/listSingleProduct.do',
+                resizable:true,
+                toolbar:"#tb",//设置工具条
+                striped:true,//将行的展示条纹化
+                //nowrap:false,//设置内容过多时是否换行，false是换行，true是不换行
+                loadMsg:"正在加载，请稍等.....",//设置加载数据时的提示信息
+                pagination:true,//设置显示分页工具条
+                rownumbers:true,//设置是否显示行号
+                singleSelect:false,//设置是否只能选中一行
+                selectOnCheck: true,//true勾选会选择行，false勾选不选择行, 1.3以后有此选项。重点在这里
+                checkOnSelect: true, //true选择行勾选，false选择行不勾选, 1.3以后有此选项
+                pageNumber:1,//设置起始页码
+                pageSize:15,//设置每页展示的条数
+                pageList:[15,30,45],//设置每页展示展示的条数的下拉列表
+                columns:[[
+                    {field:'ck',checkbox:'true'},
+                    {field:'productName',title:'产品名称'},
+                    {field:'productId',title:'产品编码'},
+                    {field:'productType',title:'产品类别'},
+                    {field:'standardPrice',title:'标准价格'},
+                    {field:'description',title:'产品描述'},
+                    {field:'creatorUserId',title:'创建人'},
+                    {field:'updateTime',title:'更新时间'},
+                    {field:'createTime',title:'创建时间'},
+                    {field:'leaderId',title:'负责人'},
+                    {field:'productState',title:'是否下架'}
+                    /*{field:'  ',title:'操作',formatter: function(value,row,index){
+                            return "<a href='javascript:updateStudent(\""+row.stuNo+"\");'>修改</a>&emsp;"+
+                                "<a href='javascript:deleteStudent(\""+row.stuNo+"\");'>删除</a>&emsp;"
+                        }
+                    }*/
+                ]]
+            });
+        }
+
+        //根据条件分页查询产品信息
+        function loadByContition(){
+            var isSingle = false ;
+            var productName = $("input[name=productName]").val();
+            $('#dg').datagrid({
+                queryParams: {
+                    "productName":productName,
+                    "isSingle":isSingle
+                },
+                url:'manage/product/listByPageByCondition.do',
+                resizable:true,
+                toolbar:"#tb",//设置工具条
+                striped:true,//将行的展示条纹化
+                //nowrap:false,//设置内容过多时是否换行，false是换行，true是不换行
+                loadMsg:"正在加载，请稍等.....",//设置加载数据时的提示信息
+                pagination:true,//设置显示分页工具条
+                rownumbers:true,//设置是否显示行号
+                singleSelect:false,//设置是否只能选中一行
+                selectOnCheck: true,//true勾选会选择行，false勾选不选择行, 1.3以后有此选项。重点在这里
+                checkOnSelect: true, //true选择行勾选，false选择行不勾选, 1.3以后有此选项
                 pageNumber:1,//设置起始页码
                 pageSize:15,//设置每页展示的条数
                 pageList:[15,30,45],//设置每页展示展示的条数的下拉列表
@@ -95,34 +192,100 @@
 
        $(function(){
             loadData();
+           $("#num").text(num);
         })
 
         //添加产品
-        /* window.open 弹出新窗口的命令；
-     　　'page.html' 弹出窗口的文件名；
-     　　'新建产品' 弹出窗口的名字（不是文件名），非必须，可用空''代替；
-     　　height=400 窗口高度；
-     　　width=600 窗口宽度；
-     　　top=350 窗口距离屏幕上方的象素值；
-     　　left=350 窗口距离屏幕左侧的象素值；
-     　　toolbar=no 是否显示工具栏，yes为显示；
-     　　menubar，scrollbars 表示菜单栏和滚动栏。
-     　　resizable=no 是否允许改变窗口大小，yes为允许；
-     　　location=no 是否显示地址栏，yes为允许；
-     　　status=no 是否显示状态栏内的信息（通常是文件已经打开），yes为允许；*/
-
         function addProduct(){
-            //alert("1111");
-            window.open('jsp/product/addProduct.jsp', '新建产品', 'height=400, width=600, top=350, left=350, toolbar=no, menubar=no, scrollbars=yes, resizable=no, location=no, status=no')
+            $('#dlg').dialog('open');
         }
+
+
+        //搜索框 条件查询
+        function doSearch(){
+            //获得参数
+            var productName=$("#search").val().trim();
+            //判断合法性
+            if(productName == ""){
+                alert("产品名称为空了！");
+                return;
+            }
+            //alert(productName);
+            //用datagrid分页展示产品信息
+            $('#dg').datagrid({
+                url:'manage/product/listProductCondition.do?productName='+productName,
+                resizable:true,
+                toolbar:"#tb",//设置工具条
+                striped:true,//将行的展示条纹化
+                //nowrap:false,//设置内容过多时是否换行，false是换行，true是不换行
+                loadMsg:"正在加载，请稍等.....",//设置加载数据时的提示信息
+                pagination:true,//设置显示分页工具条
+                rownumbers:true,//设置是否显示行号
+                singleSelect:false,//设置是否只能选中一行
+                pageNumber:1,//设置起始页码
+                pageSize:15,//设置每页展示的条数
+                pageList:[15,30,45],//设置每页展示展示的条数的下拉列表
+                columns:[[
+                    {field:'ck',checkbox:'true'},
+                    {field:'productName',title:'产品名称'},
+                    {field:'productId',title:'产品编码'},
+                    {field:'productType',title:'产品类别'},
+                    {field:'standardPrice',title:'标准价格'},
+                    {field:'description',title:'产品描述'},
+                    {field:'creatorUserId',title:'创建人'},
+                    {field:'updateTime',title:'更新时间'},
+                    {field:'createTime',title:'创建时间'},
+                    {field:'leaderId',title:'负责人'},
+                    {field:'productState',title:'是否下架'}
+                    /*{field:'  ',title:'操作',formatter: function(value,row,index){
+                            return "<a href='javascript:updateStudent(\""+row.stuNo+"\");'>修改</a>&emsp;"+
+                                "<a href='javascript:deleteStudent(\""+row.stuNo+"\");'>删除</a>&emsp;"
+                        }
+                    }*/
+                ]]
+            });
+        }
+
+        //产品上下架
+        function modifyState() {
+            $('#dlg01').dialog('open');
+        }
+
 
     </script>
 </head>
 <body>
+
+    <div id="dlg" class="easyui-dialog"  title="新建产品" style="width: 500px;height: 400px"
+         data-options="closed:true"  href="jsp/product/addProduct.jsp">
+
+    </div>
+
     <div class="right">
         <h4>产品管理</h4>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-        <input class="easyui-searchbox" data-options="prompt:'请输入值'"  style="padding-top: 15px"/>
+        <input id="search" class="easyui-searchbox" data-options="prompt:'请输入值',searcher:doSearch"  style="padding-top: 15px" />
         <button id="addProduct" onClick='addProduct()'>新建产品</button>
+    </div>
+
+
+    <div>
+        <span style="margin-bottom: 8px">已选中</span>
+        <span style="margin-bottom: 8px" id="num">    <%--已选中多少项--%>
+
+        </span>
+        <span style="margin-bottom: 8px">项</span>&emsp;&emsp;
+        <input type="radio" name="productState1" id="on" style="margin-bottom: 8px" onclick="modifyState()">上架&emsp;&emsp;
+        <input type="radio" name="productState1" id="down" style="margin-bottom: 8px">下架
+    </div>
+
+    <%--点击上架按钮后，弹出上架原因输入对话框--%>
+    <div id="dlg01" class="easyui-dialog"  title="上架原因" style="width: 500px;height: 400px"
+         data-options="closed:true" >
+        <%--<div style="font-size: 1.5em">上架原因是：</div>--%>
+        <textarea rows="17" cols="58" style="font-size: 1.2em"></textarea><br />
+            <input type="reset"  name="reset" value="取消" id="reset" style="margin-top: 16px;font-size: 1.25em;float: right;margin-right: 8px"/>
+            <input type="submit"  name="submit1" value="保存" id="submit" style="margin-top: 16px;font-size: 1.25em;float: right;margin-right: 8px"/>
+
     </div>
 
     <table id="dg"></table>

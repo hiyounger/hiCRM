@@ -41,19 +41,17 @@
         #margin-top{
             height: 10px;
         }
-        #new{
+        .button{
             display: inline-block;
-            background-color: #3E84E9;
             color: white;
             font-family: "微软雅黑";
-            width: 90px;
+            width: 130px;
             height: 30px;
             cursor: pointer;
             border-radius: 3px;
             line-height: 30px;
             text-align: center;
             font-size: 0.7em;
-            margin-left: 280px;
         }
     </style>
 
@@ -80,7 +78,9 @@
             <option>eitem5</option>
         </select>
 <shiro:hasRole name="system">
-    <div id="new">新建员工</div>
+    <div id="new" class="button"  style="background-color: #3E84E9;">新建员工</div>
+    <div id="remove" class="button" style="background-color: darkgrey" >删除员工</div>
+    <div id="refresh" class="button" onclick="loadData(0)" style="background-color:  #3E84E9;" >刷新页面</div>
 </shiro:hasRole>
 
 
@@ -94,6 +94,16 @@
         alert('You input: ' + value);
     }
 
+    var num=0;
+    var userId=0;
+    var checked;
+    if('${param.id}'){
+        userId= '${param.id}'
+    }
+
+
+
+function loadData(param){
     $('#pp').datagrid({
         toolbar:"#tb",//设置工具条
         striped:true,//将行的展示条纹化
@@ -116,8 +126,63 @@
             {field:'position',title:'岗位',width:160},
             {field:'supervisor',title:'直属上级'},
             {field:'role',title:'角色',width:120}
-        ]],pagination:true
+        ]],pagination:true,queryParams:{
+            "id":param
+        },onCheck:function(){
+            if($('#pp').datagrid('getChecked').length>0){
+                $("#remove").css("background-color","#3E84E9")
+            }else{
+                $("#remove").css("background-color","darkgrey")
+            }
+        },onUncheck:function(){
+            if($('#pp').datagrid('getChecked').length>0){
+                $("#remove").css("background-color","#3E84E9")
+            }else{
+                $("#remove").css("background-color","darkgrey")
+            }
+        },onCheckAll:function(){
+            if($('#pp').datagrid('getChecked').length>0){
+                $("#remove").css("background-color","#3E84E9")
+            }else{
+                $("#remove").css("background-color","darkgrey")
+            }
+        },onUncheckAll:function(){
+            if($('#pp').datagrid('getChecked').length>0){
+                $("#remove").css("background-color","#3E84E9")
+            }else{
+                $("#remove").css("background-color","darkgrey")
+            }
+        }
     });
+    var pager=$('#pp').datagrid().datagrid('getPager');// get the pager of datagrid
+    pager.pagination({
+        displayMsg:'共{total}条 从 {from}条 到 {to}条 ',onBeforeRefresh:function(){
+            loadData(0);
+            return true;
+        },showRefresh:true,showPageList:true,links:2,beforePageText:'前往',afterPageText:'页'
+    });
+
+}
+
+
+
+    loadData(userId)
+    $("#new").on('click',function () {
+        parent.$('#win').window('open');
+    })
+
+    $("#remove").on('click',function () {
+        checked=$('#pp').datagrid('getChecked');
+        if(checked.length==0){
+            return;
+        }
+        $.messager.alert('Warning','你确定要删除这'+checked.length+'个用户吗？',function (r) {
+            if(r){
+                alert('Ok!')
+            }
+        });
+    })
+
 </script>
 </body>
 </html>

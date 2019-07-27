@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -22,8 +23,20 @@ public class ContactsController {
     @ResponseBody
     public Map<String,Object> getLIst( String page,String rows){
         //从请求中获取当前页面和每页展示的条数
-        List<Contacts> list= contactsService.listBYPage(page,rows);
-        Integer zs= contactsService.getCount();
+        List<Contacts> list= contactsService.listBYPage(page,rows,null);
+        Integer zs= contactsService.getCount(null);
+        Map<String,Object> map=new HashMap<>();
+        map.put("total",zs);
+        map.put("rows",list);
+        return map;
+    }
+
+    @RequestMapping("/listpart")
+    @ResponseBody
+    public Map<String,Object> listPart( String page,String rows,String word){
+        //从请求中获取当前页面和每页展示的条数
+        List<Contacts> list= contactsService.listBYPage(page,rows,word.trim());
+        Integer zs= contactsService.getCount(word.trim());
         Map<String,Object> map=new HashMap<>();
         map.put("total",zs);
         map.put("rows",list);
@@ -33,11 +46,11 @@ public class ContactsController {
     @RequestMapping("/listone")
     @ResponseBody
     public Map<String,Object> getLIstOne(String name){
-        name="联系人1";
+       // System.out.println(name);
         List<Contacts> list=new ArrayList<>();
         //从请求中获取当前页面和每页展示的条数
         Contacts Contacts= contactsService.selectByName(name);
-        System.out.println(Contacts);
+        //System.out.println(Contacts);
         list.add(Contacts);
         int zs=1;
         Map<String,Object> map=new HashMap<>();
@@ -63,7 +76,7 @@ public class ContactsController {
 
     @RequestMapping("/add")
     @ResponseBody
- public Boolean addData(HttpServletRequest request){
+ public Boolean addData(HttpServletRequest request, HttpSession session){
         Contacts Contacts=new Contacts();
         Map<String,String[]> map0=request.getParameterMap();
         Map<String,Object> map=new HashMap<>();
@@ -84,9 +97,9 @@ public class ContactsController {
 
         });
         BeanUtil.mapTOBean(Contacts,map);
-        System.out.println(Contacts.getNextContactTime());
         int num= contactsService.insert(Contacts);
         if(num!=0){
+
             return true;
         }
         return false;

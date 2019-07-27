@@ -58,6 +58,7 @@
                 <div id="d3"></div>
             </tr>
 
+
             <tr class="tt">
                 <td>客户级别</td>
                 <td>客户名称</td>
@@ -152,15 +153,14 @@
 
     function addCustomer() {
         var dataString = $('#form1').serialize();
+        /*alert("aa")*/
         $.post(
             "manage/customer/addCustomer",
             dataString,
             function(data){
-                var isExist = data.success;
-                //3、根据返回的isExist动态的显示信息
-                var usernameInfo = "";
+                /*alert(data)*/
                 if(data.success){
-                    alert("新建客户失败");
+                    $.messager.alert("提示", "新建失败，请重新操作！", "info");
                 }
                 else {
                     //添加成功
