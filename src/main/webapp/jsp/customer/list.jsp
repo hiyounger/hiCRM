@@ -94,9 +94,9 @@
 			<a href="javascript:void(0);" id="addBtn" onclick="openWindow()" class="easyui-linkbutton">新建客户</a>
 			<select name="more" id="more" class="easyui-combobox" style="width:65px">
 				<option value="-1">更多</option>
-				<option value="1">哈哈</option>
-				<option value="1">嘿嘿</option>
-				<option value="1">呼呼</option>
+				<option>哈哈</option>
+				<option>嘿嘿</option>
+				<option>呼呼</option>
 			</select>
 		</div>
 		<div>&emsp;&emsp;</div>
@@ -129,8 +129,13 @@
 
 	var num=0;
 
+	var id=0;
+	if('${param.id}'){
+		id='${param.id}';
+	}
+
 	/*分页查询*/
-	function loadData(){
+	function loadData(id){
 		$("#dg").datagrid({
 			url:"manage/customer/listCustomerByPage",
 			toolbar:"#tb",//设置工具条
@@ -171,11 +176,13 @@
 			},onUncheck:function () {
 				num=num-1;
 				$("#num").text(num)
+			},queryParams:{
+				"id":id
 			}
 
 		});
 	};
-	loadData();
+	loadData(id);
 
 	$("#num").text(num)
 
@@ -233,6 +240,8 @@
 
 		}
 	};
+
+
 
 </script>
 </html>

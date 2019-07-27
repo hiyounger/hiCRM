@@ -59,23 +59,23 @@
                     <option value="否">否</option>
                 </select>
             </td>
-            <td><input id="name" class="easyui-textbox"  type="text" name="name" style="width:300px;height: 40px;"/></td>
+            <td><input id="name" class="easyui-textbox" data-options="required:true,validType:'CHS'"  type="text" name="name" style="width:300px;height: 40px;"/></td>
         </tr>
         <tr>
             <td>客户名称</td>
             <td>手机</td>
         </tr>
         <tr>
-            <td><input class="easyui-textbox"  type="text" name="customerName" style="width:300px;height: 40px;"/></td>
-            <td><input class="easyui-textbox" type="text" name="telephone" style="width:300px;height: 40px;"/></td>
+            <td><input class="easyui-textbox" data-options="required:true,validType:'CHS'"  type="text" name="customerName" style="width:300px;height: 40px;"/></td>
+            <td><input class="easyui-textbox" data-options="validType:'mobile'" type="text" name="telephone" style="width:300px;height: 40px;"/></td>
         </tr>
         <tr>
             <td>电话</td>
             <td>电子邮箱</td>
         </tr>
         <tr>
-            <td><input class="easyui-textbox" type="text" name="phone" style="width:300px;height: 40px;"/></td>
-            <td><input class="easyui-textbox" type="text" name="email" style="width:300px;height: 40px;"/></td>
+            <td><input class="easyui-textbox" data-options="validType:'phone'" type="text" name="phone" style="width:300px;height: 40px;"/></td>
+            <td><input class="easyui-textbox" data-options="validType:'email'" type="text" name="email" style="width:300px;height: 40px;"/></td>
         </tr>
         <tr>
             <td>职务</td>
@@ -108,16 +108,39 @@
     </table>
     </form>
     <div id="d4">
-        <div id="d41"><button onclick="addData()">保存</button>&ensp;<button>取消</button></div>
+        <div id="d41"><button onclick="addData()">保存</button>&ensp;<button onclick="reset()">取消</button></div>
     </div>
 
 </div>
 
 </body>
 <script>
+    //重置表单的方法
+    function reset(){
+      $("#form1").reset();
+    }
     function addData() {
+        //使用easyui提交
+
+        $('#form1').form('submit',{
+            url:"manage/Contacts/add",
+            onSubmit: function () {
+                return $(this).form('enableValidation').form('validate');
+            },
+            success:function(data){
+                if(data){
+                    alert("添加成功");
+                    window.close();
+                    var name=$("#name").val();
+                    window.opener.loadData("manage/Contacts/listone?name="+name);
+
+                }else{
+                    alert("添加失败");
+                }
+            }
+        });
         //使用ajax提交
-        $.get(
+       /* $.get(
             "manage/Contacts/add",
             $("#form1").serialize(),
             function(data) {
@@ -129,7 +152,41 @@
                 }else{
                     alert("添加失败");
                 }
-            },'json')
+            },'json')*/
     }
+
+    //扩展easyui 的表单验证
+    $.extend($.fn.validatebox.defaults.rules,{
+        //验证汉字
+        CHS:{
+            validator:function(value){
+                return   /^[\u0391-\uFFE5]+$/.test($.trim(value));
+            },
+            message:'请输入汉字 '
+        },
+
+        //验证手机号
+        mobile:{
+            validator: function(value){
+                return   /^1[0-9]{10}$/i.test($.trim(value));
+            },
+            message:  '手机号码不正确 '
+        },
+        //验证电话
+       phone:{
+            validator: function(value){
+                return /^((\(\d{2,3}\))|(\d{3}\-))?(\(0\d{2,3}\)|0\d{2,3}-)?[1-9]\d{6,7}(\-\d{1,4})?$/i.test(value);
+            },
+            message:  '电话号码不正确，请使用下面格式:xxx-xxxxxxxx '
+        },
+        //验证身份证号
+        idcard:{
+            validator: function(value){
+                return   /^\d{15}(\d{2}[A-Za-z0-9])?$/i.test(value);
+            },
+            message:  '身份证号码格式不正确 '
+        }
+
+    })
 </script>
 </html>
