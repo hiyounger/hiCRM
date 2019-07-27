@@ -45,6 +45,8 @@ public class Contacts1 {
 
     private String personincharge;
 
+    private Integer status;
+
     public Integer getId() {
         return id;
     }
@@ -173,6 +175,13 @@ public class Contacts1 {
         this.personincharge = personincharge == null ? null : personincharge.trim();
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
     @Override
     public String toString() {
@@ -193,6 +202,7 @@ public class Contacts1 {
                 ", updatetime=" + updatetime +
                 ", creationtime=" + creationtime +
                 ", personincharge='" + personincharge + '\'' +
+                ", status=" + status +
                 '}';
     }
 }

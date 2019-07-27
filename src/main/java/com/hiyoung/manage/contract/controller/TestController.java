@@ -54,7 +54,7 @@ public class TestController {
     //用easyui实现分页展示信息:jsp传入参数为page和rows,controller返回参数为total和rows
     @RequestMapping("/listByPage")
     @ResponseBody
-    public Map<String, Object> listByPage(String page, String rows,String contactName,Boolean isSingle){
+    public Map<String, Object> listByPage(String page, String rows,String contactName,String isSingle){
         int total=iContacts1.getCount(contactName);
 System.out.println("c="+contactName);
         List<Contacts1> cs=iContacts1.listByPage(Integer.valueOf(page), Integer.valueOf(rows),contactName,isSingle);
@@ -71,6 +71,18 @@ System.out.println("c="+contactName);
         int num=iContacts1.addContacts1(contacts1);
         System.out.println("合同修改行num="+num);
         return num;
+    }
+
+    /**
+     * 逻辑删除
+     * @param id
+     * @return
+     */
+    @RequestMapping("/delete")
+    @ResponseBody
+    public Boolean delete(Integer id){
+        int num=iContacts1.deleteById(id);
+        return num>0?true:false;
     }
 
 }
