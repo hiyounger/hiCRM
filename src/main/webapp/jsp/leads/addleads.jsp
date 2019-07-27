@@ -37,7 +37,7 @@
 </div>
 <br />
 <div id="d3">
-    <form id="form1" action="manage/leads/addleads.action">
+    <form id="form1">
         <table width="70%" align="center">
 
             <tr>
@@ -93,19 +93,41 @@
 
 
         </table>
-        <div id="d4">
-            <%-- <button onclick="addData()">保存</button>--%>
-            <input style="margin-left: 500px;background-color:blue;color:white;width:70px;height:40px;border-radius: 10%" type="submit" name="保存" value="保存">
-            <input style="background-color:blue ;color: white;width: 70px;height:40px;border-radius: 10%" type="reset" name="取消" value="取消">
-            <%-- <button>取消</button></div>--%>
-        </div>
-    </form>
 
+    </form>
+    <div id="d4">
+            <button onclick="save()" style="margin-left: 500px;background-color:blue;color:white;width:70px;height:40px;border-radius: 10%" >保存</button>
+            <button style="background-color:blue ;color: white;width: 70px;height:40px;border-radius: 10%" type="reset" name="取消" value="取消"></button>
+
+    </div>
 
 </div>
 
 </body>
 <script>
+
+
+    function save(){
+        //使用ajax提交
+        $.get(
+            "manage/leads/addleads.action",
+            $("#form1").serialize(),
+            function(data,status){
+               alert(data+"转态"+status)
+                if (data) {
+                    alert(data)
+                    alert("添加成功");
+                    window.close();
+                    window.opener.loadData();
+                }
+            }
+
+        )
+
+
+
+    }
+
     /* function addData() {
          //使用ajax提交
          $.get(

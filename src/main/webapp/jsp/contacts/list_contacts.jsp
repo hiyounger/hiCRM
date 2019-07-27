@@ -92,14 +92,12 @@
 
         $(function(){
             loadData("manage/contracts/list");
-
             $('#topWindow').window({
                 onBeforeClose: function () { //当面板关闭之前触发的事件
                     if (confirm('窗口正在关闭，请确认您当前的操作已保存。\n 是否继续关闭窗口？')) {
                         alert("再见");
                         loadData("manage/contracts/listone");
                         $('#topWindow').window('close', true);
-
                     } else
                         alert("欢迎回来");
                         return false;
