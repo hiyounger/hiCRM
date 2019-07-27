@@ -24,6 +24,12 @@ public interface Contacts1Mapper {
 
     int getCount(String contactName);
 
-    List<Contacts1> listByPage(@Param("offset") Integer offset, @Param("rows") Integer rows, @Param("contactName") String contactName, @Param("isSingle") Boolean isSingle);
+    List<Contacts1> listByPage(@Param("offset") Integer offset, @Param("rows") Integer rows, @Param("contactName") String contactName, @Param("isSingle") String isSingle);
 
+    /**
+     * 逻辑删除
+     * @param id
+     * @return
+     */
+    Integer deleteById(Integer id);
 }

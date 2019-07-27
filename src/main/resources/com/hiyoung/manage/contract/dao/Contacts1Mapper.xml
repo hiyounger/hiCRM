@@ -18,11 +18,12 @@
     <result column="updateTime" jdbcType="DATE" property="updatetime" />
     <result column="creationTime" jdbcType="DATE" property="creationtime" />
     <result column="personInCharge" jdbcType="VARCHAR" property="personincharge" />
+    <result column="status" jdbcType="INTEGER" property="status" />
   </resultMap>
   <sql id="Base_Column_List">
     id, customerName, number, contactName, businessName, orderTime, contractAmount, startingTimeContract,
     endTimeContract, customerContractor, companyContractor, remarks, founder, updateTime,
-    creationTime, personInCharge
+    creationTime, personInCharge,status
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
@@ -228,9 +229,10 @@
   <select id="getCount" resultType="Integer" parameterType="String">
     select count(id) from tb_crm_contracts
     <where>
+      status != 2
       <if test="contactName!= null">
         <bind value="'%'+contactName+'%'" name="cn" />
-        contactName like #{cn}
+        AND contactName like #{cn}
       </if>
     </where>
   </select>
@@ -240,7 +242,8 @@
 
     from tb_crm_contracts
     <where>
-      <if test="isSingle==true">
+        status != 2
+      <if test="isSingle=='t'">
         creationTime=(SELECT MAX(creationTime) FROM tb_crm_contracts)
       </if>
       <if test="contactName!= null">
@@ -250,4 +253,8 @@
     </where>
     limit #{offset},#{rows}
     </select>
+<!--  逻辑删除 -->
+  <update id="deleteById">
+    update tb_crm_contracts set status=2 where id=#{id}
+  </update>
 </mapper>

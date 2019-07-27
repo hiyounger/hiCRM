@@ -129,5 +129,53 @@ public class ProductController {
         return map;
     }
 
+    /**
+     * 根据产品id 下架产品  逻辑删除
+     * @param id   前端返回过来的多个产品的id 字符串
+     * @return
+     */
+    @RequestMapping("/downProduct.do")
+    @ResponseBody
+    public Map<String,Object> downProduct(String id){
+        Map<String,Object> map = new HashMap<>();
+        String[] ids = id.split(",");   //将id字符串切割
+        for(String i : ids){
+            //遍历id字符串组成的数组
+            //i 表示待下架产品的id字符串
+            int num = productService.downProduct(Integer.valueOf(i));
+            boolean success = false ;
+            if(num != 0){
+                //逻辑删除成功
+                success = true ;
+                map.put("success",success);
+            }
+        }
+        return map;
+    }
+
+    /**
+     * 据id添加产品的下架原因
+     * @param id  前端返回过来的多个产品的id 字符串
+     * @param downReason  前端返回过来的下架原因的字符串
+     * @return
+     */
+    @RequestMapping("/addDownReasonById.do")
+    @ResponseBody
+    public Map<String,Object> addDownReasonById(String id,String downReason){
+        Map<String,Object> map = new HashMap<>();
+        String[] ids = id.split(",");   //将id字符串切割
+        for(String i : ids){
+            //遍历id字符串组成的数组
+            //i 表示待下架产品的id字符串
+            int num = productService.addDownReasonById(Integer.valueOf(i),downReason);
+            boolean success = false ;
+            if(num != 0){
+                //逻辑删除成功
+                success = true ;
+                map.put("success",success);
+            }
+        }
+        return map;
+    }
 
 }
