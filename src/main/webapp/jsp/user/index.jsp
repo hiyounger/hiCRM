@@ -294,7 +294,7 @@
    $("#save").on("click",function(){
        $.ajax({
            'url':'system/user/insert',
-           'type':'get',
+           'type':'post',
            'async':false,
            'data':$('#form').serialize(),
            'dataType':'json',

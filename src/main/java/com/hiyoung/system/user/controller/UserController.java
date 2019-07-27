@@ -1,5 +1,8 @@
 package com.hiyoung.system.user.controller;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hiyoung.system.user.dao.UserMapper;
 import com.hiyoung.system.user.service.UserServiceIf;
 import com.hiyoung.system.user.entity.User;
@@ -11,10 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 public class UserController {
@@ -47,15 +47,17 @@ public class UserController {
         return map;
     }
 
-    @GetMapping("/system/user/insert")
+    @PostMapping("/system/user/insert")
     public int insert(User user){
         userMapper.insert(user);
         System.out.println(user);
         return user.getId();
     }
 
-    @DeleteMapping("/system/user/deleteByIds")
-    public int deleteById(List<Integer> ids){
-     return userMapper.deleteByIds(ids);
+    @PostMapping("/system/user/deleteByIds")
+    public int deleteById(String ids) throws Exception{
+        ObjectMapper mapper = new ObjectMapper();
+        List<Integer> list = mapper.readValue(ids, new TypeReference<List<Integer>>(){});
+        return  userMapper.deleteByIds(list);
     }
 }

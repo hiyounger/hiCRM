@@ -184,16 +184,29 @@ function loadData(param){
                 $.each(checked,function (i,val) {
                     idArray[i]=val.id
                 })
-
+                console.info(checked)
+                console.info(idArray)
                 $.ajax({
                     url:'system/user/deleteByIds',
                     type:'POST',
-                    data:{'ids':idArray,'_method':'DELETE'},
+                    data:{'ids':JSON.stringify(idArray)},
                     async:true,
                     dataType:'json',
                     success:function(data){
-                        if(!data){
-                            alert('成功删除'+data+'条数据')
+                        if(data>0){
+                            $.messager.show({
+                                msg:'删除成功',
+                                timeout:1000,
+                                showType:'null',
+                                style:{
+                                    right:'',
+                                    top:150
+                                }
+                                ,height:'100',
+                                width:'200'
+                            });
+                            loadData(0)
+
                         }
                     }
                 })

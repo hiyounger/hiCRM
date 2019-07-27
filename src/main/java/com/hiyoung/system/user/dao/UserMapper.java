@@ -3,6 +3,7 @@ package com.hiyoung.system.user.dao;
 import com.hiyoung.system.user.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 @Mapper
@@ -16,5 +17,5 @@ public interface UserMapper {
 
     int getCount(int id);
 
-    int deleteByIds(List<Integer> ids);
+    int deleteByIds( List<Integer> ids);
 }
