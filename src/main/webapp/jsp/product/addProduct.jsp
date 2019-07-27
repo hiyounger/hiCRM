@@ -157,7 +157,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				loadMsg:"正在加载，请稍等.....",//设置加载数据时的提示信息
 				pagination:true,//设置显示分页工具条
 				rownumbers:true,//设置是否显示行号
-				singleSelect:true,//设置是否只能选中一行
+				singleSelect:false,//设置是否只能选中一行
+				selectOnCheck: true,//true勾选会选择行，false勾选不选择行, 1.3以后有此选项。重点在这里
+				checkOnSelect: true, //true选择行勾选，false选择行不勾选, 1.3以后有此选项
 				pageNumber:1,//设置起始页码
 				pageSize:15,//设置每页展示的条数
 				pageList:[15,30,45],//设置每页展示展示的条数的下拉列表
