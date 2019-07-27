@@ -31,8 +31,8 @@ public class ProductController {
 
     /**
      * 分页展示产品信息
-     * @param pageStr
-     * @param rowsStr
+     * @param pageStr  从哪一页开始展示的字符串
+     * @param rowsStr  每页展示多少条数据的字符串
      * @return
      * //manage/product/listProductByPage.do
      */
@@ -44,7 +44,7 @@ public class ProductController {
         Map<String,Object> map = new HashMap<>();
         map.put("total",total);
         map.put("rows",products);
-        System.out.println(map);
+        //System.out.println(map);
         return map;
     }
 
@@ -59,19 +59,20 @@ public class ProductController {
         System.out.println(product);
         Map<String,Object> map = new HashMap<>();
         int num = productService.addProduct(product);
-        boolean success=false; //默认没添加成功
+        boolean success=false; //默认没添加成功 num = 0
         if(num != 0) {
             //添加成功
             success=true;
         }
         map.put("success",success);
+        System.out.println(map);
         return map;
     }
 
     /**
      * 展示单条产品信息
-     * @param pageStr
-     * @param rowsStr
+     * @param pageStr  从哪一页开始展示
+     * @param rowsStr  每页展示多少条数据的字符串
      * @return
      */
     @RequestMapping("/listSingleProduct.do")
@@ -92,8 +93,8 @@ public class ProductController {
 
     /**
      * 根据条件查询分页展示产品信息
-     * @param pageStr  从哪一条数据开始展示
-     * @param rowsStr 每页展示多少条数据
+     * @param pageStr  从哪一页开始展示
+     * @param rowsStr 每页展示多少条数据的字符串
      * @param productName 查询条件 待查询的产品名称
      * @return
      */
@@ -108,6 +109,24 @@ public class ProductController {
         System.out.println(map);
         return map;
 
+    }
+
+    /**
+     * 根据条件查询分页展示产品信息
+     * @param pageStr 从哪一页开始展示
+     * @param rowsStr   每页展示多少条数据的字符串
+     * @param productName  查询条件 待查询的产品名称
+     * @return
+     */
+    @RequestMapping("/listProductCondition.do")
+    @ResponseBody
+    public Map<String,Object>  listProductCondition(@RequestParam("page") String pageStr, @RequestParam("rows") String rowsStr,String productName){
+        int total = productService.getCount2(productName);
+        List<Product> products = productService.listProductCondition(pageStr, rowsStr, productName);
+        Map<String,Object> map = new HashMap<>();
+        map.put("total",total);
+        map.put("rows",products);
+        return map;
     }
 
 

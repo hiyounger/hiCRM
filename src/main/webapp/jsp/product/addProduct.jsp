@@ -131,41 +131,56 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 
         $("#submit").on("click",function () {
-            //event.preventDefault();
-            $('#ff').form('submit',{
-                url:'manage/product/addProduct.do',
-                success:function(result){
-                    if(result.success){
-                        alert("新建产品失败");
-                    }
-                    else {
-                        //添加成功
-						console.info("111111");
-						$(".panel-tool-close").click();  //对话框的右上角的关闭按钮默认的class 是panel-tool-close
-
-					}
-                }
-
-            });
+            event.preventDefault();
+			$.post("manage/product/addProduct.do",
+					$("#ff").serialize(),
+					function(data) {
+						if(data.success){
+							//alert(data.success);
+							$(".panel-tool-close").click();  //对话框的右上角的关闭按钮默认的class 是panel-tool-close
+							loadSingle();
+						}else{
+							alert("添加失败");
+						}
+					},
+					'json')
         })
 
-
-		//添加产品
-		/*$.ajax({
-			type: "POST",
-			contentType: "application/json;charset=utf-8",
-			url: "manage/product/addProduct.do",
-			data: $('#ff').serialize(),
-			dataType: "json",
-			success: function (result) {
-				console.info("result = " + result);
-			},
-			error: function (result, status) {
-				console.info(result);
-				console.info(status);
-				//alert("异常！");
-			}
-		});*/
+		function loadSingle(){
+			//用datagrid分页展示产品信息
+			$('#dg').datagrid({
+				url:'manage/product/listSingleProduct.do',
+				resizable:true,
+				toolbar:"#tb",//设置工具条
+				striped:true,//将行的展示条纹化
+				//nowrap:false,//设置内容过多时是否换行，false是换行，true是不换行
+				loadMsg:"正在加载，请稍等.....",//设置加载数据时的提示信息
+				pagination:true,//设置显示分页工具条
+				rownumbers:true,//设置是否显示行号
+				singleSelect:true,//设置是否只能选中一行
+				pageNumber:1,//设置起始页码
+				pageSize:15,//设置每页展示的条数
+				pageList:[15,30,45],//设置每页展示展示的条数的下拉列表
+				columns:[[
+					{field:'ck',checkbox:'true'},
+					{field:'productName',title:'产品名称'},
+					{field:'productId',title:'产品编码'},
+					{field:'productType',title:'产品类别'},
+					{field:'standardPrice',title:'标准价格'},
+					{field:'description',title:'产品描述'},
+					{field:'creatorUserId',title:'创建人'},
+					{field:'updateTime',title:'更新时间'},
+					{field:'createTime',title:'创建时间'},
+					{field:'leaderId',title:'负责人'},
+					{field:'productState',title:'是否下架'}
+					/*{field:'  ',title:'操作',formatter: function(value,row,index){
+                            return "<a href='javascript:updateStudent(\""+row.stuNo+"\");'>修改</a>&emsp;"+
+                                "<a href='javascript:deleteStudent(\""+row.stuNo+"\");'>删除</a>&emsp;"
+                        }
+                    }*/
+				]]
+			});
+		}
 
 
 	</script>
