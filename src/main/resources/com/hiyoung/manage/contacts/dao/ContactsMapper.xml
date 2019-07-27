@@ -40,11 +40,22 @@
   </insert>
   <select id="getCount" resultType="java.lang.Integer">
     select count(id) from  tb_contacts where delete_state=0
+    <if test="word != null and word !='' ">
+      <bind name="words" value="'%'+word+'%'"/>
+      and ( name like #{words } or telephone like #{words } )
+    </if>
   </select>
   <select id="listBYPage" resultType="com.hiyoung.manage.contacts.entity.Contacts">
     select
-    <include refid="columns"/> from tb_contacts where delete_state=0 limit #{offerset},#{rows}
+    <include refid="columns"/> from tb_contacts where delete_state=0
+    <if test="word != null and word !='' ">
+      <bind name="words" value="'%'+word+'%'"/>
+      and ( name like #{words } or telephone like #{words } )
+    </if>
+     limit #{offerset},#{rows}
+
   </select>
+
   <update id="deleteById" >
     update tb_contacts set delete_state=1 where id=#{id,jdbcType=INTEGER}
   </update>

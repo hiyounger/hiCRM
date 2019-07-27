@@ -33,6 +33,7 @@
 
 
         }
+
         #img1,#img2,#img3{
             width: 15px;
             height: 15px;
@@ -135,11 +136,23 @@
 
             }
         }
+        function search() {
+            alert("ds");
+        }
 
     </script>
 </head>
 <body>
-<div id="d1">&ensp;&ensp;&ensp;联系人管理<span><button id="bt1" onclick="addContacts()">新建联系人</button></span></div>
+<div id="d1">&ensp;&ensp;&ensp;联系人管理
+    <table align="center">
+        <tr>
+            <td><input id="ss" class="easyui-searchbox" style="width:300px"
+                       data-options="prompt:'请输入联系人姓名或手机号'"></input>   </td>
+            <td><button onclick="search()">搜索</button></td>
+        </tr>
+    </table>
+
+    <span><button id="bt1" onclick="addContacts()">新建联系人</button></span></div>
 <div id="d11">
     场景：<select name="">
     <option value="">全部联系人</option>

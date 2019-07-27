@@ -27,7 +27,7 @@ public interface ContactsMapper {
      *
      * @return
      */
-    int getCount();
+    int getCount(@Param("word") String word);
 
     /**
      * 分页展示
@@ -36,7 +36,7 @@ public interface ContactsMapper {
      * @param rows
      * @return
      */
-    List<Contacts> listBYPage(@Param("offerset") Integer offerset, @Param("rows") Integer rows);
+    List<Contacts> listBYPage(@Param("offerset") Integer offerset, @Param("rows") Integer rows,@Param("word") String word);
 
     /**
      * 通过联系人姓名查一条数据
