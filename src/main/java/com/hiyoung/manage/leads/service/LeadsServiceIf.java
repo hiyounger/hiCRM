@@ -14,11 +14,16 @@ public interface LeadsServiceIf {
      */
     List<Leads>getLeadslist(int currentPage, int currentCount);
 
+    List<Leads> fuzzyQueryByName(int currentPage, int currentCount,String fuzzyQuery);
+
+    int getCountFuzzy(String fuzzyQuery);
     /**
      * 获得所有记录数
      * @return
      */
     int getCount();
+
+
     /**
      * 删除线索
      */

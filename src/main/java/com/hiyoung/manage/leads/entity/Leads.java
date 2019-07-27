@@ -6,19 +6,21 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Leads implements Serializable {
+
     private Integer id;
+
     private String leadsName;
+
     private String mobil;
-    private String telephone;
-    @DateTimeFormat(pattern ="yyyy-MM-dd")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date updateTime;
-    @DateTimeFormat(pattern ="yyyy-MM-dd")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date createTime;
 
     private String blame;
 
     private String address;
-     @DateTimeFormat(pattern ="yyyy-MM-dd")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date nextContactTime;
 
     private String createPerson;
@@ -29,31 +31,9 @@ public class Leads implements Serializable {
 
     private String remark;
 
-   private int state;
+    private Integer state;
 
-    public int getState() {
-        return state;
-    }
-
-    public void setState(int state) {
-        this.state = state;
-    }
-
-    public String getLeadsName() {
-        return leadsName;
-    }
-
-    public void setLeadsName(String leadsName) {
-        this.leadsName = leadsName;
-    }
-
-    public Date getNextContactTime() {
-        return nextContactTime;
-    }
-
-    public void setNextContactTime(Date nextContactTime) {
-        this.nextContactTime = nextContactTime;
-    }
+    private String telephone;
 
     public Integer getId() {
         return id;
@@ -63,20 +43,20 @@ public class Leads implements Serializable {
         this.id = id;
     }
 
+    public String getLeadsName() {
+        return leadsName;
+    }
+
+    public void setLeadsName(String leadsName) {
+        this.leadsName = leadsName == null ? null : leadsName.trim();
+    }
+
     public String getMobil() {
         return mobil;
     }
 
     public void setMobil(String mobil) {
-        this.mobil = mobil;
-    }
-
-    public String getTelephone() {
-        return telephone;
-    }
-
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
+        this.mobil = mobil == null ? null : mobil.trim();
     }
 
     public Date getUpdateTime() {
@@ -111,6 +91,13 @@ public class Leads implements Serializable {
         this.address = address == null ? null : address.trim();
     }
 
+    public Date getNextContactTime() {
+        return nextContactTime;
+    }
+
+    public void setNextContactTime(Date nextContactTime) {
+        this.nextContactTime = nextContactTime;
+    }
 
     public String getCreatePerson() {
         return createPerson;
@@ -142,5 +129,21 @@ public class Leads implements Serializable {
 
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone == null ? null : telephone.trim();
     }
 }

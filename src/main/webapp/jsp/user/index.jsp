@@ -286,6 +286,8 @@ $("#sm li:selected").toggleClass("active");
        }
    });
 
+
+
    $(".button").on('mouseover',function(){
        $(this).css("background-color","#95B8E7")
        $(this).css("color","white")
@@ -296,15 +298,18 @@ $("#sm li:selected").toggleClass("active");
    $("#save").on("click",function(){
        $.ajax({
            'url':'system/user/insert',
-           'type':'get',
+           'type':'post',
            'async':false,
            'data':$('#form').serialize(),
            'dataType':'json',
            'success':function(data){
-               alert(data)
+               if(data>0){
+                   $("#iframe").attr('src','jsp/user/user.jsp?id='+data);
+                   $("#win").window('close');
+               }
            }
        })
-       $("#win").window('close');
+
    })
    $("#cancel").on('click',function(){
        $("#form").form('clear');

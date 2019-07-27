@@ -38,5 +38,11 @@ public interface CustomerMapper {
      */
     Integer delCustomer(Integer id);
 
+    /**
+     * 通过客户id一条数据
+     * @param id
+     * @return
+     */
+    Customer selectById(Integer id);
 
 }
