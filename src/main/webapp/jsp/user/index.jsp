@@ -263,7 +263,7 @@
                url:'jsp/customer/list.jsp'
            },{
                text: '联系人',
-               url:'jsp/contacts/list_contracts.jsp'
+               url:'jsp/contacts/list_contacts.jsp'
            },{
                text: '商机',
                url:'jsp/bussiness/list_business.jsp'
