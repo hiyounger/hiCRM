@@ -11,11 +11,11 @@ public interface UserMapper {
 
     int insert(User record);
 
-    User getUser(@Param("username") String username, @Param("password") String password);
+    User getUser(@Param("phone") int phone, @Param("password") String password);
 
-    List<User> listUsers(@Param("offset")Integer offset,@Param("count") Integer count,@Param("id")int id);
+    List<User> listUsers(@Param("offset")int offset,@Param("count") int count,@Param("id")int id,@Param("name")String name,@Param("status")int status);
 
-    int getCount(int id);
+    int getCount(@Param("id")int id,@Param("name")String name,@Param("status")int status);
 
     int deleteByIds( List<Integer> ids);
 }
