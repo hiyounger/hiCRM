@@ -196,14 +196,14 @@
             <tr>
                 <td>
                     <div><span class="star">*</span>姓名</div>
-                    <div class="second"><input name="username" class="easyui-textbox" type="text"/></div>
+                    <div class="second"><input name="name" class="easyui-textbox" type="text"/></div>
                 </td>
                 <td>
                     <div>性别</div>
                     <div class="second">
                         <select  class="easyui-combobox" name="sex" style="width:200px;">
-                            <option value="aa" selected>男</option>
-                            <option>女</option>
+                            <option value="男" selected>男</option>
+                            <option value="女">女</option>
                         </select>
                     </div>
                 </td>

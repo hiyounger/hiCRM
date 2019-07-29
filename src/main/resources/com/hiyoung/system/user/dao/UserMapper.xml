@@ -31,18 +31,18 @@
 
   <resultMap id="BaseResultMap" type="com.hiyoung.system.user.entity.User">
       <id column="id" javaType="java.lang.Integer" jdbcType="INTEGER" property="id"/>
-      <result column="username" property="username" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <result column="name" property="name" javaType="java.lang.String" jdbcType="VARCHAR" />
       <result column="password" property="password" javaType="java.lang.String" jdbcType="VARCHAR" />
       <result column="sex"  property="sex" javaType="java.lang.String" jdbcType="DATE" />
       <result column="EMAIL" property="email" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <result column="PHONE" property="phone" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <result column="PHONE" property="phone" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <result column="department" property="department" javaType="java.lang.String" jdbcType="VARCHAR" />
       <result column="position" property="position" javaType="java.lang.String" jdbcType="INTEGER" />
       <result column="supervisor" property="supervisor" javaType="java.lang.String" jdbcType="INTEGER" />
       <result column="role" property="role" javaType="java.lang.String" jdbcType="DATE" />
   </resultMap>
   <sql id="Base_Column_List">
-    username,sex,email,department,position,supervisor,phone
+    name,sex,email,department,position,supervisor,phone
   </sql>
 
 <!--<select id="getUser" resultMap="BaseResultMap2">
@@ -52,12 +52,21 @@
       user_role.userid left join tb_system_role as role on user_role.roleid = role.id where username =#{username} and password =#{password};
 </select>-->
 <select id="getUser" resultMap="BaseResultMap">
-  select id, <include refid="Base_Column_List"></include> ,role from tb_user where username =#{username} and password =#{password} and status =1;
+  select id, <include refid="Base_Column_List"></include> ,role from tb_user where phone =#{phone} and password =#{password} and status !=0;
 </select>
 
   <select id="listUsers" resultMap="BaseResultMap">
   select id, <include refid="Base_Column_List"></include> ,role
-  from tb_user where status =1
+  from tb_user where
+      <choose>
+          <when test="status==-1">
+              status !=0
+          </when>
+          <otherwise>
+              status=#{status}
+          </otherwise>
+      </choose>
+      AND NAME LIKE concat('%',#{name},'%')
   <choose>
        <when test="id>0">
            and id=#{id}
@@ -70,8 +79,15 @@
 </select>
   
   <select id="getCount" resultType="integer">
-    select count(id) from tb_user where status =1
-    <if test="id>0">
+    select count(id) from tb_user where   <choose>
+      <when test="status==-1">
+          status !=0
+      </when>
+      <otherwise>
+          status=#{status}
+      </otherwise>
+  </choose> AND NAME LIKE concat('%',#{name},'%')
+      <if test="id>0">
         and id =#{id}
     </if>
 
@@ -79,8 +95,7 @@
 
     <insert id="insert" parameterType="com.hiyoung.system.user.entity.User" useGeneratedKeys="true" keyProperty="id">
         insert into tb_user ( <include refid="Base_Column_List"></include> ,password,status ) VALUES
-        (#{username},#{sex},#{email},#{department},#{position},#{supervisor},#{phone},#{password},1)
-
+        (#{name},#{sex},#{email},#{department},#{position},#{supervisor},#{phone},#{password},1)
     </insert>
 
     <update id="deleteByIds" parameterType="java.util.List" >

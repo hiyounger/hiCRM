@@ -69,18 +69,18 @@
         <input id="search" class="easyui-searchbox" data-options="prompt:'请输入员工名称',searcher:doSearch" ></input>
         <span style="font-family: '微软雅黑'; font-size: 0.7em;margin-left: 50px;" >状态</span>
 
-        <select  id="cc" class="easyui-combobox" name="dept" style="width:200px;">
+        <select  id="status" class="easyui-combobox" name="dept" style="width:200px;">
 
-            <option value="aa">请选择</option>
-            <option>bitem2</option>
-            <option>bitem3</option>
-            <option>ditem4</option>
-            <option>eitem5</option>
+            <option value="-1">请选择</option>
+            <option value="1">正常</option>
+            <option value="2">离职</option>
+            <option value="3">退休</option>
+            <option value="4">休假</option>
         </select>
 <shiro:hasRole name="system">
-    <div id="new" class="button"  style="background-color: #3E84E9;">新建员工</div>
-    <div id="remove" class="button" style="background-color: darkgrey" >删除员工</div>
-    <div id="refresh" class="button" onclick="loadData(0)" style="background-color:  #3E84E9;" >刷新页面</div>
+    &emsp; &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<div id="new" class="button"  style="background-color: #3E84E9;">新建员工</div>&emsp;
+    <div id="remove" class="button" style="background-color: darkgrey" >删除员工</div>&emsp;
+    <div id="refresh" class="button" onclick="loadData(0,-1,'')" style="background-color:  #3E84E9;" >刷新页面</div>
 </shiro:hasRole>
 
 
@@ -91,10 +91,10 @@
 
 <script>
     function doSearch(value){
-        alert('You input: ' + value);
+        loadData(0,$('#status').val(),value)
     }
 
-    var num=0;
+    var no=false;
     var userId=0;
     var checked;
     if('${param.id}'){
@@ -103,7 +103,8 @@
 
 
 
-function loadData(param){
+
+function loadData(id,status,name){
     $('#pp').datagrid({
         toolbar:"#tb",//设置工具条
         striped:true,//将行的展示条纹化
@@ -118,16 +119,16 @@ function loadData(param){
         url:'system/user/list',
         columns:[[
             {field:'ck',checkbox:'true'},
-            {field:'username',title:'姓名'},
+            {field:'name',title:'姓名',width:100},
             {field:'phone',title:'手机号（登录名）',width:140},
-            {field:'sex',title:'性别'},
+            {field:'sex',title:'性别',width:60},
             {field:'email',title:'邮箱',width:240},
-            {field:'department',title:'部门'},
-            {field:'position',title:'岗位',width:160},
-            {field:'supervisor',title:'直属上级'},
-            {field:'role',title:'角色',width:120}
+            {field:'department',title:'部门',width:120},
+            {field:'position',title:'岗位',width:120},
+            {field:'supervisor',title:'直属上级',width:120},
+            {field:'role',title:'角色',width:146}
         ]],pagination:true,queryParams:{
-            "id":param
+            "id":id,"status":status,"name":name
         },onCheck:function(){
             if($('#pp').datagrid('getChecked').length>0){
                 $("#remove").css("background-color","#3E84E9")
@@ -152,34 +153,44 @@ function loadData(param){
             }else{
                 $("#remove").css("background-color","darkgrey")
             }
-        },rowStyler: function(index,row){
-            if (row.listprice>80){
-                return 'background-color:#6293BB;color:#fff;'; // return inline style
-                // the function can return predefined css class and inline style
-                // return {class:'r1', style:{'color:#fff'}};
+        },onLoadSuccess:function(data){
+            if (data.total == 0) {
+                no=true
+
+                //添加一个新数据行，第一列的值为你需要的提示信息，然后将其他列合并到第一列来，注意修改colspan参数为你columns配置的总列数
+                //隐藏分页导航条，这个需要熟悉datagrid的html结构，直接用jquery操作DOM对象，easyui datagrid没有提供相关方法隐藏导航条
+                $(this).closest('div.datagrid-wrap').find('div.datagrid-pager').hide();
+                $(this).datagrid('appendRow', { name: '<div style="text-align:center;color:red">没有相关记录！</div>' }).datagrid('mergeCells', { index: 0, field: 'name', colspan:8 })
+                $("input[type='checkbox']")[0].style.display='none'
+                $("input[name='ck']")[0].style.display='none'
+                $("input[name='ck']").on('click',function () {
+                    $('#pp').datagrid('unselectAll');
+                })
             }
+            //如果通过调用reload方法重新加载数据有数据时显示出分页导航容器
+            else $(this).closest('div.datagrid-wrap').find('div.datagrid-pager').show();
         }
     });
     var pager=$('#pp').datagrid().datagrid('getPager');// get the pager of datagrid
     pager.pagination({
-        displayMsg:'共{total}条 从 {from}条 到 {to}条 ',onBeforeRefresh:function(){
-            loadData(0);
+        displayMsg:'共{total}条   从 {from}条   到   {to}条 ',onBeforeRefresh:function(){
+            loadData(0,-1,'');
+            $("#remove").css("background-color","darkgrey")
             return true;
         },showPageList:true,links:2,beforePageText:'前往',afterPageText:'页'
     });
-
+    $("#remove").css("background-color","darkgrey")
 }
 
 
 
-    loadData(userId)
+    loadData(userId,-1,"")
     $("#new").on('click',function () {
         parent.$('#win').window('open');
     })
-
     $("#remove").on('click',function () {
         checked=$('#pp').datagrid('getChecked');
-        if(checked.length==0){
+        if(checked.length==0||no){
             return;
         }
         $.messager.defaults.cancel='取消';
@@ -211,8 +222,8 @@ function loadData(param){
                                 ,height:'100',
                                 width:'200'
                             });
-                            loadData(0)
 
+                            loadData(0,-1,'');
                         }
                     }
                 })
