@@ -74,6 +74,7 @@
 
         var num=0;   //默认选择0条数据
         var IsCheckFlag = false ;  //单选
+        var rowIndexTo = 0 ;
 
         function loadData(){
             //用datagrid分页展示产品信息
@@ -103,12 +104,7 @@
                     {field:'updateTime',title:'更新时间'},
                     {field:'createTime',title:'创建时间'},
                     {field:'leaderId',title:'负责人'},
-                    {field:'productState',title:'是否下架'},
-                    /*{field:'  ',title:'操作',formatter: function(value,row,index){
-                            return "<a href='javascript:updateStudent(\""+row.stuNo+"\");'>修改</a>&emsp;"+
-                                "<a href='javascript:deleteStudent(\""+row.stuNo+"\");'>删除</a>&emsp;"
-                        }
-                    }*/
+                    {field:'productState',title:'是否下架'}
                 ]],
                 onCheck:function(rowIndex,rowData){
                     num =num + 1;             //选中多少项
@@ -155,8 +151,8 @@
             //-------------------------------------------------------------------------------
             //---------结合SHIFT,CTRL,ALT键点击行实现多选------------
             //-------------------------------------------------------------------------------
-        var KEY = { SHIFT: 16, CTRL: 17, ALT: 18, DOWN: 40, RIGHT: 39, UP: 38, LEFT: 37 };
-        var selectIndexs = { firstSelectRowIndex: 0, lastSelectRowIndex: 0 };
+        var KEY = { SHIFT: 16, CTRL: 17, ALT: 18, DOWN: 40, RIGHT: 39, UP: 38, LEFT: 37 };   //防止魔鬼数字
+        var selectIndexs = { firstSelectRowIndex: 0, lastSelectRowIndex: 0 };   //初始化选中的行索引是0
         var inputFlags = { isShiftDown: false, isCtrlDown: false, isAltDown: false }   //默认HIFT,CTRL,ALT键 都没点击
 
         function keyPress(event) {  //响应键盘按下事件
@@ -170,6 +166,7 @@
                 case KEY.CTRL:   //点击ctrl键
                     inputFlags.isCtrlDown = true;
                     $('#dg').datagrid('options').singleSelect = false;
+                    break;
                 case KEY.ALT:
                     inputFlags.isAltDown = true;
                     $('#dg').datagrid('options').singleSelect = false;
@@ -191,6 +188,7 @@
                     inputFlags.isCtrlDown = false;
                     selectIndexs.firstSelectRowIndex = 0;
                     $('#dg').datagrid('options').singleSelect = true;
+                    break;
                 case KEY.ALT:
                     inputFlags.isAltDown = false;
                     selectIndexs.firstSelectRowIndex = 0;

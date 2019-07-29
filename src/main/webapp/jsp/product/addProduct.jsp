@@ -160,23 +160,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		});
 
 
-       /* $("#submit").on("click",function () {
-            event.preventDefault();
-			$.post("manage/product/addProduct.do",
-					$("#ff").serialize(),
-					function(data) {
-						if(data.success){
-							//alert(data.success);
-							$(".panel-tool-close").click();  //对话框的右上角的关闭按钮默认的class 是panel-tool-close
-							loadSingle();
-						}else{
-							alert("添加失败");
-						}
-					},
-					'json')
-
-        })
-*/
        //提交表单
         function submitForm(){
             //ajax提交
