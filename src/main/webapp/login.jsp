@@ -158,14 +158,19 @@
             {
                 $("#warn").css("visibility","hidden");
                 return true
+            }else{
+                $("#warn").css("visibility","visible");
+                $("#warn").text(alerttxt);
+                return false
             }
-            $("#warn").css("visibility","visible");
-            $("#warn").text(alerttxt);
-            return false
+
         }
     }
+
     function validate_password(field,alerttxt)
     {
+  //出现了闭包问题 局部变量不能在if体内部访问 解决办法 可以设置全局变量value或者不使用局部变量value
+        //var value=$('input[type=password]').val();
         with (field)
         {
             var reg1=/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/;
@@ -173,29 +178,34 @@
             {
                 $("#warn").css("visibility","hidden");
                 return true
+            }else{
+                $("#warn").css("visibility","visible");
+                $("#warn").text(alerttxt);
+                return false
             }
-            $("#warn").css("visibility","visible");
-            $("#warn").text(alerttxt);
-            return false
+
         }
     }
     function validate_form(thisform)
     {
         with (thisform)
         {
-            if (validate_phone(phone,"请输入正确的手机号")==false){
-                alert('手机号错误')
+            alert("手机号"+validate_phone("","请输入正确的手机号"));
+            alert("密码"+validate_password("","请输入正确的密码（6-8位字母或数字）"));
+            if (validate_phone(phone,"请输入正确的手机号")&&validate_password(password,"请输入正确的密码（6-8位字母或数字）")){
+                return true;
+            }else{
                 return false;
             }
-            if (validate_password(password,"请输入正确的密码（6-8位字母或数字）")==false){
-                alert('密码错误')
-                return false;
-            }
-            return true
+            // if (validate_password(password,"请输入正确的密码（6-8位字母或数字）")==false){
+            //     return false;
+            // }
+
         }
     }
     function prevent(subject){
         event.preventDefault()
+        alert(validate_form(subject));
         return validate_form(subject)
     }
     $("input[type=text]").on('blur',function () {

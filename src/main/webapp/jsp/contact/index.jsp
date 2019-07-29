@@ -17,8 +17,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script src="../../static/js/jquery.cookie.js" ></script>
     <style>
 
-
-
         .right{
             background:rgb(245,246,249);
             height: 100%;
@@ -90,7 +88,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             border: none;
             width: 300px;
             /*display: none;*/
-            margin-left: -100px;
 
         }
 
@@ -100,11 +97,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 
         }
+
     </style>
 </head>
 <body  class="body01"   οnkeydοwn="javascript:keyPress(event);" οnkeyup="javascript:keyRelease(event);">
 
 <!--    <div class="container">-->
+<%--设置隐藏滚动条style="overflow:hidden;"--%>
 <div id="dlg" href="jsp/contact/add.jsp" class="easyui-dialog" title="新建合同"
      data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true">
 
@@ -142,9 +141,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <%--                <button id="add" class="easyui-linkbutton" onclick="parent.$('#dlg').dialog('open')">添加</button>--%>
             </div>
             <div id="tb">
+
                 <a class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="$('#add').trigger('click')">添加</a>
                 <a id="del" title="status--0:待审核,1:已审核,2:删除" class="easyui-linkbutton" iconCls="icon-cut" plain="true" onclick="javascript:void(0)">删除</a>
                 <a  class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="javascript:alert('Save')">保存</a>
+
             </div>
 
             <table id="dg"></table>
@@ -156,6 +157,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 </body>
 <script type="text/javascript">
+
+    var IsCheckFlag=false;
+
     //批量删除
     function deletedata() {
         //返回选中多行
@@ -246,7 +250,7 @@ $("#dlg").dialog({
 
     });
 
-    var IsCheckFlag=false;
+
     //分页方法
     function loadData(param,isSingle){
         $('#dg').datagrid({
@@ -303,7 +307,7 @@ $("#dlg").dialog({
             toolbar:"#tb",
             striped:true,
             pagination:true,
-            singleSelect:false,
+            singleSelect:true,
           //  rownumbers:true,
             pageNumber:1,
             pageSize:5,
