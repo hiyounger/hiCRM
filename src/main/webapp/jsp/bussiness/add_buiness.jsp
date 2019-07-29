@@ -21,7 +21,7 @@
 <script type="text/javascript" src="static/easyui/jquery.easyui.min.js"></script>
   <script>
 $(function(){
-    $("#ff").submit(function(){
+	 $("#ff").submit(function(){
          //再执行关闭
         $.ajax({
             async: false,
@@ -32,13 +32,13 @@ $(function(){
             dataType: "text",
             success: function () {
             	window.close()
-            	alert("faeiweafji")
            	window.opener.location.href="jsp/bussiness/list_business2.jsp"
 	
-              }
-           /*  error: function () {
-            	alert("提交失败")
-            } */
+              },
+            error: function () {
+            	window.close()
+               	window.opener.location.href="jsp/bussiness/list_business2.jsp"
+            }
         })
     })
 	
