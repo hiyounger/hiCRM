@@ -80,4 +80,12 @@ public interface ProductMapper {
      */
     int addDownReasonById(@Param("id")Integer id,@Param("downReason")String downReason);
 
+    /**
+     * 据id添加产品的上架原因
+     * @param id   待上架产品的id
+     * @param onReason  上架原因
+     * @return
+     */
+    int addOnReasonById(@Param("id")Integer id,@Param("onReason")String onReason);
+
 }

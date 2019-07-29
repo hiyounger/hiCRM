@@ -119,11 +119,11 @@
 
   <!--创建产品-->
   <insert id="addProduct" parameterType="com.hiyoung.manage.product.entity.Product">
-    insert into tb_crm_product(id,product_id, product_type, product_name,
+    insert into tb_crm_product(product_id, product_type, product_name,
       creator_user_id, standard_price, leader_id,
       create_time, update_time, description,
       product_state, product_unit, on_reason, down_reason)
-    values(#{id,jdbcType=INTEGER},#{productId,jdbcType=INTEGER}, #{productType,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR},
+    values(#{productId,jdbcType=INTEGER}, #{productType,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR},
       #{creatorUserId,jdbcType=INTEGER}, #{standardPrice,jdbcType=REAL}, #{leaderId,jdbcType=INTEGER},
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{description,jdbcType=VARCHAR},
       #{productState,jdbcType=INTEGER}, #{productUnit,jdbcType=VARCHAR}, #{onReason,jdbcType=VARCHAR}, #{downReason,jdbcType=VARCHAR})
@@ -178,6 +178,11 @@
   <!--根据id添加产品的下架原因-->
   <update id="addDownReasonById">
     update tb_crm_product set product_state=0,down_reason=#{downReason,jdbcType=VARCHAR} where id=#{id,jdbcType=INTEGER}
+  </update>
+
+  <!--根据id添加产品的上架原因-->
+  <update id="addOnReasonById">
+    update tb_crm_product set product_state=1,on_reason=#{onReason,jdbcType=VARCHAR} where id=#{id,jdbcType=INTEGER}
   </update>
 
 

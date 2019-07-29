@@ -23,12 +23,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  <script type="text/javascript" src="static/easyui/jquery.easyui.min.js"></script>
 	  <script type="text/javascript" src="static/easyui/easyui-lang-zh_CN.js"></script>
 	 <%-- D:\idea\crm\src\main\webapp\addProduct.jsp--%>
+
+	  <style type="text/css">
+		  #ff{
+			  margin-top: -100px;
+		  }
+
+	  </style>
   </head>
   
-  <body style="width:100%;max-width:600px;padding:30px 60px;">
+  <body style="width:100%;max-width:600px;padding:30px 60px">
 	<section class="info-section">
 		<div class="column">
-			<span class="current">基本信息</span>
+			<span class="current" style="font-size: 1.35em">基本信息</span>
 		</div>
 		<form id="ff" method="post">
 			<table>
