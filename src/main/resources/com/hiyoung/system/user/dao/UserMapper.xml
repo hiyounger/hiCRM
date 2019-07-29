@@ -30,16 +30,16 @@
 
 
   <resultMap id="BaseResultMap" type="com.hiyoung.system.user.entity.User">
-      <id column="id" javaType="java.lang.Integer" jdbcType="INTEGER" property="id"/>
-      <result column="name" property="name" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <result column="password" property="password" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <result column="sex"  property="sex" javaType="java.lang.String" jdbcType="DATE" />
-      <result column="EMAIL" property="email" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <result column="PHONE" property="phone" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <result column="department" property="department" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <result column="position" property="position" javaType="java.lang.String" jdbcType="INTEGER" />
-      <result column="supervisor" property="supervisor" javaType="java.lang.String" jdbcType="INTEGER" />
-      <result column="role" property="role" javaType="java.lang.String" jdbcType="DATE" />
+      <id column="id" javaType="java.lang.Integer"  property="id"/>
+      <result column="name" property="name" javaType="java.lang.String"  />
+      <result column="password" property="password" javaType="java.lang.String"  />
+      <result column="sex"  property="sex" javaType="java.lang.String"  />
+      <result column="EMAIL" property="email" javaType="java.lang.String"  />
+      <result column="PHONE" property="phone" javaType="java.lang.String"  />
+      <result column="department" property="department" javaType="java.lang.String"  />
+      <result column="position" property="position" javaType="java.lang.String"  />
+      <result column="supervisor" property="supervisor" javaType="java.lang.String"  />
+      <result column="role" property="role" javaType="java.lang.String" />
   </resultMap>
   <sql id="Base_Column_List">
     name,sex,email,department,position,supervisor,phone
