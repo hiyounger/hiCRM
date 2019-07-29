@@ -91,12 +91,9 @@ public class LeadsController {
   public String addLeads(Leads leads,HttpSession session){
      System.out.println("leads="+leads);
      Integer num = leadsServiceIf.addLeads(leads);
-
      int id=leads.getId();
      session.setAttribute("leadsId",id);
       System.out.println("id编号为"+id);
-
-
        if (num==1){
            return "success";
        }else {

@@ -13,17 +13,17 @@ public class UserServiceImp implements UserServiceIf {
     @Resource
     UserMapper userMapper;
     @Override
-    public User getUser(String username, String password) {
-        return userMapper.getUser(username, password);
+    public User getUser(int phone, String password) {
+        return userMapper.getUser(phone, password);
     }
 
     @Override
-    public List<User> listUsers(Integer page, Integer count ,int id) {
-        return userMapper.listUsers((page-1)*count,count,id);
+    public List<User> listUsers(int page, int count ,int id,String name,int status) {
+        return userMapper.listUsers((page-1)*count,count,id,name,status);
     }
 
     @Override
-    public int getCount(int id) {
-        return userMapper.getCount(id);
+    public int getCount(int id,String name,int status) {
+        return userMapper.getCount(id,name,status);
     }
 }

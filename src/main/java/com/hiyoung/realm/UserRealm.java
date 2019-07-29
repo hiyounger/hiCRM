@@ -21,13 +21,13 @@ public class UserRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         System.out.println("-------身份认证方法--------");
-        String username = (String) authenticationToken.getPrincipal();
+        Integer phone = Integer.parseInt((String) authenticationToken.getPrincipal());
         String password = new String((char[]) authenticationToken.getCredentials());
         //根据用户名从数据库获取密码
-       User user =mapper.getUser(username,password);
+       User user =mapper.getUser(phone,password);
         System.out.println(user);
 
-        if (username == null) {
+        if (phone == null) {
             return null;
         } else if (user==null) {
             throw new IncorrectCredentialsException();

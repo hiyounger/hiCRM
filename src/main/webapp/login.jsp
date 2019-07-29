@@ -92,7 +92,7 @@
     <form id="form">
         <table id="table" height="150px" >
             <tr><td><span id="warn" >请输入正确的用户名和密码</span></td></tr>
-            <tr ><td height="50px"><input  id="username" type="text" name="username" /> </td></tr>
+            <tr ><td height="50px"><input  id="phone" type="text" name="phone" /> </td></tr>
             <tr><td height="50px"><input id="password" type="password" name="password" /> </td></tr>
             <tr><td height="50px"><div id="submit">登录</div></td></tr>
         </table>
@@ -118,7 +118,7 @@
    });
 
 
-    $('#username').textbox({
+    $('#phone').textbox({
         iconCls:'icon-man',
         iconAlign:'left',
         height:40,
@@ -144,11 +144,11 @@
 
     $('#submit').on('click',function(){
         $("#submit").text("正在登录...");
-       if(!($("#username").val().trim()&&$("#password").val().trim())){
+       if(!($("#phone").val().trim()&&$("#password").val().trim())){
            $("#warn").css("visibility","display");
        }
 
-       $.post("login",{"username":$("#username").val(),"password":$("#password").val()},function(data){
+       $.post("login",{"phone":$("#phone").val(),"password":$("#password").val()},function(data){
          if(!data){
               alert("登陆失败！");
              $("#submit").text("登录");
@@ -158,7 +158,7 @@
        },"json")
     })
 
-    window.setTimeout (function(){ $('#username')[0].focus();},0 );
+    window.setTimeout (function(){ $('#phone')[0].focus();},0 );
 
 </script>
 </body>

@@ -24,10 +24,10 @@ public class UserController {
     @Resource
     UserMapper userMapper;
     @PostMapping(value = "/login")
-    public boolean user( String username, String password){
+    public boolean user( String phone, String password){
         System.out.println("登录");
         Subject subject= SecurityUtils.getSubject();
-        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+        UsernamePasswordToken token = new UsernamePasswordToken(phone, password);
         try {
             subject.login(token);
             return true;
@@ -37,10 +37,10 @@ public class UserController {
     }
 
     @PostMapping("/system/user/list")
-    public Map<String,Object> getUsers(int page,int rows,int id){
+    public Map<String,Object> getUsers(int page,int rows,int id,String name,int status){
         Map<String, Object> map = new HashMap<>();
-        List<User> users = userService.listUsers(page, rows,id);
-        int total=userService.getCount(id);
+        List<User> users = userService.listUsers(page, rows,id,name,status);
+        int total=userService.getCount(id,name,status);
         map.put("total",total );
         map.put("rows",users );
         System.out.println(users);
