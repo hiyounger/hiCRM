@@ -21,7 +21,7 @@ public class UserRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         System.out.println("-------身份认证方法--------");
-        Integer phone = Integer.parseInt((String) authenticationToken.getPrincipal());
+        String phone = (String) authenticationToken.getPrincipal();
         String password = new String((char[]) authenticationToken.getCredentials());
         //根据用户名从数据库获取密码
        User user =mapper.getUser(phone,password);

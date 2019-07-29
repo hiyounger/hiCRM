@@ -190,22 +190,16 @@
     {
         with (thisform)
         {
-            alert("手机号"+validate_phone("","请输入正确的手机号"));
-            alert("密码"+validate_password("","请输入正确的密码（6-8位字母或数字）"));
             if (validate_phone(phone,"请输入正确的手机号")&&validate_password(password,"请输入正确的密码（6-8位字母或数字）")){
                 return true;
             }else{
                 return false;
             }
-            // if (validate_password(password,"请输入正确的密码（6-8位字母或数字）")==false){
-            //     return false;
-            // }
 
         }
     }
     function prevent(subject){
         event.preventDefault()
-        alert(validate_form(subject));
         return validate_form(subject)
     }
     $("input[type=text]").on('blur',function () {
@@ -216,20 +210,19 @@
         })
     $('#submit').on('click',function(){
             $('#fake_submit').trigger('click')
-        // $("#submit").text("正在登录...");
+         $("#submit").text("正在登录...");
 
        /*if(!($("#phone").val().trim()&&$("#password").val().trim())){
            $("#warn").css("visibility","display");
-       }
+       }*/
 
-       $.post("login",{"phone":$("#phone").val(),"password":$("#password").val()},function(data){
+       $.post("login",$("#form").serialize(),function(data){
          if(!data){
               alert("登陆失败！");
-             $("#submit").text("登录");
           } else{
               location.href="jsp/user/index.jsp";
           }
-       },"json")*/
+       },"json")
     })
 
     window.setTimeout (function(){ $('#phone')[0].focus();},0 );

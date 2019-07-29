@@ -11,7 +11,7 @@ public interface UserMapper {
 
     int insert(User record);
 
-    User getUser(@Param("phone") int phone, @Param("password") String password);
+    User getUser(@Param("phone") String phone, @Param("password") String password);
 
     List<User> listUsers(@Param("offset")int offset,@Param("count") int count,@Param("id")int id,@Param("name")String name,@Param("status")int status);
 
