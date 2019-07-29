@@ -41,4 +41,24 @@ public class BuinessImp implements BuinessIf {
 		return list;
 	}
 
+	@Override
+	public List<Buiness> getbyPagetheone(int page, int rows, int theone) {
+		return null;
+	}
+
+	@Override
+	public List<Buiness> getbyPageAnd(int page, int rows, String name) {
+		return null;
+	}
+
+	@Override
+	public int insert(Buiness record) {
+		return 0;
+	}
+
+	@Override
+	public int deletebyid(Integer id) {
+		return 0;
+	}
+
 }
