@@ -74,12 +74,12 @@ public class BuinessContoller {
 	
 	@RequestMapping("/buinessInfosee")
 	@ResponseBody
-	public Map<String, Object> listBuiness(@Param("page")Integer page,@Param("rows")Integer rows,String action){
+	public Map<String, Object> listBuiness(@Param("page")Integer page,@Param("rows")Integer rows,@Param("action")String action){
 		
 		int  count=buinessImp.getcount();
 		Map<String, Object> map=new HashMap<>();
 		map.put("total", count);
-		System.out.println(action);
+		System.out.println(action+"action的值");
 		map.put("rows", buinessImp.getbyPageAnd(page, rows, action));
 		System.out.println(buinessImp.getbyPageAnd(page, rows, action));
 		
