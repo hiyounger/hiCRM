@@ -48,17 +48,27 @@ public class BuinessImp implements BuinessIf {
 
 	@Override
 	public List<Buiness> getbyPageAnd(int page, int rows, String name) {
-		return null;
+		int count=dao.getcount();
+		int offer=(page-1)*rows;
+		int pagecount=(int) Math.ceil(count/rows);
+		if(page>pagecount) {
+			page=pagecount;
+		}
+		if(page<1) {
+			page=1;
+		}
+		
+		return dao.selectByPageAnd(offer, rows, name);
 	}
 
 	@Override
 	public int insert(Buiness record) {
-		return 0;
+		return dao.insert(record);
 	}
 
 	@Override
 	public int deletebyid(Integer id) {
-		return 0;
+		return dao.deleteByPrimaryKey(id);
 	}
 
 }

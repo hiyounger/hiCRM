@@ -72,7 +72,7 @@ table {
 			<tr>
 				<td><input name="customerAttribute" class="easyui-textbox" style="width: 300px">
 				</td>
-				<td><input name="name" class="easyui-textbox" style="width: 300px">
+				<td><input name="name" data-options="required:true" class="easyui-textbox" style="width: 300px">
 				</td>
 
 			</tr>
