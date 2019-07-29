@@ -69,6 +69,17 @@
 			font-size: smaller;
 			color: #5f5f5f;
 		}
+		.tx2{
+			margin-top: -15px;
+			margin-left: 20px;
+			font-size: smaller;
+			color: #5f5f5f;
+		}
+		.tx2:hover{
+
+			color: red;/*鼠标选中变色*/
+			cursor: pointer;/*变手*/
+		}
 
 		#xx{
 
@@ -90,7 +101,7 @@
 	<div id="xs">
             <span id="tx">客户管理 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
                 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
-		<input id="ss" class="easyui-searchbox" data-options="searcher:search,prompt:'请输入姓名/手机号/电话'"  style="width:300px"></input>
+		<input id="ss" class="easyui-searchbox" data-options="searcher:search,prompt:'请输入姓名/手机号'"  style="width:300px"></input>
 		<a href="javascript:void(0);" id="addBtn" onclick="openWindow()" class="easyui-linkbutton">新建客户</a>
 		<select name="more" id="more" class="easyui-combobox" style="width:65px">
 			<option value="-1">更多</option>
@@ -106,10 +117,10 @@
 		<span class="tx1" id="num">
 
 			</span>
-		<span class="tx1">项&emsp;&emsp;|</span>
-		<span class="tx1">&emsp;转移&emsp;&emsp;导出选中&emsp;&emsp;放入公海&emsp;&emsp;</span>
-		<span class="tx1" onclick="deletedata()">删除</span>
-		<span class="tx1">&emsp;&emsp;锁定&emsp;&emsp;解锁&emsp;&emsp;添加团队成员&emsp;&emsp;移除全队成员</span>
+		<span class="tx1">项&emsp;&emsp;|&emsp;</span>
+		<%--<span class="tx1">&emsp;转移&emsp;&emsp;导出选中&emsp;&emsp;放入公海&emsp;&emsp;</span>--%>
+		<span class="tx2" onclick="deletedata()">删除</span>
+		<%--<span class="tx1">&emsp;&emsp;锁定&emsp;&emsp;解锁&emsp;&emsp;添加团队成员&emsp;&emsp;移除全队成员</span>--%>
 	</div>
 	<div>
 		<table id="dg"></table>
@@ -119,12 +130,6 @@
 
 <script type="text/javascript">
 
-	//给搜索框建立点击事件
-	function search() {
-		var word=$("#ss").val();
-		loadData(0,"manage/customer/listCustomerByWord?word="+word);
-	}
-
 	//给选中条数赋值
 	var num=0;
 
@@ -133,6 +138,15 @@
 	//获取请求头的参数id，通过id查询，id=0分页查询，id！=0单条查询
 	if('${param.id}'){
 		id='${param.id}';
+	}
+
+
+	//给搜索框建立点击事件,模糊查询
+	function search() {
+		var word=$("#ss").val();
+		loadData(0,"manage/customer/listCustomerByWord?word="+word);
+		num=0
+		$("#num").text(num)
 	}
 
 	/*分页查询*/
@@ -195,7 +209,7 @@
 			displayMsg:'显示 {from} 到 {to}  共{total}记录 ',onBeforeRefresh:function(){
 				loadData(0,"manage/customer/listCustomerByPage");
 				return true;
-			},showPageList:true,links:2,beforePageText:'第',afterPageText:'页'
+			},beforePageText:'第',afterPageText:'页'
 		});
 
 	}
@@ -248,9 +262,8 @@
 
 							$.messager.alert("提示", "恭喜您，信息删除成功！", "info");
 							loadData(0);
-							// num=0
-							// $("#num").text(num)
-							$("#num").text($('#dg').datagrid('getChecked').length)
+							num=0
+							$("#num").text(num)
 						} else {
 							$.messager.alert("提示", "删除失败，请重新操作！", "info");
 
