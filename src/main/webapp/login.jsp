@@ -22,6 +22,7 @@
     <link rel="stylesheet" type="text/css" href="static/easyui/themes/icon.css">
     <script type="text/javascript" src="static/easyui/jquery.min.js"></script>
     <script type="text/javascript" src="static/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="static/js/validator.js"></script>
     <style type="text/css">
 
         #left{
@@ -29,6 +30,7 @@
             width: 70%;
             height: 625px;
             float: left;
+            border: none;
             /*background-image: url(static/img/login.png);*/
             /*background-position: center;*/
 
@@ -36,6 +38,7 @@
         #left .bgImg{
             width: 100%;
             height: 100%;
+            border: none;
         }
         #right{
             width: 30%;
@@ -80,22 +83,27 @@
             height: 20px;
             left: 30%;
         }
+        td {
+            padding-bottom: 24px;
+        }
+
 
     </style>
 </head>
-<body style="margin: 0px;">
+<body style="margin: 0px;background: #b4ddff;">
 <div id="left">
     <img class="bgImg" src="static/img/login.png" ></img>
 </div>
 <div id="right">
-    <h1 align="center" style="font-family: '微软雅黑'; font-size: 1em;margin-top: 80px;">悟空CRM系统</h1>
-    <form id="form">
+    <h1 align="center" style="font-family: '微软雅黑';margin-top:190px; font-size: 1em;margin-top: 80px;">悟空CRM系统</h1>
+    <form id="form" method="post" onsubmit='prevent(this)'>
         <table id="table" height="150px" >
-            <tr><td><span id="warn" >请输入正确的用户名和密码</span></td></tr>
-            <tr ><td height="50px"><input  id="phone" type="text" name="phone" /> </td></tr>
-            <tr><td height="50px"><input id="password" type="password" name="password" /> </td></tr>
+            <tr><td><span id="warn"  style="visibility: hidden">请输入正确的用户名和密码</span></td></tr>
+            <tr ><td height="50px"><input id="phone" type="text" name='phone'/> </td></tr>
+            <tr><td height="50px"><input id="password" type="password" name="password"  /> </td></tr>
             <tr><td height="50px"><div id="submit">登录</div></td></tr>
         </table>
+        <input style="display: none" type="submit" id="fake_submit">
     </form>
 
 
@@ -123,7 +131,7 @@
         iconAlign:'left',
         height:40,
         width:300,
-        prompt:'请输入用户名'
+        prompt:'请输入用户名(手机号)'
     })
 
     $('#password').textbox({
@@ -142,16 +150,75 @@
     }
     document.onkeydown = keyDown;
 
-    $('#submit').on('click',function(){
-        $("#submit").text("正在登录...");
-       if(!($("#phone").val().trim()&&$("#password").val().trim())){
-           $("#warn").css("visibility","display");
-       }
+    function validate_phone(field,alerttxt)
+    {
+        with (field)
+        {
+            if (/^(13|15|18)\d{9}$/i.test($('#phone').val()))
+            {
+                $("#warn").css("visibility","hidden");
+                return true
+            }else{
+                $("#warn").css("visibility","visible");
+                $("#warn").text(alerttxt);
+                return false
+            }
 
-       $.post("login",{"phone":$("#phone").val(),"password":$("#password").val()},function(data){
+        }
+    }
+
+    function validate_password(field,alerttxt)
+    {
+  //出现了闭包问题 局部变量不能在if体内部访问 解决办法 可以设置全局变量value或者不使用局部变量value
+        //var value=$('input[type=password]').val();
+        with (field)
+        {
+            var reg1=/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/;
+            if (reg1.test($('input[type=password]').val()))
+            {
+                $("#warn").css("visibility","hidden");
+                return true
+            }else{
+                $("#warn").css("visibility","visible");
+                $("#warn").text(alerttxt);
+                return false
+            }
+
+        }
+    }
+    function validate_form(thisform)
+    {
+        with (thisform)
+        {
+            if (validate_phone(phone,"请输入正确的手机号")&&validate_password(password,"请输入正确的密码（6-8位字母或数字）")){
+                return true;
+            }else{
+                return false;
+            }
+
+        }
+    }
+    function prevent(subject){
+        event.preventDefault()
+        return validate_form(subject)
+    }
+    $("input[type=text]").on('blur',function () {
+        validate_phone(phone,"请输入正确的手机号")
+    })
+       $('input[type=password]') .on('blur',function () {
+        validate_password(password,"请输入正确的密码（6-8位字母或数字）")
+        })
+    $('#submit').on('click',function(){
+            $('#fake_submit').trigger('click')
+         $("#submit").text("正在登录...");
+
+       /*if(!($("#phone").val().trim()&&$("#password").val().trim())){
+           $("#warn").css("visibility","display");
+       }*/
+
+       $.post("login",$("#form").serialize(),function(data){
          if(!data){
               alert("登陆失败！");
-             $("#submit").text("登录");
           } else{
               location.href="jsp/user/index.jsp";
           }

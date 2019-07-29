@@ -8,17 +8,20 @@ import java.util.List;
 public interface LeadsServiceIf {
     /**
      * 分页查询所有数据
-     * @param currentPage 当前页码
+     *
+     * @param currentPage  当前页码
      * @param currentCount 一页展示的条数
      * @return
      */
-    List<Leads>getLeadslist(int currentPage, int currentCount,int leadsId);
+    List<Leads> getLeadslist(int currentPage, int currentCount, int leadsId);
 
-    List<Leads> fuzzyQueryByName(int currentPage, int currentCount,String fuzzyQuery);
+    List<Leads> fuzzyQueryByName(int currentPage, int currentCount, String fuzzyQuery);
 
     int getCountFuzzy(String fuzzyQuery);
+
     /**
      * 获得所有记录数
+     *
      * @return
      */
     int getCount();
@@ -31,5 +34,13 @@ public interface LeadsServiceIf {
 
 
     int addLeads(Leads leads);
+
+    /**
+     * 添加的时候查询是否有此线索人
+     *
+     * @param leadsName
+     * @return
+     */
+    boolean getLeadsName(String leadsName);
 
 }

@@ -5,6 +5,7 @@ import com.hiyoung.manage.contacts.service.ContactsService;
 import com.hiyoung.utils.BeanUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -33,7 +34,7 @@ public class ContactsController {
 
     @RequestMapping("/listpart")
     @ResponseBody
-    public Map<String,Object> listPart( String page,String rows,String word){
+    public Map<String,Object> listPart(String page, String rows, String word){
         //从请求中获取当前页面和每页展示的条数
         List<Contacts> list= contactsService.listBYPage(page,rows,word.trim());
         Integer zs= contactsService.getCount(word.trim());

@@ -21,7 +21,7 @@
 <script type="text/javascript" src="static/easyui/jquery.easyui.min.js"></script>
   <script>
 $(function(){
-    $("#ff").submit(function(){
+	 $("#ff").submit(function(){
          //再执行关闭
         $.ajax({
             async: false,
@@ -36,7 +36,8 @@ $(function(){
 	
               },
             error: function () {
-            	alert("提交失败")
+            	window.close()
+               	window.opener.location.href="jsp/bussiness/list_business2.jsp"
             }
         })
     })
@@ -71,7 +72,7 @@ table {
 			<tr>
 				<td><input name="customerAttribute" class="easyui-textbox" style="width: 300px">
 				</td>
-				<td><input name="name" class="easyui-textbox" style="width: 300px">
+				<td><input name="name" data-options="required:true" class="easyui-textbox" style="width: 300px">
 				</td>
 
 			</tr>

@@ -13,7 +13,7 @@ public class UserServiceImp implements UserServiceIf {
     @Resource
     UserMapper userMapper;
     @Override
-    public User getUser(int phone, String password) {
+    public User getUser(String phone, String password) {
         return userMapper.getUser(phone, password);
     }
 

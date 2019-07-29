@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 
@@ -25,10 +26,22 @@ public class CustomerController {
 
     @RequestMapping("/listCustomerByPage")
     @ResponseBody
-    public Map<String, Object>  getCustomerByPage(Integer page,Integer rows,Integer id) {
+    public Map<String, Object>  getCustomerByPage(@RequestParam(name = "page") Integer page, @RequestParam(name = "rows") Integer rows,  @RequestParam(name = "id")Integer id) {
         Map<String, Object> map = new HashMap<>() ;
-        Integer total = customerImp.getCount();
-        List<Customer> customers = customerImp.getCustomerByPage(page,rows,id);
+        Integer total = customerImp.getCount(null);
+        List<Customer> customers = customerImp.getCustomerByPage(page,rows,id,null);
+        map.put("total", total);
+        map.put("rows", customers);
+        System.out.println(map);
+        return map ;
+    }
+
+    @RequestMapping("/listCustomerByWord")
+    @ResponseBody
+    public Map<String, Object>  getCustomerByPage(Integer page,Integer rows,Integer id,String word) {
+        Map<String, Object> map = new HashMap<>() ;
+        Integer total = customerImp.getCount(word.trim());
+        List<Customer> customers = customerImp.getCustomerByPage(page,rows,id,word.trim());
         map.put("total", total);
         map.put("rows", customers);
         System.out.println(map);

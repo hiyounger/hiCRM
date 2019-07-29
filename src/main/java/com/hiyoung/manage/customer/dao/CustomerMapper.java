@@ -17,12 +17,12 @@ public interface CustomerMapper {
      * @param rows 每页展示的数据的条数
      * @return
      */
-    List<Customer> getCustomerByPage(@Param("offerset") Integer offerset, @Param("rows") Integer rows);
+    List<Customer> getCustomerByPage(@Param("offerset") Integer offerset, @Param("rows") Integer rows,@Param("word") String word);
     /**
      * 获得所有记录总数
      * @return
      */
-    Integer getCount();
+    Integer getCount(@Param("word") String word);
 
     /**
      * 添加客户
@@ -44,5 +44,7 @@ public interface CustomerMapper {
      * @return
      */
     Customer selectById(Integer id);
+
+
 
 }

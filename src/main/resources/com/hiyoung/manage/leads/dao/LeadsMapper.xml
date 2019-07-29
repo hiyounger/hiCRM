@@ -65,6 +65,12 @@
   </select>
 
 
+<select id="getLeadsName" resultMap="BaseResultMap">
+
+  SELECT * FROM tb_leads WHERE leads_name=#{leadsName} AND state=1
+
+</select>
+
 
 
 

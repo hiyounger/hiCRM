@@ -37,10 +37,21 @@ public class Contacts1 {
 
     private String founder;
 
+   // @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Integer mxtime;
+
+    public Integer getMxtime() {
+        return mxtime;
+    }
+
+    public void setMxtime(Integer mxtime) {
+        this.mxtime = mxtime;
+    }
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date updatetime;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date creationtime;
 
     private String personincharge;
