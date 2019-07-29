@@ -145,7 +145,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <a class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="$('#add').trigger('click')">添加</a>
                 <a id="del" title="status--0:待审核,1:已审核,2:删除" class="easyui-linkbutton" iconCls="icon-cut" plain="true" onclick="javascript:void(0)">删除</a>
                 <a  class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="javascript:alert('Save')">保存</a>
-
+                <span id="num" >0</span>
             </div>
 
             <table id="dg"></table>
@@ -158,7 +158,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </body>
 <script type="text/javascript">
 
+    //选择多行数据
     var IsCheckFlag=false;
+    var num=0;   //默认选择0条数据
 
     //批量删除
     function deletedata() {
@@ -254,47 +256,6 @@ $("#dlg").dialog({
     //分页方法
     function loadData(param,isSingle){
         $('#dg').datagrid({
-
-            /**
-             * 选择单行/多行
-             * @param rowIndex
-             * @param rowData
-             */
-            onSelect: function (rowIndex, rowData) {
-                if (!IsCheckFlag) {
-                    IsCheckFlag = true;
-                    rowIndexTo = rowIndex;
-                } else if (rowIndexTo == rowIndex) {
-                    IsCheckFlag = false;
-                    $('#dg').datagrid("unselectRow", rowIndex);
-                } else {
-                    IsCheckFlag = false;
-                }
-            },
-
-//单击行事件
-            onClickRow: function (index, row) {
-                //---------结合SHIFT,CTRL,ALT键点击行实现多选------------
-                if (index != selectIndexs.firstSelectRowIndex && !inputFlags.isShiftDown) {
-                    selectIndexs.firstSelectRowIndex = index;
-                }
-                if (inputFlags.isShiftDown) {
-                    $('#dg').datagrid('clearSelections');
-                    selectIndexs.lastSelectRowIndex = index;
-                    var tempIndex = 0;
-                    if (selectIndexs.firstSelectRowIndex > selectIndexs.lastSelectRowIndex) {
-                        tempIndex = selectIndexs.firstSelectRowIndex;
-                        selectIndexs.firstSelectRowIndex = selectIndexs.lastSelectRowIndex;
-                        selectIndexs.lastSelectRowIndex = tempIndex;
-                    }
-                    for (var i = selectIndexs.firstSelectRowIndex ; i <= selectIndexs.lastSelectRowIndex ; i++) {
-                        $('#dg').datagrid('selectRow', i);
-                    }
-                }
-                //---------结合SHIFT,CTRL,ALT键点击行实现多选------------
-            },
-
-
             url:'manage/contract/listByPage',
             queryParams:{
                 contactName:param,
@@ -308,6 +269,8 @@ $("#dlg").dialog({
             striped:true,
             pagination:true,
             singleSelect:true,
+            selectOnCheck: true,//true勾选会选择行，false勾选不选择行, 1.3以后有此选项。重点在这里
+            checkOnSelect: true, //true选择行勾选，false选择行不勾选, 1.3以后有此选项
           //  rownumbers:true,
             pageNumber:1,
             pageSize:5,
@@ -385,7 +348,51 @@ $("#dlg").dialog({
 
                     return "<a style='color:orange;text-decoration:none;border:1px solid;font-size: 12px;' href='javascript:;'>待审核</a>";
                     }}
-            ]]
+            ]],
+            /**
+             * 选择单行/多行
+             * @param rowIndex
+             * @param rowData
+             */
+            onSelect: function (rowIndex, rowData) {
+                if (!IsCheckFlag) {
+                    IsCheckFlag = true;
+                    rowIndexTo = rowIndex;
+                } else if (rowIndexTo === rowIndex) {
+                    IsCheckFlag = false;
+                    $('#dg').datagrid("unselectRow", rowIndex);
+                } else {
+                    IsCheckFlag = false;
+                }
+            },
+            onCheck:function(rowIndex,rowData){
+                num =num + 1;             //选中多少项
+                $("#num").text(num);
+            },onUncheck:function () {
+                num =num -1;
+                $("#num").text(num);
+            },
+            //单击行事件
+            onClickRow: function (index, row) {
+                //---------结合SHIFT,CTRL,ALT键点击行实现多选------------
+                if (index != selectIndexs.firstSelectRowIndex && !inputFlags.isShiftDown) {
+                    selectIndexs.firstSelectRowIndex = index;
+                }
+                if (inputFlags.isShiftDown) {
+                    $('#dg').datagrid('clearSelections');
+                    selectIndexs.lastSelectRowIndex = index;
+                    var tempIndex = 0;
+                    if (selectIndexs.firstSelectRowIndex > selectIndexs.lastSelectRowIndex) {
+                        tempIndex = selectIndexs.firstSelectRowIndex;
+                        selectIndexs.firstSelectRowIndex = selectIndexs.lastSelectRowIndex;
+                        selectIndexs.lastSelectRowIndex = tempIndex;
+                    }
+                    for (var i = selectIndexs.firstSelectRowIndex ; i <= selectIndexs.lastSelectRowIndex ; i++) {
+                        $('#dg').datagrid('selectRow', i);
+                    }
+                }
+                //---------结合SHIFT,CTRL,ALT键点击行实现多选------------
+            }
         });
     }
 
