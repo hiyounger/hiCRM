@@ -58,4 +58,21 @@ public interface ProductIf {
      * @return
      */
     int getCount2(String productName);
+
+    /**
+     * 批量下架  伪删除
+     * @param id  待下架产品的id
+     * @return
+     */
+    int downProduct(Integer id);
+
+    /**
+     * 据id添加产品的下架原因
+     * @param id   待下架产品的id
+     * @param downReason  下架原因
+     * @return
+     */
+    int addDownReasonById(Integer id,String downReason);
+
+
 }

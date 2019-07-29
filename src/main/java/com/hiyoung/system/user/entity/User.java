@@ -4,12 +4,12 @@ import java.io.Serializable;
 
 public class User implements Serializable {
     private Integer id;
-   private String username;
+   private String name;
 
     private String password;
     private String email;
 
-    private String phone;
+    private Integer phone;
     private String sex;
 
     private String department;
@@ -34,12 +34,12 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username == null ? null : username.trim();
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
     }
 
     public String getPassword() {
@@ -59,12 +59,12 @@ public class User implements Serializable {
         this.email = email == null ? null : email.trim();
     }
 
-    public String getPhone() {
+    public Integer getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone == null ? null : phone.trim();
+    public void setPhone(Integer phone) {
+        this.phone = phone;
     }
 
 
@@ -112,7 +112,7 @@ public class User implements Serializable {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
+                ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +

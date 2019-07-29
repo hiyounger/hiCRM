@@ -24,9 +24,9 @@
     <script type="text/javascript" src="static/easyui/easyui-lang-zh_CN.js"></script>
     <style>
         .container {
-            width: 90%;
-            height: 500px;
-            border: 1px solid grey;
+            width: 100%;
+            height: 540px;
+           border: 1px solid grey;
             position: relative;
             margin: 20px auto;
         }
@@ -51,6 +51,7 @@
             position: absolute;
             left: 0;
             height: 100%;
+
         }
 
         .right {
@@ -103,12 +104,14 @@
         }
 
         #sm {
-            background: rgb(69, 78, 87)!important;
+            background: rgb(45, 48, 55);
+            padding-bottom: 180px;
+
         }
 
-        #sm li:nth-of-type(8) {
-            background: rgb(69, 78, 87);
-            color: white;
+        .active {
+            background: rgb(255, 228, 141);
+            color: black;
         }
 
         body{
@@ -193,14 +196,14 @@
             <tr>
                 <td>
                     <div><span class="star">*</span>姓名</div>
-                    <div class="second"><input name="username" class="easyui-textbox" type="text"/></div>
+                    <div class="second"><input name="name" class="easyui-textbox" type="text"/></div>
                 </td>
                 <td>
                     <div>性别</div>
                     <div class="second">
                         <select  class="easyui-combobox" name="sex" style="width:200px;">
-                            <option value="aa" selected>男</option>
-                            <option>女</option>
+                            <option value="男" selected>男</option>
+                            <option value="女">女</option>
                         </select>
                     </div>
                 </td>
@@ -250,7 +253,7 @@
 
 </div>
 <script type="text/javascript">
-
+$("#sm li:selected").toggleClass("active");
 
    $("#sm").sidemenu({
        data : [{
@@ -279,8 +282,9 @@
            }]
        }],onSelect:function (item) {
           $("#iframe").attr('src',item.url+'');
+
        }
-   })
+   });
 
 
 
@@ -294,7 +298,7 @@
    $("#save").on("click",function(){
        $.ajax({
            'url':'system/user/insert',
-           'type':'get',
+           'type':'post',
            'async':false,
            'data':$('#form').serialize(),
            'dataType':'json',
