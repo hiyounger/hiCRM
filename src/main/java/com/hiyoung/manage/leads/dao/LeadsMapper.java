@@ -14,7 +14,7 @@ public interface LeadsMapper {
 
     int getCount();
 
-    List<Leads> getLeadsList(@Param("page")int page,@Param("size") int size);
+    List<Leads> getLeadsList(@Param("page")int page,@Param("size") int size,@Param("leadsId")int leadsId);
 
 
     List<Leads>fuzzyQueryByName(@Param("offsize")int offsize,@Param("size") int size,@Param("fuzzyQuery") String fuzzyQuery);

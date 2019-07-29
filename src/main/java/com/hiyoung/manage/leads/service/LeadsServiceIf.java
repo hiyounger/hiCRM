@@ -12,7 +12,7 @@ public interface LeadsServiceIf {
      * @param currentCount 一页展示的条数
      * @return
      */
-    List<Leads>getLeadslist(int currentPage, int currentCount);
+    List<Leads>getLeadslist(int currentPage, int currentCount,int leadsId);
 
     List<Leads> fuzzyQueryByName(int currentPage, int currentCount,String fuzzyQuery);
 

@@ -96,8 +96,8 @@
 
     </form>
     <div id="d4">
-            <button onclick="save()" style="margin-left: 500px;background-color:blue;color:white;width:70px;height:40px;border-radius: 10%" >保存</button>
-            <button style="background-color:blue ;color: white;width: 70px;height:40px;border-radius: 10%" type="reset" name="取消" value="取消"></button>
+            <button onclick="save()" style="margin-left: 500px;background-color:deepskyblue;color:white;width:70px;height:40px;border-radius: 10%" >保存</button>
+            <button style="background-color:deepskyblue ;color: white;width: 70px;height:40px;border-radius: 10%" type="reset" value="取消">取消</button>
 
     </div>
 
@@ -110,7 +110,7 @@
     function save(){
         //使用ajax提交
         $.get(
-            "manage/leads/addleads.action",
+            "manage/leads/addleadsSingle.action",
             $("#form1").serialize(),
             function(data,status){
                alert(data+"转态"+status)

@@ -26,8 +26,18 @@ public class Buiness {
     private Date createTime;
 
     private String customerAttribute;
+    private Integer view;
+    
 
-    public Integer getId() {
+    public Integer getView() {
+		return view;
+	}
+
+	public void setView(Integer view) {
+		this.view = view;
+	}
+
+	public Integer getId() {
         return id;
     }
 
