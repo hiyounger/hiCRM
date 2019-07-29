@@ -49,11 +49,17 @@ public class ShiroConfig  {
          * role：对应角色权限可访问
          **/
         Map<String, String> filterMap = new LinkedHashMap<>();
-        filterMap.put("/login","anon");
+       /* filterMap.put("/login","anon");
         filterMap.put("/static/**","anon");
         filterMap.put("/system/**","authc");
         filterMap.put("/jsp/**","authc");
-        filterMap.put("/**", "authc");
+        filterMap.put("/**", "authc");*/
+        filterMap.put("/login","anon");
+        filterMap.put("/static/**","anon");
+        filterMap.put("/system/**","anon");
+        filterMap.put("/jsp/**","anon");
+        filterMap.put("/**", "anon");
+
         bean.setFilterChainDefinitionMap(filterMap);
         return bean;
     }
