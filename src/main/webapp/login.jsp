@@ -166,11 +166,10 @@
     }
     function validate_password(field,alerttxt)
     {
-        var value=$('input[type=password]').val()
         with (field)
         {
             var reg1=/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/;
-            if (reg1.test(value))
+            if (reg1.test($('input[type=password]').val()))
             {
                 $("#warn").css("visibility","hidden");
                 return true
@@ -185,9 +184,11 @@
         with (thisform)
         {
             if (validate_phone(phone,"请输入正确的手机号")==false){
+                alert('手机号错误')
                 return false;
             }
             if (validate_password(password,"请输入正确的密码（6-8位字母或数字）")==false){
+                alert('密码错误')
                 return false;
             }
             return true
