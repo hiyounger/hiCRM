@@ -16,7 +16,7 @@ public interface IContacts1 {
 
     Integer addContacts1(Contacts1 contacts1);
 
-    Integer deleteById(Integer i);
+    int deleteById(String ids);
 
 
 

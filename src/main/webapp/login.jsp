@@ -29,6 +29,7 @@
             width: 70%;
             height: 625px;
             float: left;
+            border: none;
             /*background-image: url(static/img/login.png);*/
             /*background-position: center;*/
 
@@ -36,6 +37,7 @@
         #left .bgImg{
             width: 100%;
             height: 100%;
+            border: none;
         }
         #right{
             width: 30%;
@@ -80,15 +82,19 @@
             height: 20px;
             left: 30%;
         }
+        td {
+            padding-bottom: 24px;
+        }
+
 
     </style>
 </head>
-<body style="margin: 0px;">
+<body style="margin: 0px;background: #b4ddff;">
 <div id="left">
     <img class="bgImg" src="static/img/login.png" ></img>
 </div>
-<div id="right">
-    <h1 align="center" style="font-family: '微软雅黑'; font-size: 1em;margin-top: 80px;">悟空CRM系统</h1>
+<div id="right" style="margin-top:190px;">
+    <h1 align="center" style="font-family: '微软雅黑'; font-size: 3em;margin-top: 10px;">悟空CRM系统</h1>
     <form id="form">
         <table id="table" height="150px" >
             <tr><td><span id="warn" >请输入正确的用户名和密码</span></td></tr>
