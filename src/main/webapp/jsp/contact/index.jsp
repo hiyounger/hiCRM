@@ -145,7 +145,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <a class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="$('#add').trigger('click')">添加</a>
                 <a id="del" title="status--0:待审核,1:已审核,2:删除" class="easyui-linkbutton" iconCls="icon-cut" plain="true" onclick="javascript:void(0)">删除</a>
                 <a  class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="javascript:alert('Save')">保存</a>
-                <span id="num" >0</span>
+                <span id="num" style="display: none;" >0</span>
             </div>
 
             <table id="dg"></table>
@@ -358,7 +358,7 @@ $("#dlg").dialog({
                 if (!IsCheckFlag) {
                     IsCheckFlag = true;
                     rowIndexTo = rowIndex;
-                } else if (rowIndexTo === rowIndex) {
+                } else if (rowIndexTo == rowIndex) {
                     IsCheckFlag = false;
                     $('#dg').datagrid("unselectRow", rowIndex);
                 } else {
