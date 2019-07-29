@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,6 +59,9 @@ public class TestController {
     @ResponseBody
     public Map<String, Object> listByPage(String page, String rows,String contactName,String isSingle){
         int total=iContacts1.getCount(contactName);
+        if(isSingle=="1"){
+           total=1;
+        }
 System.out.println("c="+contactName);
         List<Contacts1> cs=iContacts1.listByPage(Integer.valueOf(page), Integer.valueOf(rows),contactName,isSingle);
         Map<String, Object> map=new HashMap<>();
@@ -66,7 +72,8 @@ System.out.println("c="+contactName);
 
     @RequestMapping("/add")
     @ResponseBody
-    public Integer add( Contacts1 contacts1){
+    public Integer add( Contacts1 contacts1) throws ParseException {
+        contacts1.setCreationtime(new Date());
         System.out.println(contacts1);
         int num=iContacts1.addContacts1(contacts1);
         System.out.println("合同修改行num="+num);
@@ -75,13 +82,14 @@ System.out.println("c="+contactName);
 
     /**
      * 逻辑删除
-     * @param id
+     * @param ids
      * @return
      */
     @RequestMapping("/delete")
     @ResponseBody
-    public Boolean delete(Integer id){
-        int num=iContacts1.deleteById(id);
+    public Boolean delete(String ids){
+        System.out.println("ids="+ids);
+        int num=iContacts1.deleteById(ids);
         return num>0?true:false;
     }
 

@@ -19,6 +19,7 @@
     <result column="creationTime" jdbcType="DATE" property="creationtime" />
     <result column="personInCharge" jdbcType="VARCHAR" property="personincharge" />
     <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="mxTime" jdbcType="DATE" property="mxtime" />
   </resultMap>
   <sql id="Base_Column_List">
     id, customerName, number, contactName, businessName, orderTime, contractAmount, startingTimeContract,
@@ -226,35 +227,46 @@
   <select id="getAll" resultMap="BaseResultMap">
     select <include refid="Base_Column_List"/> from tb_crm_contracts
   </select>
-  <select id="getCount" resultType="Integer" parameterType="String">
-    select count(id) from tb_crm_contracts
+  <select id="getCount" resultType="Integer">
+    select count(id)
+    from tb_crm_contracts as tb1 left join (SELECT MAX(id) mxTime FROM tb_crm_contracts) AS tb2
+    ON tb1.id=tb2.mxTime
     <where>
       status != 2
-      <if test="contactName!= null">
+      <if test="contactName!= null and contactName!= '' ">
         <bind value="'%'+contactName+'%'" name="cn" />
         AND contactName like #{cn}
       </if>
     </where>
   </select>
 
-  <select id="listByPage" resultMap="BaseResultMap" parameterType="Integer">
-    select <include refid="Base_Column_List"/>
-
-    from tb_crm_contracts
+  <select id="listByPage" resultMap="BaseResultMap">
+    select tb1.*
+,tb2.mxTime
+    from tb_crm_contracts as tb1 left join (SELECT MAX(id) mxTime FROM tb_crm_contracts) AS tb2
+    ON tb1.id=tb2.mxTime
     <where>
         status != 2
-      <if test="isSingle=='t'">
-        creationTime=(SELECT MAX(creationTime) FROM tb_crm_contracts)
+      <if test="isSingle==1">
+        AND tb1.id=tb2.mxTime
       </if>
-      <if test="contactName!= null">
+      <if test="contactName!= null  and contactName!= ''">
       <bind value="'%'+contactName+'%'" name="cn" />
         AND contactName like #{cn}
       </if>
     </where>
+    order by id desc
     limit #{offset},#{rows}
     </select>
 <!--  逻辑删除 -->
   <update id="deleteById">
-    update tb_crm_contracts set status=2 where id=#{id}
+    update tb_crm_contracts set status=2
+    <if test="ids != null">
+      <!--最终生成的SQL语句: select * from user where sex = '' and (id= or id= or id= ) and username like '' -->
+      <foreach collection="ids" item="id" open="where " close=" " separator="or">
+        <!-- 每个遍历需要生成的串 -->
+        id=#{id}
+      </foreach>
+    </if>
   </update>
 </mapper>

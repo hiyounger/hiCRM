@@ -6,6 +6,8 @@ import com.hiyoung.manage.contract.service.IContacts1;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -52,7 +54,8 @@ public class Contacts1Imp implements IContacts1 {
     }
 
     @Override
-    public Integer deleteById(Integer i) {
-        return contactsMapper1.deleteById(i);
+    public int deleteById(String ids) {
+        String[] idss= ids.split(",");
+        return contactsMapper1.deleteById(idss);
     }
 }

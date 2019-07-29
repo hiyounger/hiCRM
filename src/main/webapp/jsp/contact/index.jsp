@@ -14,6 +14,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script type="text/javascript" src="../../static/easyui/jquery.min.js"></script>
     <script type="text/javascript" src="../../static/easyui/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="../../static/easyui/easyui-lang-zh_CN.js"></script>
+    <script src="../../static/js/jquery.cookie.js" ></script>
     <style>
 
 
@@ -94,7 +95,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
         #dlg{
             width:700px;
-            height:500px;
+            height:400px;
         }
     </style>
 </head>
@@ -134,10 +135,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <input class="easyui-searchbox" name="condition" data-options="prompt:'请输入合同名称'"  style="padding-top: 15px"/>
 
                 <button id="add" class="easyui-linkbutton" onclick="$('#dlg').dialog('open')">添加</button>
+<%--                <button id="add" class="easyui-linkbutton" onclick="parent.$('#dlg').dialog('open')">添加</button>--%>
             </div>
             <div id="tb">
-                <a class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="javascript:alert('Add')">添加</a>
-                <a id="del"  class="easyui-linkbutton" iconCls="icon-cut" plain="true" onclick="javascript:void(0)">删除</a>
+                <a class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="$('#add').trigger('click')">添加</a>
+                <a id="del" title="status--0:待审核,1:已审核,2:删除" class="easyui-linkbutton" iconCls="icon-cut" plain="true" onclick="javascript:void(0)">删除</a>
                 <a  class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="javascript:alert('Save')">保存</a>
             </div>
 
@@ -174,12 +176,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 if (!r) {
                     return;
                 }
-                /*alert(temID);*/
+                //alert(temID);
                 //提交
                 $.ajax({
                     type: "POST",
                     async: false,
-                    url: "manage/contract/delete?id=" + temID,
+                    url: "manage/contract/delete?ids=" + temID,
                     data: temID,
                     success: function (result) {
                         if (result) {
@@ -204,26 +206,31 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     $(function () {
 loadData();
 var param=null;
- var isSingle="f";
+ var isSingle=0;//0:正常，1：显示单条
+        //模糊查询
 $(".searchbox-button").click(function () {
-    alert($(".easyui-searchbox").val());
+    //alert($(".easyui-searchbox").val());
     param=$(".easyui-searchbox").val();
-    loadData(param,isSingle);
-    //$.removeCookie('isSingle');
+    loadData(param);
+
 });
 $("#dlg").dialog({
     onClose:function(){
 //alert(123456);
-        // if($.cookie('isSingle')!=null){
-        //     isSingle=true;
-        // };
-        isSingle="t";
+        console.log("cookie---->"+$.cookie('isSingle'));
+        if($.cookie('isSingle')!=null){
+            isSingle=1;
+           // alert("刷新");
+            $.removeCookie('isSingle');
+        };
+       // isSingle=1;
         console.log(typeof isSingle+":"+isSingle);
         param=$(".easyui-searchbox").val();
 
         console.log(isSingle+","+param);
         loadData(param,isSingle);
-        isSingle="f";
+
+        isSingle=0;
         console.log(isSingle+","+param);
     }
 });
@@ -244,24 +251,43 @@ $("#dlg").dialog({
                 isSingle:isSingle,
             },
             frozenColumns:[[
-                {field:'id',title:'id',width:80},
+             //   {field:'id',title:'id',width:80},
               //  {field:'status',title:'状态',width:80},
             ]],
             toolbar:"#tb",
             striped:true,
             pagination:true,
             singleSelect:false,
-            rownumbers:true,
+          //  rownumbers:true,
             pageNumber:1,
             pageSize:5,
             pageList:[5,10,15],
             resizable:true,
+            //修改行的样式
+            //     rowStyler: function(index, row) {
+            //         //index:下标   row对象
+            //         //此处可以添加条件
+            //         if(row.列名==‘条件’){
+            //             // return 'background-color:red;';
+            //             return 'background-color:green;color:white';
+            //         }
+            //     },
             columns:[[
                 {field:'ck',checkbox:"true"},
-                {field:'number',title:'合同编号'},
+                //修改列的样式
+                {field:'number',title:'合同编号', styler: function (value, row, index) {
+                       //不需要条件可不写
+                            return 'color:blue';
+                    }},
                 {field:'contactname',title:'合同名称'},
-                {field:'customername',title:'客户名称'},
-                {field:'businessname',title:'商机名称'},
+                {field:'customername',title:'客户名称', styler: function (value, row, index) {
+                        //不需要条件可不写
+                        return 'color:blue';
+                    }},
+                {field:'businessname',title:'商机名称', styler: function (value, row, index) {
+                        //不需要条件可不写
+                        return 'color:blue';
+                    }},
                 {field:'ordertime',title:'下单时间',formatter:function (value,row,index) {
                         return new Date(value).getFullYear()+"-"+
                             new Date(value).getMonth()+"-"+
@@ -293,8 +319,21 @@ $("#dlg").dialog({
                             new Date(value).getDate();
                     }},
                 {field:'personincharge',title:' 负责人'},
-                {field:'status',title:' 状态',formatter:function (value) {
-                    return "待审核";
+                {field:'status',title:' 状态',styler: function (value, row, index) {
+                        // if(value==0){
+                        //     return 'color:orange;border:1px solid;padding:1px';
+                        // }
+                        if(value==1){
+                            return 'color:green';
+                        }
+
+                    },formatter:function (value) {
+                    if(value==1){
+
+                        return "通过"
+                    }
+
+                    return "<a style='color:orange;text-decoration:none;border:1px solid;font-size: 12px;' href='javascript:;'>待审核</a>";
                     }}
             ]]
         });

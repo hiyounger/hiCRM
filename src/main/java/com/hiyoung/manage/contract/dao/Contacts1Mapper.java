@@ -28,8 +28,8 @@ public interface Contacts1Mapper {
 
     /**
      * 逻辑删除
-     * @param id
+     * @param ids
      * @return
      */
-    Integer deleteById(Integer id);
+    int deleteById(@Param("ids") String[] ids);
 }

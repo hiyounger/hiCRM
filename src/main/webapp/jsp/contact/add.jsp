@@ -15,7 +15,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script type="text/javascript" src="../../static/easyui/jquery.min.js"></script>
     <script type="text/javascript" src="../../static/easyui/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="../../static/easyui/easyui-lang-zh_CN.js"></script>
-
+    <script src="../../static/js/jquery.cookie.js" ></script>
     <style>
         h5{
             font-size: 12px;
@@ -36,7 +36,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <%--<h4>新建合同</h4>--%>
 
 <div style="margin:20px 0;"></div>
-<div class="easyui-panel" title="<h5><span> </span>基本信息</h5>" style="width:800px">
+<%--<div class="easyui-panel" title="<h5><span> </span>基本信息</h5>" style="width:800px">--%>
     <div style="padding:10px 60px 20px 60px">
         <form id="ff" method="post">
             <table cellpadding="5">
@@ -63,31 +63,31 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <tr>
                     <td>
                         <div>下单时间</div>
-                        <input class="easyui-textbox" type="date" name="ordertime"></input>
+                        <input class="easyui-textbox time" name="ordertime"></input>
                     </td>
                     <td>
                         <div>合同金额</div>
-                        <input class="easyui-textbox" type="text" name="contractamount"></input>
+                        <input class="easyui-textbox" type="text" name="contractamount" data-options="validType:'number'" ></input>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <div>合同开始时间</div>
-                        <input class="easyui-textbox" type="date" name="startingtimecontract"></input>
+                        <input class="easyui-textbox time" name="startingtimecontract"></input>
                     </td>
                     <td>
                         <div>合同结束时间</div>
-                        <input class="easyui-textbox" type="date" name="endtimecontract"></input>
+                        <input class="easyui-textbox time" name="endtimecontract"></input>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <div>客户签约人</div>
-                        <input class="easyui-textbox" type="text" name="customercontractor" ></input>
+                        <input class="easyui-textbox" type="text" name="customercontractor"  data-options="validType:'CHS'" ></input>
                     </td>
                     <td>
                         <div>公司签约人</div>
-                        <input class="easyui-textbox" type="text" name="companycontractor"></input>
+                        <input class="easyui-textbox" type="text" name="companycontractor"   data-options="validType:'CHS'"  ></input>
                     </td>
                 </tr>
                 <tr>
@@ -106,9 +106,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
 </div>
 <script>
+    $('.time').datetimebox({
+        value: '3/4/2019 2:3',
+        required: true,
+        showSeconds: false
+    });
     function submitForm(){
         //ajax提交
-        alert("点击");
+        //alert("点击");
         var data1=$("ff").serialize();
         console.log(data1);
         // $.ajax({
@@ -134,8 +139,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               //  alert(data);
                    if(data=="1"){
                        //关闭对话框
+                       $.cookie('isSingle', true, { expires: 1 });
                        $(".panel-tool-close").click();
-                      // $.cookie('isSingle', true, { expires: 1 });
+
                    }
             },
             dataType:"text"
@@ -152,6 +158,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     return /^[0-9]+$/i.test(value);
                 },
                 message : '请输入数字'
+            },
+            // 验证中文
+            CHS : {
+                validator : function(value) {
+                    return /^[\u0391-\uFFE5]+$/.test(value);},
+                message : "只能输入汉字"
             }
         });
 
