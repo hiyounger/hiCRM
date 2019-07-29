@@ -43,11 +43,21 @@ id, name, transaction_status, tel, phone, next_contect_time, creator, update_tim
   </sql>
 
   <select id="getCustomerByPage" resultMap="BaseResultMap">
-    select <include refid="Base_Column_List"></include> from customer where delete_status=0 order by create_time desc limit #{offerset} , #{rows}
+    select <include refid="Base_Column_List"></include>
+    from customer where delete_status=0
+    <if test="word != null and word !='' ">
+      <bind name="words" value="'%'+word+'%'"/>
+      and ( name like #{words } or phone like #{words } )
+    </if>
+     order by create_time desc limit #{offerset} , #{rows}
   </select>
 
   <select id="getCount" resultType="java.lang.Integer">
-  	select count(id) from customer
+  	select count(id) from customer where delete_status=0
+    <if test="word != null and word !='' ">
+      <bind name="words" value="'%'+word+'%'"/>
+      and ( name like #{words } or phone like #{words } )
+    </if>
   </select>
 
 <update id="delCustomer" parameterType="java.lang.Integer">

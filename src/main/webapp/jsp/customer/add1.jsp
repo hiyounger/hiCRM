@@ -3,7 +3,7 @@
 <!DOCTYPE html >
 <% request.getScheme();%>
 <%
-       String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/";
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/";
 %>
 <html>
 <head>
