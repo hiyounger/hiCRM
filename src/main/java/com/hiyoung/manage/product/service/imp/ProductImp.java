@@ -166,4 +166,15 @@ public class ProductImp implements ProductIf {
     public int addDownReasonById(Integer id, String downReason) {
         return productMapper.addDownReasonById(id, downReason);
     }
+
+    /**
+     * 据id添加产品的上架原因
+     * @param id   待上架产品的id
+     * @param onReason  上架原因
+     * @return
+     */
+    @Override
+    public int addOnReasonById(Integer id, String onReason) {
+        return productMapper.addOnReasonById(id, onReason);
+    }
 }

@@ -74,5 +74,13 @@ public interface ProductIf {
      */
     int addDownReasonById(Integer id,String downReason);
 
+    /**
+     * 据id添加产品的上架原因
+     * @param id   待上架产品的id
+     * @param onReason  上架原因
+     * @return
+     */
+    int addOnReasonById(Integer id,String onReason);
+
 
 }
