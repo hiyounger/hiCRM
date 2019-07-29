@@ -26,13 +26,13 @@
       remarks, creater, update_time,
       is_key_maker, sex
   </sql>
-  <insert id="insert" parameterType="com.hiyoung.manage.contacts.entity.Contacts">
-    insert into tb_contacts (id, name, customer_name,
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.hiyoung.manage.contacts.entity.Contacts">
+    insert into tb_contacts ( name, customer_name,
       telephone, phone, email, 
       job, address, next_contact_time, 
       remarks, creater, update_time, 
       is_key_maker, sex)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{customerName,jdbcType=VARCHAR},
+    values (#{name,jdbcType=VARCHAR}, #{customerName,jdbcType=VARCHAR},
       #{telephone,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
       #{job,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{nextContactTime,jdbcType=TIMESTAMP}, 
       #{remarks,jdbcType=VARCHAR}, #{creater,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
@@ -45,6 +45,7 @@
       and ( name like #{words } or telephone like #{words } )
     </if>
   </select>
+
   <select id="listBYPage" resultType="com.hiyoung.manage.contacts.entity.Contacts">
     select
     <include refid="columns"/> from tb_contacts where delete_state=0
@@ -60,8 +61,8 @@
     update tb_contacts set delete_state=1 where id=#{id,jdbcType=INTEGER}
   </update>
 
-  <select id="selectByName" resultType="com.hiyoung.manage.contacts.entity.Contacts">
+  <select id="selectById" resultType="com.hiyoung.manage.contacts.entity.Contacts">
     select
-    <include refid="columns"/> from tb_contacts where delete_state=0 and name= #{name,jdbcType=VARCHAR}
+    <include refid="columns"/> from tb_contacts where delete_state=0 and  id=#{id,jdbcType=INTEGER}
   </select>
 </mapper>
