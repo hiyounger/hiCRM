@@ -22,6 +22,7 @@
     <link rel="stylesheet" type="text/css" href="static/easyui/themes/icon.css">
     <script type="text/javascript" src="static/easyui/jquery.min.js"></script>
     <script type="text/javascript" src="static/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="static/js/validator.js"></script>
     <style type="text/css">
 
         #left{
@@ -92,7 +93,7 @@
     <form id="form">
         <table id="table" height="150px" >
             <tr><td><span id="warn" >请输入正确的用户名和密码</span></td></tr>
-            <tr ><td height="50px"><input  id="phone" type="text" name="phone" /> </td></tr>
+            <tr ><td height="50px"><input class="easyui-validatebox" id="phone" type="text" name="phone" /> </td></tr>
             <tr><td height="50px"><input id="password" type="password" name="password" /> </td></tr>
             <tr><td height="50px"><div id="submit">登录</div></td></tr>
         </table>
