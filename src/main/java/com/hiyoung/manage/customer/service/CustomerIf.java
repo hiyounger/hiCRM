@@ -13,12 +13,12 @@ public interface CustomerIf {
      * @param rows 每页展示的数据的条数
      * @return
      */
-    List<Customer> getCustomerByPage(Integer page, Integer rows,Integer id);
+    List<Customer> getCustomerByPage(Integer page, Integer rows,Integer id,String word);
     /**
      * 获得总记录数
      * @return
      */
-    Integer getCount();
+    Integer getCount(String word);
 
     /**
      * 添加客户

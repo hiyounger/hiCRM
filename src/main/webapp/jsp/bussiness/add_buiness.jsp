@@ -19,21 +19,49 @@
 
 <script type="text/javascript" src="static/easyui/jquery.min.js"></script>
 <script type="text/javascript" src="static/easyui/jquery.easyui.min.js"></script>
+  <script>
+$(function(){
+    $("#ff").submit(function(){
+         //再执行关闭
+        $.ajax({
+            async: false,
+            type: "POST",
+            url:'manage/bussiness/addone',
+            contentType : "application/x-www-form-urlencoded; charset=utf-8",
+            data:$("#ff").serialize(),
+            dataType: "text",
+            success: function () {
+            	window.close()
+            	alert("faeiweafji")
+           	window.opener.location.href="jsp/bussiness/list_business2.jsp"
+	
+              }
+           /*  error: function () {
+            	alert("提交失败")
+            } */
+        })
+    })
+	
+})
 
+
+</script>
 
 
 <style>
 table {
 	margin: auto;
 }
+
 </style>
 
 </head>
 <body>
+<div >
 
-	<form action="manage/bussiness/addone">
+	<form id="ff"  >
 
-		<table weith="100%">
+		<table width="70%" >
 			<tr>
 				<td>客户属性</td>
 				<td>商机名称</td>
@@ -59,7 +87,7 @@ table {
 			<tr>
 				<td><input name="customerName" class="easyui-textbox" style="width: 300px">
 				</td>
-				<td><input name="money" class="easyui-textbox" style="width: 300px">
+				<td><input name="money" data-options="prompt:'只能是填入数字'" class="easyui-numberbox" style="width: 300px">
 				</td>
 
 			</tr>
@@ -71,7 +99,7 @@ table {
 			</tr>
 
 			<tr>
-				<td><input name="preDate" class="easyui-textbox" style="width: 300px">
+				<td><input name="preDate"  class="easyui-datebox" style="width: 300px">
 				</td>
 				<td><input name="beizhu" class="easyui-textbox" style="width: 300px">
 				</td>
@@ -95,9 +123,9 @@ table {
 				
 				<tr >
 				<td align="center">
-				<input type="submit" style="height: 30px;color: white;background-color: blue ">
+				<input type="submit"  style="height: 30px;color: white;background-color: blue ">
 				</td>
-				<td align="center" >
+				<td align="left" >
 				<input style="height: 30px;color: white;background-color: blue" type="reset">
 				</td>
 				
@@ -107,6 +135,7 @@ table {
         
 	</form>
 
+</div>
 
 </body>
 </html>

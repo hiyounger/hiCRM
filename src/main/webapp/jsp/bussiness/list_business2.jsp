@@ -27,17 +27,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     button {
 	background-color: 	FF33FF;
      }
+#button3{
+margin: auto;
 
+}
   </style>
 
   </head>
   
  
   <body>
-  <div id="div1"> <div id="add"><button id="button2"><font  color="white">新建联系人</font></button></div> </div>
- <div align="center"> <input id="ss"   class="easyui-searchbox" data-options="prompt:'请输入商机名'" style="width:300px"></input></div>
- 
+  <div id="div1"> <div id="add"><button id="button2" ><font  color="white">新建联系人</font></button></div> </div>
   <button id="button1"><font color="white">删除选中行</font></button>
+  <button id="button3" ><font color="white">查看所有</font></button>
  <table id="businessList"></table>
   </body>
   
@@ -77,30 +79,70 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      }
   
 
+   function add(url){
+        	parent.parent.openTopWindow({
+    				width:900,
+    				height:600,
+    				title:"添加商机",
+    				"url": url,
+    				 close:function(){
+    					$("#businessList").datagrid("reload");
+    				} 
+    			});
+        } 
   
   	$(function(){
   		
-  		see("manage/bussiness/buinessInfo");
-
+  		
+  		
+  		//分页展示客户列表
+		$("#businessList").datagrid({
+			url:"manage/bussiness/buinessInfofo",
+			checkOnSelect:false,
+			idField:"name",
+			pagination:true,
+			sortName:"name",
+			
+			frozenColumns:[[
+				{field:"id",checkbox:true,width:30},
+				{field:"customerName",title:"客户名",width:160},	
+			]],
+			columns:[[
+				{field:"name",title:"商机名",width:120},
+				{field:"status",title:"商机状态组",width:100},
+				{field:"stage",title:"商机阶段",width:100},
+				{field:"money",title:"商机金额",width:100},
+				{field:"preDate",title:"预计成交日期",width:180},
+				{field:"beizhu",title:"备注",width:150},
+				{field:"createName",title:"创建人",width:100},
+				{field:"updateTime",title:"更新时间",width:100},
+				{field:"createTime",title:"创建时间",width:150},
+				{field:"customerAttribute",title:"客户属性",width:100},
+				{field:"operation",title:"操作",width:120,formatter:function(value,row,index){ 
+		  			return "<a href='javascript:void(0)' onclick='return see("+index+")'>查看</a>"+
+		  			" <a href='javascript:void(0)' onclick='return modify("+index+")'>修改</a>";
+  				}}
+			]]
+			/* loadFilter:function(data){
+				return {total : data.data.totalRows,rows:data.data.result}
+			} */		
+		})	
+		
+		 
 	})
 	
+	$("#button3").on("click",function(){
 	
-	//查询
-	$('#ss').searchbox({
-    searcher:function(value){
-    	
-    see("manage/bussiness/buinessInfosee?action="+value)
-    }
-   
-      });
+	  window.location.href="manage/bussiness/lll"
+})
 	
 	
-	$("#button2").on("click",function(){
+	 $("#button2").on("click",function(){
 		
 		window.open("jsp/bussiness/add_buiness.jsp","添加页面","height=500, width=800")
-    //  window.location.href="text/add_buiness.jsp" 
+   //   window.location.href="text/add_buiness.jsp" 
 		
-	})
+	}) 
 	//删除按钮
 	$("#button1").on("click",function(){
 		
@@ -153,45 +195,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	
 	
-	function see(urll){
-		
-		//分页展示客户列表
-		$("#businessList").datagrid({
-			url:urll,
-			checkOnSelect:false,
-			idField:"name",
-			pagination:true,
-			sortName:"name",
-			
-			frozenColumns:[[
-				{field:"id",checkbox:true,width:30},
-				{field:"customerName",title:"客户名",width:160},	
-			]],
-			columns:[[
-				{field:"name",title:"商机名",width:120},
-				{field:"status",title:"商机状态组",width:100},
-				{field:"stage",title:"商机阶段",width:100},
-				{field:"money",title:"商机金额",width:100},
-				{field:"preDate",title:"预计成交日期",width:180},
-				{field:"beizhu",title:"备注",width:150},
-				{field:"createName",title:"创建人",width:100},
-				{field:"updateTime",title:"更新时间",width:100},
-				{field:"createTime",title:"创建时间",width:150},
-				{field:"customerAttribute",title:"客户属性",width:100},
-				{field:"operation",title:"操作",width:120,formatter:function(value,row,index){ 
-		  			return "<a href='javascript:void(0)' onclick='return see("+index+")'>查看</a>"+
-		  			" <a href='javascript:void(0)' onclick='return modify("+index+")'>修改</a>";
-  				}}
-			]]
-			/* loadFilter:function(data){
-				return {total : data.data.totalRows,rows:data.data.result}
-			} */		
-		})	
-		
-		
+	function see(index){
+		$("#businessList").datagrid("selectRow",index);
+		var row=$("#businessList").datagrid("getSelected");
+		parent.parent.openTopWindow({
+    				width:900,
+    				height:600,
+    				title:"查看商机",
+    				"url": "manage/business/BusinessAction_see.action?busi.businessid="+row.id,
+    				close:function(){
+    					$("#businessList").datagrid("reload");
+    				}
+    			});
 	}
-	
-	
 	function modify(index){
 		$("#businessList").datagrid("selectRow",index);
 		var row=$("#businessList").datagrid("getSelected");

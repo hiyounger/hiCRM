@@ -23,7 +23,7 @@ public class JtcrmApplicationTests {
     UserServiceImp userServiceImp;
     @Test
     public void contextLoads() {
-        User user=userMapper.getUser(1233,"111");
+        User user=userMapper.getUser(110,"admin");
         System.out.println(user);
 
 //        List<User> users = userServiceImp.listUsers(1,2,2);
