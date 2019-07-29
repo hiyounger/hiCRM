@@ -120,39 +120,33 @@
         $("#sex").combobox('select', '男');
     }
     function addData() {
-        //使用easyui提交
+        var name=$("#name").val();
 
-        $('#form1').form('submit',{
-            url:"manage/Contacts/add",
-            onSubmit: function () {
-                return $(this).form('enableValidation').form('validate');
-            },
-            success:function(data){
-                if(data){
-                    alert("添加成功");
-                    window.close();
-                    var name=$("#name").val();
-                    window.opener.loadData("manage/Contacts/listone?name="+name);
+        //get和post是异步的，无法限制，需要原生的ajax请求
 
-                }else{
-                    alert("添加失败");
-                }
-            }
-        });
-        //使用ajax提交
-       /* $.get(
-            "manage/Contacts/add",
-            $("#form1").serialize(),
-            function(data) {
-                if(data){
-                    alert("添加成功");
-                   window.close();
-                   var name=$("#name").val();
-                   window.opener.loadData("manage/Contacts/listone?name="+name);
-                }else{
-                    alert("添加失败");
-                }
-            },'json')*/
+                    //使用easyui提交
+
+                    $('#form1').form('submit', {
+                        url: "manage/Contacts/add",
+                        onSubmit: function () {
+                            return $(this).form('enableValidation').form('validate');
+                        },
+                        success: function (data) {
+
+                            var map=eval('(' + data+ ')');
+
+                            if (map.success) {
+                                    alert("添加成功");
+                                    window.close();
+                                    window.opener.loadData("manage/Contacts/listone?id=" + map.id);
+                                } else {
+                                    alert("添加失败");
+                                }
+
+                            }
+
+                    });
+
     }
 
     //扩展easyui 的表单验证
