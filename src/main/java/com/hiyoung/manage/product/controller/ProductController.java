@@ -65,7 +65,7 @@ public class ProductController {
             success=true;
         }
         map.put("success",success);
-        System.out.println(map);
+        System.out.println("map=========="+map);
         return map;
     }
 

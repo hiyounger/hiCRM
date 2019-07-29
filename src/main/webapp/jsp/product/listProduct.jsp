@@ -73,6 +73,7 @@
     <script type="text/javascript">
 
         var num=0;   //默认选择0条数据
+        var IsCheckFlag = false ;  //单选
 
         function loadData(){
             //用datagrid分页展示产品信息
@@ -85,12 +86,12 @@
                 loadMsg:"正在加载，请稍等.....",//设置加载数据时的提示信息
                 pagination:true,//设置显示分页工具条
                 rownumbers:true,//设置是否显示行号
-                singleSelect:false,//设置是否只能选中一行
                 selectOnCheck: true,//true勾选会选择行，false勾选不选择行, 1.3以后有此选项。重点在这里
                 checkOnSelect: true, //true选择行勾选，false选择行不勾选, 1.3以后有此选项
                 pageNumber:1,//设置起始页码
-                pageSize:15,//设置每页展示的条数
-                pageList:[15,30,45],//设置每页展示展示的条数的下拉列表
+                pageSize:5,//设置每页展示的条数
+                pageList:[5,10,15],//设置每页展示展示的条数的下拉列表
+                singleSelect:true, //只允许选中一行
                 columns:[[
                     {field:'ck',checkbox:'true'},
                     {field:'productName',title:'产品名称'},
@@ -110,13 +111,93 @@
                     }*/
                 ]],
                 onCheck:function(rowIndex,rowData){
-                    num=num + 1;             //选中多少项
-                    $("#num").text(num)
+                    num =num + 1;             //选中多少项
+                    $("#num").text(num);
                 },onUncheck:function () {
-                    num=num -1;
-                    $("#num").text(num)
+                    num =num -1;
+                    $("#num").text(num);
+                },
+                onSelect: function (rowIndex, rowData) {    //第二次点击行取消选中（单选）
+                    if (!IsCheckFlag) {
+                        IsCheckFlag = true;
+                        rowIndexTo = rowIndex;
+                    } else if (rowIndexTo == rowIndex) {
+                        IsCheckFlag = false;
+                        $('#dg').datagrid("unselectRow", rowIndex);
+                    } else {
+                        IsCheckFlag = false;
+                    }
+                },
+                onClickRow: function (index, row) {        //单击行事件
+                    //---------结合SHIFT,CTRL,ALT键点击行实现多选------------
+                    if (index != selectIndexs.firstSelectRowIndex && !inputFlags.isShiftDown) {
+                        selectIndexs.firstSelectRowIndex = index;
+                    }
+                    if (inputFlags.isShiftDown) {
+                        $('#dg').datagrid('clearSelections');
+                        selectIndexs.lastSelectRowIndex = index;
+                        var tempIndex = 0;
+                        if (selectIndexs.firstSelectRowIndex > selectIndexs.lastSelectRowIndex) {
+                            tempIndex = selectIndexs.firstSelectRowIndex;
+                            selectIndexs.firstSelectRowIndex = selectIndexs.lastSelectRowIndex;
+                            selectIndexs.lastSelectRowIndex = tempIndex;
+                        }
+                        for (var i = selectIndexs.firstSelectRowIndex ; i <= selectIndexs.lastSelectRowIndex ; i++) {
+                            $('#dg').datagrid('selectRow', i);
+                        }
+                    }
+                    //---------结合SHIFT,CTRL,ALT键点击行实现多选------------
                 }
             });
+        }
+
+        //把键盘按下事件和放开事件都放到JS中即可
+            //-------------------------------------------------------------------------------
+            //---------结合SHIFT,CTRL,ALT键点击行实现多选------------
+            //-------------------------------------------------------------------------------
+        var KEY = { SHIFT: 16, CTRL: 17, ALT: 18, DOWN: 40, RIGHT: 39, UP: 38, LEFT: 37 };
+        var selectIndexs = { firstSelectRowIndex: 0, lastSelectRowIndex: 0 };
+        var inputFlags = { isShiftDown: false, isCtrlDown: false, isAltDown: false }   //默认HIFT,CTRL,ALT键 都没点击
+
+        function keyPress(event) {  //响应键盘按下事件
+            var e = event || window.event;
+            var code = e.keyCode | e.which | e.charCode;
+            switch (code) {
+                case KEY.SHIFT:  //点击shift键
+                    inputFlags.isShiftDown = true;
+                    $('#dg').datagrid('options').singleSelect = false;
+                    break;
+                case KEY.CTRL:   //点击ctrl键
+                    inputFlags.isCtrlDown = true;
+                    $('#dg').datagrid('options').singleSelect = false;
+                case KEY.ALT:
+                    inputFlags.isAltDown = true;
+                    $('#dg').datagrid('options').singleSelect = false;
+                    break;
+                default:
+            }
+        }
+
+        function keyRelease(event) { //响应键盘按键放开的事件
+            var e = event || window.event;
+            var code = e.keyCode | e.which | e.charCode;
+            switch (code) {
+                case KEY.SHIFT:
+                    inputFlags.isShiftDown = false;
+                    selectIndexs.firstSelectRowIndex = 0;
+                    $('#dg').datagrid('options').singleSelect = true;
+                    break;
+                case KEY.CTRL:
+                    inputFlags.isCtrlDown = false;
+                    selectIndexs.firstSelectRowIndex = 0;
+                    $('#dg').datagrid('options').singleSelect = true;
+                case KEY.ALT:
+                    inputFlags.isAltDown = false;
+                    selectIndexs.firstSelectRowIndex = 0;
+                    $('#dg').datagrid('options').singleSelect = true;
+                    break;
+                default:
+            }
         }
 
         function loadSingle(){
@@ -391,25 +472,33 @@
             }
         };
 
+        //enter键添加操作
+        function selectForKeyDown(){  //这个方法和onkeydown绑定，只要在指定容器中按键盘就会触发此方法
+            if (event.keyCode == 13){   //13代表Enter键
+                doSearch();  //实现条件查询功能块代码
+            }
+        }
+
 
 
     </script>
 </head>
-<body>
+<body onkeydown="javascript:keyPress(event);" onkeyup="javascript:keyRelease(event);">
 
     <%--<div id="dlg" class="easyui-dialog"  title="新建产品" style="width: 500px;height: 400px"
          data-options="closed:true"  href="jsp/product/addProduct.jsp">
 
     </div>--%>
-    <div id="dlg" class="easyui-dialog"  title="新建产品" style="width: 500px;height: 400px"
+    <div id="dlg" class="easyui-dialog"  title="新建产品" style="width: 500px;height: 350px;overflow: hidden"
          data-options="closed:true" href="jsp/product/addProduct.jsp">
 
     </div>
 
     <div class="right">
         <h4>产品管理</h4>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-        <input id="search" class="easyui-searchbox" data-options="prompt:'请输入值',searcher:doSearch"  style="padding-top: 15px" />
-        <button id="addProduct" onClick='addProduct()'>新建产品</button>
+        <input id="search" class="easyui-searchbox" onkeydown="selectForKeyDown()" data-options="prompt:'请输入值',searcher:doSearch"  style="padding-top: 15px" />
+        <%--<button id="addProduct" onClick='addProduct()'>新建产品</button>--%>
+        <a href="javascript:void(0)" id="addProduct" class="easyui-linkbutton" onclick="addProduct()">新建产品</a>
     </div>
 
 

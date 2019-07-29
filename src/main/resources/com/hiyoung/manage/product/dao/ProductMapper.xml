@@ -159,14 +159,14 @@
   <select id="getCount2" resultType="java.lang.Integer">
     <bind name="bindValue1" value="'%'+productName+'%'" />
     select count(tb_crm_product.product_id) from tb_crm_product where product_state=1
-    where tb_crm_product.product_name like #{bindValue1}
+    and tb_crm_product.product_name like #{bindValue1}
   </select>
 
   <!--条件查询分页展示-->
   <select id="listProductCondition" resultMap="BaseResultMap">
     <bind name="bindValue1" value="'%'+productName+'%'" />
       select <include refid="Base_Column_List"/> from tb_crm_product where product_state=1
-      where tb_crm_product.product_name like #{bindValue1}
+      and tb_crm_product.product_name like #{bindValue1}
       limit #{offset},#{rows}
   </select>
 
