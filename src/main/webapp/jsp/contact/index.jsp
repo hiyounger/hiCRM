@@ -157,6 +157,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 </body>
 <script type="text/javascript">
+
+    var IsCheckFlag=false;
+
     //批量删除
     function deletedata() {
         //返回选中多行
@@ -247,7 +250,7 @@ $("#dlg").dialog({
 
     });
 
-    var IsCheckFlag=false;
+
     //分页方法
     function loadData(param,isSingle){
         $('#dg').datagrid({
@@ -304,7 +307,7 @@ $("#dlg").dialog({
             toolbar:"#tb",
             striped:true,
             pagination:true,
-            singleSelect:false,
+            singleSelect:true,
           //  rownumbers:true,
             pageNumber:1,
             pageSize:5,
