@@ -49,7 +49,7 @@
 			color:white ;
 		}
 		#addBtn{
-			margin-left: 420px;
+			margin-left: 380px;
 		}
 
 		#tx{
