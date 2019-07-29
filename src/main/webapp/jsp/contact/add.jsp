@@ -28,8 +28,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             height: 12px;
         }
         td div{
-            margin-bottom: 4px;
+            padding-bottom: 8px;
+            font-size: 14px;
         }
+
     </style>
 </head>
 <body>
@@ -42,17 +44,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <table cellpadding="5">
                 <tr>
                     <td>
-                        <div>合同编号</div>
+                        <div><span style="color: red;">*</span>合同编号</div>
                         <input class="easyui-textbox" type="text" name="number" data-options="required:true,validType:'number'" ></input>
                     </td>
                     <td>
-                        <div>合同名称</div>
+                        <div><span style="color: red;">*</span>合同名称</div>
                         <input class="easyui-textbox" type="text" name="contactname" data-options="required:true"></input>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <div>客户名称</div>
+                        <div><span style="color: red;">*</span>客户名称</div>
                         <input class="easyui-textbox" type="text" name="customername" data-options="required:true" placeholder="+添加"></input>
                     </td>
                     <td>
@@ -140,6 +142,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                    if(data=="1"){
                        //关闭对话框
                        $.cookie('isSingle', true, { expires: 1 });
+                       clearForm();
                        $(".panel-tool-close").click();
 
                    }

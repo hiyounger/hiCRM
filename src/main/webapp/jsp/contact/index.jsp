@@ -90,16 +90,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             border: none;
             width: 300px;
             /*display: none;*/
+            margin-left: -100px;
 
         }
 
         #dlg{
-            width:700px;
+            width:500px;
             height:400px;
+
+
         }
     </style>
 </head>
-<body>
+<body  class="body01"   οnkeydοwn="javascript:keyPress(event);" οnkeyup="javascript:keyRelease(event);">
+
 <!--    <div class="container">-->
 <div id="dlg" href="jsp/contact/add.jsp" class="easyui-dialog" title="新建合同"
      data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true">
@@ -242,9 +246,51 @@ $("#dlg").dialog({
 
     });
 
+    var IsCheckFlag=false;
     //分页方法
     function loadData(param,isSingle){
         $('#dg').datagrid({
+
+            /**
+             * 选择单行/多行
+             * @param rowIndex
+             * @param rowData
+             */
+            onSelect: function (rowIndex, rowData) {
+                if (!IsCheckFlag) {
+                    IsCheckFlag = true;
+                    rowIndexTo = rowIndex;
+                } else if (rowIndexTo == rowIndex) {
+                    IsCheckFlag = false;
+                    $('#dg').datagrid("unselectRow", rowIndex);
+                } else {
+                    IsCheckFlag = false;
+                }
+            },
+
+//单击行事件
+            onClickRow: function (index, row) {
+                //---------结合SHIFT,CTRL,ALT键点击行实现多选------------
+                if (index != selectIndexs.firstSelectRowIndex && !inputFlags.isShiftDown) {
+                    selectIndexs.firstSelectRowIndex = index;
+                }
+                if (inputFlags.isShiftDown) {
+                    $('#dg').datagrid('clearSelections');
+                    selectIndexs.lastSelectRowIndex = index;
+                    var tempIndex = 0;
+                    if (selectIndexs.firstSelectRowIndex > selectIndexs.lastSelectRowIndex) {
+                        tempIndex = selectIndexs.firstSelectRowIndex;
+                        selectIndexs.firstSelectRowIndex = selectIndexs.lastSelectRowIndex;
+                        selectIndexs.lastSelectRowIndex = tempIndex;
+                    }
+                    for (var i = selectIndexs.firstSelectRowIndex ; i <= selectIndexs.lastSelectRowIndex ; i++) {
+                        $('#dg').datagrid('selectRow', i);
+                    }
+                }
+                //---------结合SHIFT,CTRL,ALT键点击行实现多选------------
+            },
+
+
             url:'manage/contract/listByPage',
             queryParams:{
                 contactName:param,
@@ -337,6 +383,47 @@ $("#dlg").dialog({
                     }}
             ]]
         });
+    }
+
+
+
+    //-------------------------------------------------------------------------------
+    //---------结合SHIFT,CTRL,ALT键点击行实现多选------------
+    //-------------------------------------------------------------------------------
+    var KEY = { SHIFT: 16, CTRL: 17, ALT: 18, DOWN: 40, RIGHT: 39, UP: 38, LEFT: 37 };
+    var selectIndexs = { firstSelectRowIndex: 0, lastSelectRowIndex: 0 };
+    var inputFlags = { isShiftDown: false, isCtrlDown: false, isAltDown: false }
+
+    function keyPress(event) {//响应键盘按下事件
+        var e = event || window.event;
+        var code = e.keyCode | e.which | e.charCode;
+        switch (code) {
+            case KEY.SHIFT:
+                inputFlags.isShiftDown = true;
+                $('#dg').datagrid('options').singleSelect = false;
+                break;
+            case KEY.CTRL:
+                inputFlags.isCtrlDown = true;
+                $('#dg').datagrid('options').singleSelect = false;
+            default:
+        }
+    }
+
+    function keyRelease(event) { //响应键盘按键放开的事件
+        var e = event || window.event;
+        var code = e.keyCode | e.which | e.charCode;
+        switch (code) {
+            case KEY.SHIFT:
+                inputFlags.isShiftDown = false;
+                selectIndexs.firstSelectRowIndex = 0;
+                $('#dg').datagrid('options').singleSelect = true;
+                break;
+            case KEY.CTRL:
+                inputFlags.isCtrlDown = false;
+                selectIndexs.firstSelectRowIndex = 0;
+                $('#dg').datagrid('options').singleSelect = true;
+            default:
+        }
     }
 
 </script>
