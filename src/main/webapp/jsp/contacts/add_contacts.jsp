@@ -53,10 +53,9 @@
         </tr>
         <tr>
             <td>
-                <select name="isKeyMaker" class="easyui-combobox"  style="width:300px;height: 40px;">
+                <select id="isKeyMaker" name="isKeyMaker" class="easyui-combobox"  style="width:300px;height: 40px;">
                     <option value="否">请选择(默认否)</option>
                     <option value="是">是</option>
-                    <option value="否">否</option>
                 </select>
             </td>
             <td><input id="name" class="easyui-textbox" data-options="required:true,validType:'CHS'"  type="text" name="name" style="width:300px;height: 40px;"/></td>
@@ -92,23 +91,22 @@
         <tr>
             <td><input type="text"  class="easyui-datetimebox" name="nextContactTime" data-options="prompt:'请选择日期'" style="width:300px;height: 40px;"></td>
             <td>
-                <select class="easyui-combobox" name="sex" style="width:300px;height: 40px;">
+                <select id="sex" class="easyui-combobox" name="sex" style="width:300px;height: 40px;">
                     <option value="男">请选择性别(默认男)</option>
-                    <option value="男">男</option>
                     <option value="女">女</option>
                 </select>
             </td>
         </tr>
         <tr>
-            <td colspan="2">备注</td>
+            <td>备注</td>
         </tr>
         <tr>
-            <td colspan="2"><input class="easyui-textbox" name="remarks" data-options="multiline:true"style="width:95%;height:50px"></td>
+            <td ><input class="easyui-textbox" name="remarks" data-options="multiline:true"style="width:300px;height:60px"></td>
         </tr>
     </table>
     </form>
     <div id="d4">
-        <div id="d41"><button onclick="addData()">保存</button>&ensp;<button onclick="reset()">取消</button></div>
+        <div id="d41"><button onclick="addData()">保存</button>&ensp;<button onclick="reset()">重置</button></div>
     </div>
 
 </div>
@@ -117,7 +115,9 @@
 <script>
     //重置表单的方法
     function reset(){
-      $("#form1").reset();
+      $("#form1").form('clear');
+        $("#isKeyMaker").combobox('select', '否');
+        $("#sex").combobox('select', '男');
     }
     function addData() {
         //使用easyui提交
