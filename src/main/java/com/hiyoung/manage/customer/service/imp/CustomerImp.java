@@ -16,10 +16,10 @@ public class CustomerImp implements CustomerIf {
     CustomerMapper customerMapper ;
 
     @Override
-    public List<Customer> getCustomerByPage(Integer page, Integer rows,Integer id) {
+    public List<Customer> getCustomerByPage(Integer page, Integer rows,Integer id,String word) {
         //调用customerMapper的查询的方法
         //先判断page的合法性
-        double count = customerMapper.getCount();
+        double count = customerMapper.getCount(word);
         System.out.println(page+rows);
         //计算总页数
         int pageCount =  (int) Math.ceil(count/rows);
@@ -33,7 +33,7 @@ public class CustomerImp implements CustomerIf {
         Integer offerset = (page-1)*rows ;
 
         if(id==0){
-            return customerMapper.getCustomerByPage(offerset, rows);
+            return customerMapper.getCustomerByPage(offerset, rows,word);
         }else {
             List<Customer> list = new ArrayList<>();
             list.add(customerMapper.selectById(id));
@@ -43,8 +43,8 @@ public class CustomerImp implements CustomerIf {
     }
 
     @Override
-    public Integer getCount() {
-        return customerMapper.getCount();
+    public Integer getCount(String word) {
+        return customerMapper.getCount(word);
     }
 
     @Override
