@@ -42,7 +42,7 @@
 
         }
 
-        #img1,#img2,#img3,#img4{
+        #img1,#img2,#img4{
             width: 15px;
             height: 15px;
         }
@@ -51,7 +51,10 @@
             height: 100%;
             float: right;
         }
-
+        a{
+            color: black;
+            text-decoration:none;
+        }
     </style>
     <script>
 
@@ -97,7 +100,24 @@
                     }
 
                 ]]
-            })
+                ,onCheck:function(rowIndex,rowData){//选中一行行数加一
+                $("#num").text($('#dg').datagrid('getChecked').length)
+            },onUncheck:function () {//取消选中一行行数减一
+                $("#num").text($('#dg').datagrid('getChecked').length)
+            },onCheckAll:function(){
+                $("#num").text($('#dg').datagrid('getChecked').length)
+            },onUncheckAll:function(){
+                $("#num").text($('#dg').datagrid('getChecked').length)
+            }
+            });
+            //更改列表底部样式，及刷新效果
+            var pager=$('#dg').datagrid().datagrid('getPager');// get the pager of datagrid
+            pager.pagination({
+                displayMsg:'显示 {from} 到 {to}  共{total}记录 ',onBeforeRefresh:function(){
+                    loadData("manage/Contacts/list");
+                    return true;
+                },showPageList:true,beforePageText:'第',afterPageText:'页'
+            });
         }
         function updateData(id) {
             alert(id);
@@ -105,6 +125,7 @@
 
         $(function(){
             loadData("manage/Contacts/list");
+            $("#num").text($('#dg').datagrid('getChecked').length);
         })
 
         function deleteData(){
@@ -151,6 +172,7 @@
         function search() {
             var word=$("#ss").val();
             loadData("manage/Contacts/listpart?word="+word);
+            $("#num").text($('#dg').datagrid('getChecked').length);
         }
 
     </script>
@@ -166,9 +188,13 @@
     场景：<select name="">
     <option value="">全部联系人</option>
     <option></option>
-</select> &ensp;&ensp;<img src="static/img/logo.png" id="img1" />&ensp; <a href="javascript:void(0)">高级筛选</a> &ensp;
+</select>
+    <span class="tx1">已选中</span>
+    <span class="tx1" id="num">
+			</span>
+    <span class="tx1">项&emsp;&emsp;|</span>
+    &ensp;&ensp;<img src="static/img/logo.png" id="img1" />&ensp; <a href="javascript:void(0)">高级筛选</a> &ensp;
             <img src="static/img/logo.png" id="img2" /> <a href="javascript:deleteData()">删除</a>&ensp;
-            <img src="static/img/logo.png" id="img3" /> <a href="javascript:loadData('manage/Contacts/list')">刷新</a>
           <div id="d12">
               <img src="static/easyui/themes/black/images/slider_handle.png" id="img4" /> <a href="javascript:addContacts()">新建联系人</a>&ensp;
           </div>
