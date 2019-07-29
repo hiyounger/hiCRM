@@ -30,6 +30,7 @@
             width: 70%;
             height: 625px;
             float: left;
+            border: none;
             /*background-image: url(static/img/login.png);*/
             /*background-position: center;*/
 
@@ -37,6 +38,7 @@
         #left .bgImg{
             width: 100%;
             height: 100%;
+            border: none;
         }
         #right{
             width: 30%;
@@ -68,34 +70,38 @@
             width: 300px;
         }
         #submit:hover{
-            background-color: #81c2ee;
+            background-color:#55AAEE ;
         }
         #copyright{
             font-size:0.4em;
             /*margin-top: 200px;*/
             text-align: center;
-            color: #808073;
+            color: purple;
             /*background: red;*/
             position: absolute;
             bottom: 0;
             height: 20px;
             left: 30%;
         }
+        td {
+            padding-bottom: 24px;
+        }
+
+
     </style>
 </head>
-<body style="margin: 0px;">
+<body style="margin: 0px;background: #b4ddff;">
 <div id="left">
     <img class="bgImg" src="static/img/login.png" ></img>
 </div>
 <div id="right">
-    <h1 align="center" style="font-family: '微软雅黑'; font-size: 1em;margin-top: 80px;">悟空CRM系统</h1>
+    <h1 align="center" style="font-family: '微软雅黑';margin-top:190px; font-size: 1em;margin-top: 80px;">悟空CRM系统</h1>
     <form id="form" method="post" onsubmit='prevent(this)'>
         <table id="table" height="150px" >
             <tr><td><span id="warn"  style="visibility: hidden">请输入正确的用户名和密码</span></td></tr>
             <tr ><td height="50px"><input id="phone" type="text" name='phone'/> </td></tr>
             <tr><td height="50px"><input id="password" type="password" name="password"  /> </td></tr>
             <tr><td height="50px"><div id="submit">登录</div></td></tr>
-
         </table>
         <input style="display: none" type="submit" id="fake_submit">
     </form>

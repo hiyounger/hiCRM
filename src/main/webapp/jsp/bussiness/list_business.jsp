@@ -35,7 +35,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  
   <body>
   <div id="div1"> <div id="add"><button id="button2"><font  color="white">新建联系人</font></button></div> </div>
- <div align="center"> <input id="ss"   class="easyui-searchbox" data-options="prompt:'请输入商机名'" style="width:300px"></input></div>
+ <div align="center"> <input id="ss"  name="action"  class="easyui-searchbox" data-options="prompt:'请输入商机名'" style="width:300px"></input></div>
  
   <button id="button1"><font color="white">删除选中行</font></button>
  <table id="businessList"></table>
@@ -88,8 +88,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	//查询
 	$('#ss').searchbox({
     searcher:function(value){
-    	
-    see("manage/bussiness/buinessInfosee?action="+value)
+    see("manage/bussiness/buinessInfosee?action="+value);
     }
    
       });
