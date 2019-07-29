@@ -38,4 +38,6 @@ public interface LeadsMapper {
      */
     int  getDelleads(int id);
 
+    Leads getLeadsName(@Param("leadsName") String leadsName);
+
 }
