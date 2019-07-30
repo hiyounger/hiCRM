@@ -219,9 +219,11 @@
        $.post("login",$("#form").serialize(),function(data){
          if(!data){
               alert("登陆失败！");
+
           } else{
               location.href="jsp/user/index.jsp";
           }
+           $("#submit").text("登录");
        },"json")
     })
 
