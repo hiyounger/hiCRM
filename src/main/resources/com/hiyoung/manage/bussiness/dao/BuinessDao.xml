@@ -59,6 +59,28 @@
     from tb_buiness
   </select>
   
+    <select id="newget" resultMap="BaseResultMap">
+  select id, name, customer_name, status, stage, money, pre_date, beizhu, create_name, 
+    update_time, create_time, customer_attribute ,view
+  from tb_buiness 
+  <where>
+   view=1
+  <if test="buiness.name !=null and buiness.name !=''">
+      <bind name="ename" value="'%'+buiness.name+'%'"/>
+      and name like #{ename}
+  </if>
+  <if test="buiness.customerName !=null and buiness.customerName !=''">
+  <bind name="cuatomer" value="'%'+buiness.customerName+'%'"/>
+  and customer_name like #{cuatomer}
+  </if>
+  </where>
+  limit #{offere},#{rows}
+  </select>
+  
+  
+  
+  
+  
   <select id="selectByPage" resultMap="BaseResultMap">
     select id, name, customer_name, status, stage, money, pre_date, beizhu, create_name, 
     update_time, create_time, customer_attribute ,view
@@ -83,6 +105,14 @@
   
     <select id="getcount" resultType="java.lang.Integer">
   select count(id) from tb_buiness where view=1
+  </select>
+  
+  <select id="getCount2" resultType="java.lang.Integer">
+    select count(id) from  tb_buiness where view=1
+    <if test="namese !=null and namese !='' ">
+      <bind name="name2" value="'%'+namese+'%'"/>
+      and  name like #{name2} 
+    </if>
   </select>
   
   
