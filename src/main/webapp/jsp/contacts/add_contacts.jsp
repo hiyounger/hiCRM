@@ -128,13 +128,14 @@
 
                     $('#form1').form('submit', {
                         url: "manage/Contacts/add",
+                        type: "POST",//方法类型
+                        dataType: "json",//预期服务器返回的数据类型
                         onSubmit: function () {
                             return $(this).form('enableValidation').form('validate');
                         },
                         success: function (data) {
 
-                            var map=eval('(' + data+ ')');
-
+                          var map=eval('(' + data+ ')');
                             if (map.success) {
                                     alert("添加成功");
                                     window.close();
