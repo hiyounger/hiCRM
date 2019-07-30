@@ -95,7 +95,25 @@
 
     <insert id="insert" parameterType="com.hiyoung.system.user.entity.User" useGeneratedKeys="true" keyProperty="id">
         insert into tb_user ( <include refid="Base_Column_List"></include> ,password,status ) VALUES
-        (#{name},#{sex},#{email},#{department},#{position},#{supervisor},#{phone},#{password},1)
+        (#{name},
+       <choose>
+           <when test="sex=-1">
+               -1
+           </when>
+           <otherwise>
+               #{sex}
+           </otherwise>
+       </choose>
+        ,#{email},#{department},#{position},
+        <choose>
+            <when test="supervisor=-1">
+                -1
+            </when>
+            <otherwise>
+                #{supervisor}
+            </otherwise>
+        </choose>
+        ,#{phone},#{password},1)
     </insert>
 
     <update id="deleteByIds" parameterType="java.util.List" >

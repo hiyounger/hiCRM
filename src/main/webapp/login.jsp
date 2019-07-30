@@ -190,7 +190,7 @@
     {
         with (thisform)
         {
-            if (validate_phone(phone,"请输入正确的手机号")&&validate_password(password,"请输入正确的密码（6-8位字母或数字）")){
+            if (validate_phone(phone,"请输入正确的手机号")&&validate_password(password,"请输入正确的密码（6-16位字母或数字）")){
                 return true;
             }else{
                 return false;
@@ -202,27 +202,23 @@
         event.preventDefault()
         return validate_form(subject)
     }
-    $("input[type=text]").on('blur',function () {
-        validate_phone(phone,"请输入正确的手机号")
-    })
-       $('input[type=password]') .on('blur',function () {
-        validate_password(password,"请输入正确的密码（6-8位字母或数字）")
-        })
-    $('#submit').on('click',function(){
-            $('#fake_submit').trigger('click')
-         $("#submit").text("正在登录...");
 
+    $('#submit').on('click',function(){
+       var isCorrect= validate_form($('#form'))
+        if(!isCorrect){
+            return;
+        }
        /*if(!($("#phone").val().trim()&&$("#password").val().trim())){
            $("#warn").css("visibility","display");
        }*/
 
        $.post("login",$("#form").serialize(),function(data){
-         if(!data){
-              alert("登陆失败！");
-
-          } else{
+         if(data){
               location.href="jsp/user/index.jsp";
-          }
+          }else{
+             $("#warn").css("visibility","visible");
+             $("#warn").text("用户名或密码错误");
+         }
            $("#submit").text("登录");
        },"json")
     })

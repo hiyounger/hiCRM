@@ -60,4 +60,8 @@ public class UserController {
         List<Integer> list = mapper.readValue(ids, new TypeReference<List<Integer>>(){});
         return  userMapper.deleteByIds(list);
     }
+    @PostMapping("/system/user/validatePhone")
+    public int validatePhone(String phone){
+        return userMapper.validatePhone(phone);
+    }
 }
