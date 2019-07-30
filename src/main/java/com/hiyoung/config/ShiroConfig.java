@@ -56,9 +56,9 @@ public class ShiroConfig  {
         filterMap.put("/**", "authc");*/
         filterMap.put("/login","anon");
         filterMap.put("/static/**","anon");
-        filterMap.put("/system/**","anon");
-        filterMap.put("/jsp/**","anon");
-        filterMap.put("/**", "anon");
+        filterMap.put("/system/**","authc");
+        filterMap.put("/jsp/**","authc");
+        filterMap.put("/**", "authc");
 
         bean.setFilterChainDefinitionMap(filterMap);
         return bean;
