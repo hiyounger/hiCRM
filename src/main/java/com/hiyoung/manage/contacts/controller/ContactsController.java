@@ -2,9 +2,12 @@ package com.hiyoung.manage.contacts.controller;
 
 import com.hiyoung.manage.contacts.entity.Contacts;
 import com.hiyoung.manage.contacts.service.ContactsService;
+import com.hiyoung.manage.contacts.util.Timer1;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +27,7 @@ public class ContactsController {
     @RequestMapping("/list")
     @ResponseBody
     public Map<String,Object> getLIst( String page,String rows){
+
         //从请求中获取当前页面和每页展示的条数
         List<Contacts> list= contactsService.listBYPage(page,rows,null);
         Integer zs= contactsService.getCount(null);
@@ -37,8 +41,8 @@ public class ContactsController {
     @ResponseBody
     public  boolean batchImport(MultipartFile file)throws Exception{
         List<Contacts> contactsList=new ArrayList<>();
-        // 编写解析代码逻辑
-        // 基于.xls 格式解析 HSSF
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        // 编写解析代码逻辑   基于.xls 格式解析 HSSF
         // 1、 加载Excel文件对象
         HSSFWorkbook hssfWorkbook = new HSSFWorkbook(file.getInputStream());
         // 2、 读取一个sheet
@@ -50,28 +54,54 @@ public class ContactsController {
                 // 第一行 跳过
                 continue;
             }
+
             // 跳过空行
             if (row.getCell(0) == null || StringUtils.isBlank(row.getCell(0).getStringCellValue())) {
                 continue;
             }
-           Contacts contacts=new Contacts();
-            contacts.setName(row.getCell(0).getStringCellValue());
-            contacts.setCustomerName(row.getCell(1).getStringCellValue());
-            contacts.setTelephone(row.getCell(2).getStringCellValue());
-            contacts.setPhone(row.getCell(3).getStringCellValue());
-            contacts.setEmail(row.getCell(4).getStringCellValue());
-            contacts.setJob(row.getCell(5).getStringCellValue());
-            contacts.setAddress(row.getCell(6).getStringCellValue());
-            SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            contacts.setNextContactTime(sdf.parse(row.getCell(7).getStringCellValue()));
-            contacts.setRemarks(row.getCell(8).getStringCellValue());
-            contacts.setCreater(row.getCell(9).getStringCellValue());
-            contacts.setUpdateTime(sdf.parse(row.getCell(10).getStringCellValue()));
-            contacts.setIsKeyMaker(row.getCell(11).getStringCellValue());
-            contacts.setSex(row.getCell(12).getStringCellValue());
-
+            Contacts contacts=new Contacts();
+            if(row.getCell(0).getStringCellValue()!=null&&row.getCell(0).getStringCellValue().trim()!=""){
+                contacts.setName(row.getCell(0).getStringCellValue());
+            }
+            if(row.getCell(1).getStringCellValue()!=null&&row.getCell(1).getStringCellValue().trim()!=""){
+                contacts.setCustomerName(row.getCell(1).getStringCellValue());
+            }
+          /*  if(row.getCell(2).getStringCellValue()!=null&&row.getCell(2).getStringCellValue().trim()!=""){
+                contacts.setTelephone(row.getCell(2).getStringCellValue());
+            }
+            if(row.getCell(3).getStringCellValue()!=null&&row.getCell(3).getStringCellValue().trim()!=""){
+                contacts.setPhone(row.getCell(3).getStringCellValue());
+            }
+            if(row.getCell(4).getStringCellValue()!=null&&row.getCell(4).getStringCellValue().trim()!=""){
+                contacts.setEmail(row.getCell(4).getStringCellValue());
+            }
+            if(row.getCell(5).getStringCellValue()!=null&&row.getCell(5).getStringCellValue().trim()!=""){
+                contacts.setJob(row.getCell(5).getStringCellValue());
+            }
+            if(row.getCell(6).getStringCellValue()!=null&&row.getCell(6).getStringCellValue().trim()!=""){
+                contacts.setAddress(row.getCell(6).getStringCellValue());
+            }
+            if(row.getCell(7).getStringCellValue()!=null&&row.getCell(7).getStringCellValue().trim()!=""){
+                contacts.setNextContactTime(sdf.parse(row.getCell(7).getStringCellValue()));
+            }
+            if(row.getCell(8).getStringCellValue()!=null&&row.getCell(8).getStringCellValue().trim()!=""){
+                contacts.setRemarks(row.getCell(8).getStringCellValue());
+            }
+            if(row.getCell(9).getStringCellValue()!=null&&row.getCell(9).getStringCellValue().trim()!=""){
+                contacts.setCreater(row.getCell(9).getStringCellValue());
+            }
+            if(row.getCell(10).getStringCellValue()!=null&&row.getCell(10).getStringCellValue().trim()!=""){
+                contacts.setUpdateTime(sdf.parse(row.getCell(10).getStringCellValue()));
+            }
+            if(row.getCell(11).getStringCellValue()!=null&&row.getCell(11).getStringCellValue().trim()!=""){
+                contacts.setIsKeyMaker(row.getCell(11).getStringCellValue());
+            }
+            if(row.getCell(12).getStringCellValue()!=null&&row.getCell(12).getStringCellValue().trim()!=""){
+                contacts.setSex(row.getCell(12).getStringCellValue());
+            }*/
             contactsList.add(contacts);
         }
+        System.out.println(contactsList.get(1)+"--"+contactsList.size());
        int num= contactsService.batchInsert(contactsList);
         if(num!=0){
             return true;
@@ -106,8 +136,6 @@ public class ContactsController {
         map.put("rows",list);
         return map;
     }
-
-
 
     @RequestMapping("/delete")
     @ResponseBody
@@ -149,4 +177,5 @@ public class ContactsController {
     public String list(){
         return "contacts/list_contacts";
     }
+
 }

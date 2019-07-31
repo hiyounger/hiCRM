@@ -118,6 +118,7 @@
         $(function(){
             loadData("manage/Contacts/list");
             $("#num").text($('#dg').datagrid('getChecked').length);
+
         })
 
         function deleteData(){
@@ -161,13 +162,20 @@
 
             }
         }
+
         function search() {
             var word=$("#ss").val();
             loadData("manage/Contacts/listpart?word="+word);
             $("#num").text($('#dg').datagrid('getChecked').length);
         }
 
+        function importfile(){
+            var formdata = new FormData();
 
+            $.post('manage/Contacts/import',formdata).then(function (data) {
+                   alert(data);
+                })
+        }
     </script>
 </head>
 <body>
@@ -197,10 +205,9 @@
 <div id="d2">
     <table id="dg" style="width:100%;" ></table>
 
-    <form id="form1" action="manage/Contacts/import"  enctype="multipart/form-data" method="post">
-        <input id="file" type="file" name="file"/>
-        <button id="import" type="submit">导入</button>
-        <button id="export">导出</button>
+    <form action="manage/Contacts/import" th:action="@{/excel/upload}" enctype="multipart/form-data" method="post">
+        <input type="file" name="file"/>
+        <button type="submit">开始导入</button>
     </form>
 
 </div>
