@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hiyoung.manage.product.dao.ProductMapper">
+  <resultMap id="BaseResultMap" type="com.hiyoung.manage.product.entity.Product">
+    <result column="product_id" jdbcType="INTEGER" property="productId" />
+    <result column="product_type" jdbcType="VARCHAR" property="productType" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="creator_user_id" jdbcType="INTEGER" property="creatorUserId" />
+    <result column="standard_price" jdbcType="REAL" property="standardPrice" />
+    <result column="leader_id" jdbcType="INTEGER" property="leaderId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="product_state" jdbcType="INTEGER" property="productState" />
+    <result column="product_unit" jdbcType="VARCHAR" property="productUnit" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    product_id, product_type, product_name, creator_user_id, standard_price, leader_id,
+    create_time, update_time, description,product_unit,product_state
+  </sql>
+
+  <insert id="insert" parameterType="com.hiyoung.manage.product.entity.Product">
+    insert into tb_crm_product(product_id, product_type, product_name,
+      creator_user_id, standard_price, leader_id, 
+      create_time, update_time, description, 
+      product_state, product_unit)
+    values(#{productId,jdbcType=INTEGER}, #{productType,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR},
+      #{creatorUserId,jdbcType=INTEGER}, #{standardPrice,jdbcType=REAL}, #{leaderId,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{description,jdbcType=VARCHAR}, 
+      #{productState,jdbcType=INTEGER}, #{productUnit,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hiyoung.manage.product.entity.Product">
+    insert into tb_crm_product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="productType != null">
+        product_type,
+      </if>
+      <if test="productName != null">
+        product_name,
+      </if>
+      <if test="creatorUserId != null">
+        creator_user_id,
+      </if>
+      <if test="standardPrice != null">
+        standard_price,
+      </if>
+      <if test="leaderId != null">
+        leader_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="productState != null">
+        product_state,
+      </if>
+      <if test="productUnit != null">
+        product_unit,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="productId != null">
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="productType != null">
+        #{productType,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorUserId != null">
+        #{creatorUserId,jdbcType=INTEGER},
+      </if>
+      <if test="standardPrice != null">
+        #{standardPrice,jdbcType=REAL},
+      </if>
+      <if test="leaderId != null">
+        #{leaderId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="productState != null">
+        #{productState,jdbcType=INTEGER},
+      </if>
+      <if test="productUnit != null">
+        #{productUnit,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <!--分页展示产品信息-->
+  <select id="listProductByPage" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from tb_crm_product order by tb_crm_product.create_time desc  limit #{offset},#{rows}
+  </select>
+
+  <!--获得总条数-->
+  <select id="getCount" resultType="java.lang.Integer">
+      select count(tb_crm_product.product_id) from tb_crm_product
+  </select>
+
+  <!--创建产品-->
+  <insert id="addProduct" parameterType="com.hiyoung.manage.product.entity.Product">
+    insert into tb_crm_product(product_id, product_type, product_name,
+      creator_user_id, standard_price, leader_id,
+      create_time, update_time, description,
+      product_state, product_unit)
+    values(#{productId,jdbcType=INTEGER}, #{productType,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR},
+      #{creatorUserId,jdbcType=INTEGER}, #{standardPrice,jdbcType=REAL}, #{leaderId,jdbcType=INTEGER},
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{description,jdbcType=VARCHAR},
+      #{productState,jdbcType=INTEGER}, #{productUnit,jdbcType=VARCHAR})
+  </insert>
+
+  <!--获得条件查询总条数-->
+  <select id="getCount1" resultType="java.lang.Integer">
+    <bind name="bindValue" value="'%'+productName+'%'" />
+    select count(tb_crm_product.product_id) from tb_crm_product
+    <where>
+      <if test="productName != null">
+        tb_crm_product.product_name like #{bindValue}
+      </if>
+    </where>
+  </select>
+
+  <!--条件查询分页展示-->
+  <select id="listByPageByCondition" resultMap="BaseResultMap">
+    <bind name="bindValue" value="'%'+productName+'%'" />
+      select <include refid="Base_Column_List"/> from tb_crm_product
+      <where>
+        <if test=" isSingle == true">   /*查询单条数据*/
+          create_time=(SELECT MAX(create_time) FROM tb_crm_product)
+        </if>
+        <if test="productName != null">   /*模糊查询*/
+          and tb_crm_product.product_name like #{bindValue}
+        </if>
+      </where>
+      limit #{offset},#{rows}
+  </select>
+
+  <!--获得条件查询总条数-->
+  <select id="getCount2" resultType="java.lang.Integer">
+    <bind name="bindValue1" value="'%'+productName+'%'" />
+    select count(tb_crm_product.product_id) from tb_crm_product
+    where tb_crm_product.product_name like #{bindValue1}
+  </select>
+
+  <!--条件查询分页展示-->
+  <select id="listProductCondition" resultMap="BaseResultMap">
+    <bind name="bindValue1" value="'%'+productName+'%'" />
+      select <include refid="Base_Column_List"/> from tb_crm_product
+      where tb_crm_product.product_name like #{bindValue1}
+      limit #{offset},#{rows}
+  </select>
+
+
+
+
+
+</mapper>

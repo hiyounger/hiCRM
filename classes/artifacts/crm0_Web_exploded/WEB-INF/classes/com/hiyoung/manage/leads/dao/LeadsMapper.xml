@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hiyoung.manage.leads.dao.LeadsMapper">
+  <resultMap id="BaseResultMap" type="com.hiyoung.manage.leads.entity.Leads">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="leads_name" jdbcType="VARCHAR" property="leadsName" />
+    <result column="mobil" jdbcType="VARCHAR" property="mobil" />
+    <result column="update_time" jdbcType="DATE" property="updateTime" />
+    <result column="create_time" jdbcType="DATE" property="createTime" />
+    <result column="blame" jdbcType="VARCHAR" property="blame" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="next_contact_time" jdbcType="DATE" property="nextContactTime" />
+    <result column="create_person" jdbcType="VARCHAR" property="createPerson" />
+    <result column="leads_orgin" jdbcType="VARCHAR" property="leadsOrgin" />
+    <result column="customer_level" jdbcType="INTEGER" property="customerLevel" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="telephone" jdbcType="VARCHAR" property="telephone" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, leads_name, mobil,
+      update_time, create_time, blame,
+      address, next_contact_time, create_person,
+      leads_orgin, customer_level, remark,
+      state, telephone
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_leads
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+<!--分页查询-->
+  <select id="getLeadsList" resultMap="BaseResultMap">
+    select  * from  tb_leads WHERE state=1  limit #{page},#{size}
+
+
+  </select>
+
+<!--删除语句-->
+  <delete id="getDelleads" >
+      update tb_leads set state=0 where id=#{id}
+  </delete>
+
+<!--查询一共有多少条记录数-->
+  <select id="getCount" resultType="int">
+
+   SELECT COUNT(*)FROM tb_leads WHERE state=1
+
+  </select>
+
+
+
+
+
+<!--添加联系人-->
+  <insert id="addLeads" parameterType="com.hiyoung.manage.leads.entity.Leads" >
+     insert into tb_leads (id, leads_name, mobil,
+      update_time, create_time, blame,
+      address, next_contact_time, create_person,
+      leads_orgin, customer_level, remark,
+      state, telephone)
+    values (#{id,jdbcType=INTEGER}, #{leadsName,jdbcType=VARCHAR}, #{mobil,jdbcType=VARCHAR},
+      #{updateTime,jdbcType=DATE}, #{createTime,jdbcType=DATE}, #{blame,jdbcType=VARCHAR},
+      #{address,jdbcType=VARCHAR}, #{nextContactTime,jdbcType=DATE}, #{createPerson,jdbcType=VARCHAR},
+      #{leadsOrgin,jdbcType=VARCHAR}, #{customerLevel,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR},
+      1, #{telephone,jdbcType=VARCHAR})
+  </insert>
+
+<!--通过线索名称和手机查询-->
+  <select id="fuzzyQueryByName" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from tb_leads
+    where state=1
+
+    <if test="fuzzyQuery!=null and fuzzyQuery!='' ">
+      <!-- <bind name="fuzzyQuery" value="'%'+fuzzyQuery+'%'"/>-->
+       and leads_name like CONCAT ('%',#{fuzzyQuery},'%')
+       or telephone like  CONCAT ('%',#{fuzzyQuery},'%')
+    </if>
+    limit #{offsize},#{size}
+ </select>
+ <!-- 根据模糊查询的总记录数-->
+  <select id="getCountFuzzy" resultType="int">
+    select count(id) from tb_leads where state=1
+     <if test="fuzzyQuery!=null and fuzzyQuery!=''">
+        <bind name="fuzzyQuery" value= "'%'+fuzzyQuery+'%'"/>
+        and (leads_name like #{fuzzyQuery} or  telephone like #{fuzzyQuery})
+     </if>
+
+
+  </select>
+
+
+</mapper>

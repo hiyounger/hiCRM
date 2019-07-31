@@ -10,20 +10,25 @@ import java.util.List;
 @Service
 public class ContactsServiceImp implements ContactsService {
     @Resource
-    ContactsMapper ContactsMapper;
+    ContactsMapper contactsMapper;
     @Override
     public int getCount(String word) {
-        return ContactsMapper.getCount(word);
+        return contactsMapper.getCount(word);
     }
 
     @Override
     public Contacts selectById(Integer id) {
-        return ContactsMapper.selectById(id);
+        return contactsMapper.selectById(id);
     }
 
     @Override
     public int insert(Contacts record) {
-        return ContactsMapper.insert(record);
+        return contactsMapper.insert(record);
+    }
+
+    @Override
+    public int batchInsert(List<Contacts> list) {
+        return contactsMapper.batchInsert(list);
     }
 
     @Override
@@ -38,11 +43,11 @@ public class ContactsServiceImp implements ContactsService {
         if(page<1){
             page=1;
         }
-        return ContactsMapper.listBYPage((page-1)*rows,rows,word);
+        return contactsMapper.listBYPage((page-1)*rows,rows,word);
     }
 
     @Override
     public int deleteById(Integer id) {
-        return ContactsMapper.deleteById(id);
+        return contactsMapper.deleteById(id);
     }
 }

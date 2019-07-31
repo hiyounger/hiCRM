@@ -38,6 +38,22 @@
       #{remarks,jdbcType=VARCHAR}, #{creater,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{isKeyMaker,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR})
   </insert>
+
+    <insert id="batchInsert">
+      insert into tb_contacts ( name, customer_name,
+      telephone, phone, email,
+      job, address, next_contact_time,
+      remarks, creater, update_time,
+      is_key_maker, sex)
+    values <foreach collection="list" item="t" index="index" separator=",">
+        (#{t.name,jdbcType=VARCHAR}, #{t.customerName,jdbcType=VARCHAR},
+        #{t.telephone,jdbcType=VARCHAR}, #{t.phone,jdbcType=VARCHAR}, #{t.email,jdbcType=VARCHAR},
+        #{t.job,jdbcType=VARCHAR}, #{t.address,jdbcType=VARCHAR}, #{t.nextContactTime,jdbcType=TIMESTAMP},
+        #{t.remarks,jdbcType=VARCHAR}, #{t.creater,jdbcType=VARCHAR}, #{t.updateTime,jdbcType=TIMESTAMP},
+        #{t.isKeyMaker,jdbcType=VARCHAR}, #{t.sex,jdbcType=VARCHAR})
+    </foreach>
+    </insert>
+
   <select id="getCount" resultType="java.lang.Integer">
     select count(id) from  tb_contacts where delete_state=0
     <if test="word != null and word !='' ">

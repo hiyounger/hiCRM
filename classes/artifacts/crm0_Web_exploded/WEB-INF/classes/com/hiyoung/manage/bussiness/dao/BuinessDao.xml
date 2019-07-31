@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hiyoung.manage.bussiness.dao.BuinessDao">
+  <resultMap id="BaseResultMap" type="com.hiyoung.manage.bussiness.entity.Buiness">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="customer_name" jdbcType="VARCHAR" property="customerName" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="stage" jdbcType="VARCHAR" property="stage" />
+    <result column="money" jdbcType="INTEGER" property="money" />
+    <result column="pre_date" jdbcType="DATE" property="preDate" />
+    <result column="beizhu" jdbcType="VARCHAR" property="beizhu" />
+    <result column="create_name" jdbcType="VARCHAR" property="createName" />
+    <result column="update_time" jdbcType="DATE" property="updateTime" />
+    <result column="create_time" jdbcType="DATE" property="createTime" />
+    <result column="customer_attribute" jdbcType="VARCHAR" property="customerAttribute" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_buiness
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hiyoung.manage.bussiness.dao.BuinessDao">
+    insert into tb_buiness (id, name, customer_name, 
+      status, stage, money, 
+      pre_date, beizhu, create_name, 
+      update_time, create_time, customer_attribute
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{customerName,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{stage,jdbcType=VARCHAR}, #{money,jdbcType=INTEGER}, 
+      #{preDate,jdbcType=DATE}, #{beizhu,jdbcType=VARCHAR}, #{createName,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=DATE}, #{createTime,jdbcType=DATE}, #{customerAttribute,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.hiyoung.manage.bussiness.dao.BuinessDao">
+    update tb_buiness
+    set name = #{name,jdbcType=VARCHAR},
+      customer_name = #{customerName,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      stage = #{stage,jdbcType=VARCHAR},
+      money = #{money,jdbcType=INTEGER},
+      pre_date = #{preDate,jdbcType=DATE},
+      beizhu = #{beizhu,jdbcType=VARCHAR},
+      create_name = #{createName,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=DATE},
+      create_time = #{createTime,jdbcType=DATE},
+      customer_attribute = #{customerAttribute,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, name, customer_name, status, stage, money, pre_date, beizhu, create_name, 
+    update_time, create_time, customer_attribute
+    from tb_buiness
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, name, customer_name, status, stage, money, pre_date, beizhu, create_name, 
+    update_time, create_time, customer_attribute
+    from tb_buiness
+  </select>
+  
+  <select id="selectByPage" resultMap="BaseResultMap">
+    select id, name, customer_name, status, stage, money, pre_date, beizhu, create_name, 
+    update_time, create_time, customer_attribute 
+    from tb_buiness  limit #{offere},#{rows}
+  </select>
+  
+    <select id="getcount" resultType="java.lang.Integer">
+  select count(id) from tb_buiness
+  </select>
+  
+  
+</mapper>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/static/easyui/themes/icon.css">
+    <script type="text/javascript" src="/static/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/static/easyui/easyui-lang-zh_CN.js"></script>
+    <style>
+        .container{
+            width: 90%;
+            height: 500px;
+            border:1px solid grey;
+            position: relative;
+            margin: 20px auto;
+        }
+        .header{
+            width: 100%;
+            height: 80px;
+            background: white;
+            position: absolute;
+            left: 0;
+            z-index: 1;
+        }
+        .header img{
+            transform: scale(1.5);
+        }
+
+        .left{
+            width: 15%;
+            /*background: rgb(45,48,55);*/
+           position: absolute;
+            left: 0;
+            height: 100%;
+
+        }
+        .right{
+            width: 85%;
+            background:rgb(245,246,249);
+           position: absolute;
+            right: 0;
+            top:20px;
+            height: 100%;
+            padding-top: 80px;
+        }
+
+
+        .header_left{
+            float: left;
+            width: 15%;
+            height: 100%;
+            text-align: center;
+           margin-top: 24px;
+        }
+
+        .header_right{
+            float: left;
+            width: 85%;
+            height: 100%;
+            margin-top: -10px;
+        }
+
+        .header_right li{
+            list-style: none;
+            float: left;
+            margin-left: 40px;
+            margin-top: 20px;
+        }
+
+        .header_right li a{
+            text-decoration: none;
+            color: black;
+
+        }
+        .header_right li a:hover{
+            color: blue;
+        }
+        #sm li{
+            color:rgb(163,158,151) ;
+            background:rgb(45,48,55);
+        }
+
+        #sm{
+            background: rgb(69,78,87)!important;
+        }
+        #sm li:nth-of-type(11){
+            background: rgb(69,78,87);
+            color:white ;
+        }
+
+        .right h4{
+            font-size: 1.5em;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        #easyui-searchbox{
+            width: 200px;
+            height: 8px;
+            display: inline-block;
+
+        }
+
+        #addProduct{
+            display: inline-block;
+            float: right;
+            margin-right: 10px;
+            margin-top: 20px;
+            background-color: dodgerblue;
+        }
+
+        #product_div{
+            width: 100%;
+            height: 80%;
+            border: none;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header_left">
+                <img src="/static/img/logo.png">
+            </div>
+            <div class="header_right">
+                <ul>
+                    <li><a href="">办公</a></li>
+                    <li><a href="">客户管理</a></li>
+                    <li><a href="">商业智能</a></li>
+                    <li><a href="">项目管理</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="left">
+            <div style="margin:20px 0;">
+                <a href="javascript:;" class="easyui-linkbutton" onclick="toggle()">Toggle</a>
+            </div>
+            <div id="sm" class="easyui-sidemenu" data-options="data:data"></div>
+
+        </div>
+        <div class="right">
+            <h4>产品管理</h4>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+            <input class="easyui-searchbox" data-options="prompt:'请输入值'"  style="padding-top: 15px"/>
+            <button id="addProduct" onClick='addProduct()'>新建产品</button>
+            <iframe id="product_div" src="listProduct.jsp">
+
+
+            </iframe>
+        </div>
+
+    </div>
+
+</body>
+<script type="text/javascript">
+    var data = [{
+        text: '',
+        iconCls: 'fa fa-wpforms',
+        state: 'open',
+        children: [{
+            text: '快速访问 >'
+        },{
+            text: '仪表盘'
+        },{
+            text: '代办事项'
+        },{
+            text: '线索'
+        },{
+            text: '客户'
+        },{
+            text: '联系人'
+        },{
+            text: '公海'
+        },{
+            text: '商机'
+        },{
+            text: '合同',content:"合同"
+        },{
+            text: '回款'
+        },{
+            text: '产品'
+        }]
+    }];
+
+    /*function toggle(){
+        var opts = $('#sm').sidemenu('options');
+        $('#sm').sidemenu(opts.collapsed ? 'expand' : 'collapse');
+        opts = $('#sm').sidemenu('options');
+        $('#sm li').css("background","red");
+        $('#sm').sidemenu('resize', {
+            width: opts.collapsed ? 60 : 200
+        })
+    }
+    toggle();*/
+
+
+    //添加产品
+   /* window.open 弹出新窗口的命令；
+　　'page.html' 弹出窗口的文件名；
+　　'新建产品' 弹出窗口的名字（不是文件名），非必须，可用空''代替；
+　　height=400 窗口高度；
+　　width=600 窗口宽度；
+　　top=350 窗口距离屏幕上方的象素值；
+　　left=350 窗口距离屏幕左侧的象素值；
+　　toolbar=no 是否显示工具栏，yes为显示；
+　　menubar，scrollbars 表示菜单栏和滚动栏。
+　　resizable=no 是否允许改变窗口大小，yes为允许；
+　　location=no 是否显示地址栏，yes为允许；
+　　status=no 是否显示状态栏内的信息（通常是文件已经打开），yes为允许；*/
+
+    function addProduct(){
+        //alert("1111");
+        window.open('jsp/product/addProduct.jsp', '新建产品', 'height=400, width=600, top=350, left=350, toolbar=no, menubar=no, scrollbars=yes, resizable=no, location=no, status=no')
+    }
+
+
+
+
+    // $("#_easyui_tree_11").on("click", function(){
+    //     alert("llllll");
+    // });
+/*
+    $("#_easyui_tree_11").click(function(){
+        event.preventDefault();
+        alert("llllll");
+    });*/
+
+
+</script>
+
+</html>

@@ -47,7 +47,7 @@
             height: 15px;
         }
         #d12{
-            width: 200px;
+            width: 250px;
             height: 100%;
             float: right;
         }
@@ -167,6 +167,7 @@
             $("#num").text($('#dg').datagrid('getChecked').length);
         }
 
+
     </script>
 </head>
 <body>
@@ -188,12 +189,21 @@
     &ensp;&ensp;<img src="static/img/logo.png" id="img1" />&ensp; <a href="javascript:void(0)">高级筛选</a> &ensp;
             <img src="static/img/logo.png" id="img2" /> <a href="javascript:deleteData()">删除</a>&ensp;
           <div id="d12">
-              <img src="static/easyui/themes/black/images/slider_handle.png" id="img4" /> <a href="javascript:addContacts()">新建联系人</a>&ensp;
+              <img src="static/easyui/themes/black/images/slider_handle.png" id="img4" />
+              <a href="javascript:addContacts()">新建联系人</a>&ensp;
           </div>
 </div>
 <br/>
 <div id="d2">
     <table id="dg" style="width:100%;" ></table>
+
+    <form id="form1" action="manage/Contacts/import"  enctype="multipart/form-data" method="post">
+        <input id="file" type="file" name="file"/>
+        <button id="import" type="submit">导入</button>
+        <button id="export">导出</button>
+    </form>
+
 </div>
+
 </body>
 </html>

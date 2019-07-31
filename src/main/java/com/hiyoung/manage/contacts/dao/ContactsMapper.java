@@ -23,6 +23,13 @@ public interface ContactsMapper {
     int insert(Contacts record);
 
     /**
+     * 批量插入
+     * @param list
+     * @return
+     */
+    int batchInsert(List<Contacts> list);
+
+    /**
      * 获得总条数
      *
      * @return
