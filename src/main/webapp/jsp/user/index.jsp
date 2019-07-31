@@ -158,12 +158,12 @@
             <img src="static/img/logo.png">
         </div>
         <div class="header_right">
-            <ul>
+            <%--<ul>
                 <li><a href="">办公</a></li>
                 <li><a href="">客户管理</a></li>
                 <li><a href="">商业智能</a></li>
                 <li><a href="">项目管理</a></li>
-            </ul>
+            </ul>--%>
         </div>
     </div>
     <div class="left">

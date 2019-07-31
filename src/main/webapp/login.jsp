@@ -76,7 +76,7 @@
             font-size:0.4em;
             /*margin-top: 200px;*/
             text-align: center;
-            color: purple;
+            color: #807e7f;
             /*background: red;*/
             position: absolute;
             bottom: 0;

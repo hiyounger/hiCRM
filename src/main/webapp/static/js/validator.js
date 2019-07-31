@@ -191,7 +191,7 @@ $.extend($.fn.validatebox.defaults.rules,{
             $.ajax({
                 type:"post",
                 async:false,
-                url:'/system/user/validatePhone',
+                url:'system/user/validatePhone',
                 data:{'phone':value},
                 dataType:"json",
                 success:function(data){

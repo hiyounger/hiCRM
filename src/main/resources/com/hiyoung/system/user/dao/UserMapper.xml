@@ -52,7 +52,7 @@
       user_role.userid left join tb_system_role as role on user_role.roleid = role.id where username =#{username} and password =#{password};
 </select>-->
 <select id="getUser" resultMap="BaseResultMap">
-  select id, <include refid="Base_Column_List"></include> ,role from tb_user where phone =#{phone} and password =#{password} and status !=0;
+  select id,password, <include refid="Base_Column_List"></include> ,role from tb_user where phone =#{phone} and status !=0;
 </select>
 
   <select id="listUsers" resultMap="BaseResultMap">
@@ -95,24 +95,8 @@
 
     <insert id="insert" parameterType="com.hiyoung.system.user.entity.User" useGeneratedKeys="true" keyProperty="id">
         insert into tb_user ( <include refid="Base_Column_List"></include> ,password,status ) VALUES
-        (#{name},
-       <choose>
-           <when test="sex=-1">
-               -1
-           </when>
-           <otherwise>
-               #{sex}
-           </otherwise>
-       </choose>
-        ,#{email},#{department},#{position},
-        <choose>
-            <when test="supervisor=-1">
-                -1
-            </when>
-            <otherwise>
-                #{supervisor}
-            </otherwise>
-        </choose>
+        (#{name},#{sex}
+        ,#{email},#{department},#{position},#{supervisor}
         ,#{phone},#{password},1)
     </insert>
 
