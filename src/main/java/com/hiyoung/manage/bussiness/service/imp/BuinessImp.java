@@ -48,7 +48,8 @@ public class BuinessImp implements BuinessIf {
 
 	@Override
 	public List<Buiness> getbyPageAnd(int page, int rows, String name) {
-		int count=dao.getcount();
+		// TODO Auto-generated method stub
+		int count=dao.getCount2(name);
 		int offer=(page-1)*rows;
 		int pagecount=(int) Math.ceil(count/rows);
 		if(page>pagecount) {
@@ -60,6 +61,7 @@ public class BuinessImp implements BuinessIf {
 		
 		return dao.selectByPageAnd(offer, rows, name);
 	}
+	
 
 	@Override
 	public int insert(Buiness record) {
@@ -69,6 +71,28 @@ public class BuinessImp implements BuinessIf {
 	@Override
 	public int deletebyid(Integer id) {
 		return dao.deleteByPrimaryKey(id);
+	}
+
+	@Override
+	public int getCount2(String name) {
+		// TODO Auto-generated method stub
+		return dao.getCount2(name);
+	}
+
+	@Override
+	public List<Buiness> newget(int page, int rows, Buiness buiness) {
+		int count=dao.getcount();
+		int offer=(page-1)*rows;
+		int pagecount=(int) Math.ceil(count/rows);
+		if(page>pagecount) {
+			page=pagecount;
+		}
+		if(page<1) {
+			page=1;
+		}
+		
+		
+		return dao.newget(offer, rows, buiness);
 	}
 
 }

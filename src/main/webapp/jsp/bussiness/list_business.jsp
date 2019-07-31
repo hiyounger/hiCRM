@@ -78,20 +78,34 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
 
   
-  	$(function(){
+	$(function(){
   		
-  		see("manage/bussiness/buinessInfo");
+		see("manage/bussiness/newlist");
+  		$('#ss').searchbox({
+  		    searcher:function(value){
+  		    	
+  		    	$('#businessList').datagrid('load',{
+  		    		
+  		    		name: value
+  		    	});
+  		    }
+  	   
+  	      });
 
 	})
 	
 	
 	//查询
-	$('#ss').searchbox({
-    searcher:function(value){
-    see("manage/bussiness/buinessInfosee?action="+value);
-    }
-   
-      });
+/* 	$('#ss').searchbox({
+     searcher:function(value){
+    	 see("manage/bussiness/buinessInfosee?action="+value)
+    	
+    	
+    } 
+  }); */
+	
+	
+
 	
 	
 	$("#button2").on("click",function(){

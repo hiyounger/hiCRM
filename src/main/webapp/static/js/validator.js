@@ -1,4 +1,10 @@
 $.extend($.fn.validatebox.defaults.rules,{
+    password:{
+        validator : function(value, param) {
+            return /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/.test(value);
+        },
+        message : '密码必须包含字符和数字，且长度在6-16之间'
+    },
     NotEmpty : { // 非空字符串验证。 easyui 原装required 不能验证空格
         validator : function(value, param) {
             return $.trim(value).length>0;
@@ -179,24 +185,23 @@ $.extend($.fn.validatebox.defaults.rules,{
         },
         message:'请输入正确的日期格式：YYYY-MM-DD HH:MM:SS'
     },
-    workNoAjax:{//验证员工管理界面，工号是否重复
+    unique_phone:{//验证员工管理界面，手机号是否重复
         validator:function(value){
-            var a=true;
-            var doctorId=$('#doctor_id').val();
+            var a=false;
             $.ajax({
                 type:"post",
                 async:false,
-                url:_basePath+'/base/bas/queryDoctorWorkNo.html',
-                data:"workno="+value+"&doctor_id="+doctorId,
-                dataType:"text",
+                url:'/system/user/validatePhone',
+                data:{'phone':value},
+                dataType:"json",
                 success:function(data){
-                    if(data=="true"){
-                        a=false;
-                    }
+                   if(data<1){
+                       a=true;
+                   }
                 }
             });
             return a;
         },
-        message:'该工号已经存在'
+        message:'该手机号已经存在'
     }
 });

@@ -57,6 +57,7 @@ public class ShiroConfig  {
         filterMap.put("/login","anon");
         filterMap.put("/static/**","anon");
         filterMap.put("/system/**","authc");
+        filterMap.put("/manage/**","authc");
         filterMap.put("/jsp/**","authc");
         filterMap.put("/**", "authc");
 
