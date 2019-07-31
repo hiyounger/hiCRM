@@ -45,21 +45,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <tr>
                     <td>
                         <div><span style="color: red;">*</span>合同编号</div>
-                        <input class="easyui-textbox" type="text" name="number" data-options="required:true,validType:'number'" ></input>
+                        <input class="easyui-textbox" type="text" name="number" data-options="required:true,validType:['number','maxLength[8]']" ></input>
                     </td>
                     <td>
                         <div><span style="color: red;">*</span>合同名称</div>
-                        <input class="easyui-textbox" type="text" name="contactname" data-options="required:true"></input>
+                        <input class="easyui-textbox" type="text" name="contactname" data-options="required:true,validType:'maxLength[5]'"></input>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <div><span style="color: red;">*</span>客户名称</div>
-                        <input class="easyui-textbox" type="text" name="customername" data-options="required:true" placeholder="+添加"></input>
+                        <input class="easyui-textbox" type="text" name="customername" data-options="required:true,validType:'maxLength[5]'" placeholder="+添加"></input>
                     </td>
                     <td>
                         <div>商机名称</div>
-                        <input class="easyui-textbox" type="text" name="businessname"></input>
+                        <input class="easyui-textbox" type="text" name="businessname"  data-options="validType:'maxLength[5]'" ></input>
                     </td>
                 </tr>
                 <tr>
@@ -69,7 +69,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </td>
                     <td>
                         <div>合同金额</div>
-                        <input class="easyui-textbox" type="text" name="contractamount" data-options="validType:'number'" ></input>
+                        <input class="easyui-textbox" type="text" name="contractamount" data-options="validType:['number','maxLength[4]']" ></input>
                     </td>
                 </tr>
                 <tr>
@@ -167,6 +167,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 validator : function(value) {
                     return /^[\u0391-\uFFE5]+$/.test(value);},
                 message : "只能输入汉字"
+            },
+            maxLength:{
+                validator:function(value,param){
+                    return value.length >=param[0]
+                },
+                message:'至少输入{0}个字'
             }
         });
 
