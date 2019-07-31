@@ -15,7 +15,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script type="text/javascript" src="../../static/easyui/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="../../static/easyui/easyui-lang-zh_CN.js"></script>
     <script src="../../static/js/jquery.cookie.js" ></script>
-    <script type="text/javascript" src="../../static/easyui/datagrid-export.js"></script>
+<%--    <script type="text/javascript" src="../../static/easyui/datagrid-export.js"></script>--%>
     <style>
 
         .right{
@@ -468,7 +468,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <a  class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="javascript:alert('Save')">保存</a>
                 <p style="color: #4b72a4;display: inline-block;" >按住shift/ctrl/alt可以多选 &emsp;&emsp; </p><span id="num" style="opacity: 0" ></span>
                 <a class="easyui-linkbutton" id="exportExcel" onclick="javascript:exportExcel()" > 一键导出 </a>
-                <input type="file" id="f" /><a class="easyui-linkbutton" id="entranceExcel" onclick="javascript:if(f.value=='')alert('请选择xls文件');else importXLS(f.value)" > 一键导入 </a>
+                <form style="display: inline-block;margin-left: 40px;" id="upload" enctype="multipart/form-data" method="post" title="日期格式yyyy/MM/dd" >
+                    <input name="file" type="file" id="f" /><a class="easyui-linkbutton" id="entranceExcel" onclick="javascript:if(f.value=='')alert('请选择xls文件');else importXLS(f.value)" > 一键导入 </a>
+
+                </form>
 
             </div>
 
@@ -483,40 +486,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script>
     function exportExcel() {
        // var url=base+'/api/xx?xx='+$("#xx").val()+'&xx='+$("#xx").val()+'&xx='+$("#xx").val();
-        window.location.href = "/api/xx/export";
+        window.location.href = "manage/contract/export";
     }
     function importXLS(fileName)
     {
+        $("#upload").form("submit",{
+            url:"manage/contract/import",
+             success:function (data) {
 
-        objCon = new ActiveXObject("ADODB.Connection");
-        objCon.Provider = "Microsoft.Jet.OLEDB.4.0";
-        objCon.ConnectionString = "Data Source=" + fileName + ";Extended Properties=Excel 8.0;";
-        objCon.CursorLocation = 1;
-        objCon.Open;
-        var strQuery;
-        //Get the SheetName
-        var strSheetName = "Sheet1$";
-        var rsTemp =   new ActiveXObject("ADODB.Recordset");
-        rsTemp = objCon.OpenSchema(20);
-        if(!rsTemp.EOF)
-            strSheetName = rsTemp.Fields("Table_Name").Value;
-        rsTemp = null;
-        rsExcel =   new ActiveXObject("ADODB.Recordset");
-        strQuery = "SELECT * FROM [" + strSheetName + "]";
-        rsExcel.ActiveConnection = objCon;
-        rsExcel.Open(strQuery);
-        while(!rsExcel.EOF)
-        {
-            for(i = 0;i<rsExcel.Fields.Count;++i)
-            {
-                alert(rsExcel.Fields(i).value);
-            }
-            rsExcel.MoveNext;
-        }
-        // Close the connection and dispose the file
-        objCon.Close;
-        objCon =null;
-        rsExcel = null;
+                     alert(data);
+
+             },
+            dataType:"text"
+        });
     }
 </script>
 </html>
