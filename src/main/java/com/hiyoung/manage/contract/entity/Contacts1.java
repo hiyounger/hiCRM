@@ -59,6 +59,30 @@ public class Contacts1 {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date updatetime;
 
+    @Override
+    public String toString() {
+        return "Contacts1{" +
+                "id=" + id +
+                ", customername='" + customername + '\'' +
+                ", number=" + number +
+                ", contactname='" + contactname + '\'' +
+                ", businessname='" + businessname + '\'' +
+                ", ordertime=" + ordertime +
+                ", contractamount=" + contractamount +
+                ", startingtimecontract=" + startingtimecontract +
+                ", endtimecontract=" + endtimecontract +
+                ", customercontractor='" + customercontractor + '\'' +
+                ", companycontractor='" + companycontractor + '\'' +
+                ", remarks='" + remarks + '\'' +
+                ", founder='" + founder + '\'' +
+                ", mxtime=" + mxtime +
+                ", updatetime=" + updatetime +
+                ", creationtime=" + creationtime +
+                ", personincharge='" + personincharge + '\'' +
+                ", status=" + status +
+                '}';
+    }
+
     @Excel(name = "客户姓名",orderNum = 15)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date creationtime;
@@ -215,26 +239,4 @@ public class Contacts1 {
         this.status = status;
     }
 
-    @Override
-    public String toString() {
-        return "Contacts1{" +
-                "id=" + id +
-                ", customername='" + customername + '\'' +
-                ", number=" + number +
-                ", contactname='" + contactname + '\'' +
-                ", businessname='" + businessname + '\'' +
-                ", ordertime=" + ordertime +
-                ", contractamount=" + contractamount +
-                ", startingtimecontract=" + startingtimecontract +
-                ", endtimecontract=" + endtimecontract +
-                ", customercontractor='" + customercontractor + '\'' +
-                ", companycontractor='" + companycontractor + '\'' +
-                ", remarks='" + remarks + '\'' +
-                ", founder='" + founder + '\'' +
-                ", updatetime=" + updatetime +
-                ", creationtime=" + creationtime +
-                ", personincharge='" + personincharge + '\'' +
-                ", status=" + status +
-                '}';
-    }
 }
