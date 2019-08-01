@@ -149,7 +149,7 @@
             },
             success: function (data) {
                 if (data) {
-                    alert(data)
+                    // alert(data)
                     var id = data;
                     window.close();
                     window.opener.loadData("manage/leads/list.do?id=" + id);
@@ -190,8 +190,8 @@
     $.extend($.fn.validatebox.defaults.rules, {
         equaldDate: {
             validator: function (value, param) {
-                alert("valued===============" + value);
-                alert("parsfdasfddsa" + param)
+                // alert("valued===============" + value);
+                // alert("parsfdasfddsa" + param)
                 var d1 = $(param[0]).datetimebox('getValue');  //获取开始时间
                 return value >= d1;  //有效范围为大于开始时间的日期
             },
