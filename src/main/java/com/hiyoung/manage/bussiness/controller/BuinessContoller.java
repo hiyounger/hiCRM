@@ -33,12 +33,12 @@ import com.hiyoung.manage.bussiness.service.imp.BuinessImp;
 
 @SessionAttributes(value= {"buiness"})
 @Controller
-@RequestMapping("/manage/bussiness")
+//@RequestMapping("/manage/bussiness")
 public class BuinessContoller {
 	@Resource
 	BuinessImp  buinessImp;
 	
-	@RequestMapping("/get")
+	@RequestMapping("/manage/bussiness/get")
 	@ResponseBody
 	public Map<String, Object> get() {
 		Map<String, Object> map=new HashMap<>();
@@ -46,20 +46,33 @@ public class BuinessContoller {
 		return map;
 	}
 	
+	@RequestMapping("/manage/bussiness/newlist")
+	@ResponseBody
+	public Map<String, Object> newList(@Param("page")Integer page,@Param("rows")Integer rows,Buiness bu){
+		System.out.println("name为"+bu.getName());
+		
+		int count=buinessImp.getcount();
+		Map<String, Object> map2=new HashMap<>();
+		map2.put("total", count);
+		map2.put("rows", buinessImp.newget(page, rows, bu));
+		
+		return map2;
+	}
 	
-	@RequestMapping("/lll2")
+	
+	@RequestMapping("/manage/bussiness/lll2")
 	public String gettwoo(@Param("theone")String theone) {
 		System.out.println(theone);
 		return "bussiness/list_business2";
 	}
 	
-	@RequestMapping("/lll")
+	@RequestMapping("/manage/bussiness/lll")
 	public String gettwo() {
 		
 		return "bussiness/list_business";
 	}
 	
-	@RequestMapping("/buinessInfo")
+	@RequestMapping("/manage/bussiness/buinessInfo")
 	@ResponseBody
 	public Map<String, Object> listBuiness(@Param("page")Integer page,@Param("rows")Integer rows){
 		
@@ -72,24 +85,24 @@ public class BuinessContoller {
 		return map;
 	}
 	
-	@RequestMapping("/buinessInfosee")
+	@RequestMapping("/manage/bussiness/buinessInfosee")
 	@ResponseBody
 	public Map<String, Object> listBuiness(@Param("page")Integer page,@Param("rows")Integer rows,@Param("action")String action){
-		
+	
+		System.out.println("page的值"+page+"rows的值"+rows);
 		int  count=buinessImp.getcount();
 		Map<String, Object> map=new HashMap<>();
 		map.put("total", count);
-		System.out.println(action+"action的值");
+		System.out.println(action);
 		map.put("rows", buinessImp.getbyPageAnd(page, rows, action));
-		System.out.println(buinessImp.getbyPageAnd(page, rows, action));
 		
-		System.out.println("能不能得到");
+		System.out.println("能不能");
 		
 		return map;
 	}
 	
 	
-	@RequestMapping("/buinessInfofo")
+	@RequestMapping("/manage/bussiness/buinessInfofo")
 	@ResponseBody
 	public Map<String, Object> listBuiness(@ModelAttribute("buiness")Buiness theone ){
 		System.out.println("到前天显示单条");
@@ -107,7 +120,7 @@ public class BuinessContoller {
 	
 	
 	
-	@RequestMapping("/addone")
+	@RequestMapping("/manage/bussiness/addone")
 	@ResponseBody
 	public ModelAndView add(Buiness buiness) {
 	//	String name=buiness.getName();
@@ -126,7 +139,7 @@ public class BuinessContoller {
 		return view;
 	}
 	
-	@RequestMapping("/delete")
+	@RequestMapping("/manage/bussiness/delete")
 	@ResponseBody
 	public String delete( String iid ) {
 		

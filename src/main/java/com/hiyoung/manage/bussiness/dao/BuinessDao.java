@@ -18,6 +18,7 @@ public interface BuinessDao {
     Buiness selectByPrimaryKey(Integer id);
 
     List<Buiness> selectAll();
+    List<Buiness> newget(@Param("offere")int offere,@Param("rows")int rows,@Param("buiness")Buiness buiness);
 
     int updateByPrimaryKey(Buiness record);
     List<Buiness> selectByPageAnd(@Param("offere")int offere ,@Param("rows") int rows,@Param("namese")String name);
@@ -25,4 +26,5 @@ public interface BuinessDao {
     List<Buiness> selectByPage(@Param("offere")int offere ,@Param("rows") int rows);
     List<Buiness> selectByPagetheone(@Param("offere")int offere ,@Param("rows") int rows,@Param("theone")int theone);
     int getcount();
+    int getCount2(@Param("namese")String name);
 }

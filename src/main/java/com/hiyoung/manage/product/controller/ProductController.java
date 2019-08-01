@@ -65,7 +65,7 @@ public class ProductController {
             success=true;
         }
         map.put("success",success);
-        System.out.println(map);
+        System.out.println("map=========="+map);
         return map;
     }
 
@@ -163,6 +163,10 @@ public class ProductController {
     @ResponseBody
     public Map<String,Object> addDownReasonById(String id,String downReason){
         Map<String,Object> map = new HashMap<>();
+
+        System.out.println("id ======"+ id);
+        System.out.println("downReason ======"+ downReason);
+
         String[] ids = id.split(",");   //将id字符串切割
         for(String i : ids){
             //遍历id字符串组成的数组
@@ -171,6 +175,36 @@ public class ProductController {
             boolean success = false ;
             if(num != 0){
                 //逻辑删除成功
+                success = true ;
+                map.put("success",success);
+            }
+        }
+        return map;
+    }
+
+    /**
+     * 据id添加产品的上架原因
+     * @param id  前端返回过来的多个产品的id 字符串
+     * @param onReason  前端返回过来的上架原因的字符串
+     * @return
+     */
+    @RequestMapping("/addOnReasonById.do")
+    @ResponseBody
+    public Map<String,Object> addOnReasonById(String id,String onReason){
+        Map<String,Object> map = new HashMap<>();
+
+        System.out.println("id ======"+ id);
+        System.out.println("onReason ======"+ onReason);
+
+        String[] ids = id.split(",");   //将id字符串切割
+        for(String i : ids){
+            //遍历id字符串组成的数组
+            //i 表示待下架产品的id字符串
+            //int num = productService.addOnReasonById(Integer.valueOf(i),onReason);
+            int num = productService.addOnReasonById(Integer.valueOf(i),onReason);
+            boolean success = false ;
+            if(num != 0){
+                //添加原因成功成功
                 success = true ;
                 map.put("success",success);
             }

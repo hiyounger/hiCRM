@@ -94,7 +94,6 @@
         loadData(0,$('#status').val(),value)
     }
 
-    var no=false;
     var userId=0;
     var checked;
     if('${param.id}'){
@@ -130,33 +129,31 @@ function loadData(id,status,name){
         ]],pagination:true,queryParams:{
             "id":id,"status":status,"name":name
         },onCheck:function(){
-            if($('#pp').datagrid('getChecked').length>0){
+            if($('#pp').datagrid('getChecked').length>0&&$("td[field=name]").length==6){
                 $("#remove").css("background-color","#3E84E9")
             }else{
                 $("#remove").css("background-color","darkgrey")
             }
         },onUncheck:function(){
-            if($('#pp').datagrid('getChecked').length>0){
+            if($('#pp').datagrid('getChecked').length>0&&$("td[field=name]").length==6){
                 $("#remove").css("background-color","#3E84E9")
             }else{
                 $("#remove").css("background-color","darkgrey")
             }
         },onCheckAll:function(){
-            if($('#pp').datagrid('getChecked').length>0){
+            if($('#pp').datagrid('getChecked').length>0&&$("td[field=name]").length==6){
                 $("#remove").css("background-color","#3E84E9")
             }else{
                 $("#remove").css("background-color","darkgrey")
             }
         },onUncheckAll:function(){
-            if($('#pp').datagrid('getChecked').length>0){
+            if($('#pp').datagrid('getChecked').length>0&&$("td[field=name]").length==6){
                 $("#remove").css("background-color","#3E84E9")
             }else{
                 $("#remove").css("background-color","darkgrey")
             }
         },onLoadSuccess:function(data){
             if (data.total == 0) {
-                no=true
-
                 //添加一个新数据行，第一列的值为你需要的提示信息，然后将其他列合并到第一列来，注意修改colspan参数为你columns配置的总列数
                 //隐藏分页导航条，这个需要熟悉datagrid的html结构，直接用jquery操作DOM对象，easyui datagrid没有提供相关方法隐藏导航条
                 $(this).closest('div.datagrid-wrap').find('div.datagrid-pager').hide();
@@ -165,11 +162,13 @@ function loadData(id,status,name){
                 $("input[name='ck']")[0].style.display='none'
                 $("input[name='ck']").on('click',function () {
                     $('#pp').datagrid('unselectAll');
+
                 })
             }
             //如果通过调用reload方法重新加载数据有数据时显示出分页导航容器
-            else $(this).closest('div.datagrid-wrap').find('div.datagrid-pager').show();
-        }
+            else {
+                $(this).closest('div.datagrid-wrap').find('div.datagrid-pager').show();
+            } }
     });
     var pager=$('#pp').datagrid().datagrid('getPager');// get the pager of datagrid
     pager.pagination({
@@ -190,8 +189,11 @@ function loadData(id,status,name){
     })
     $("#remove").on('click',function () {
         checked=$('#pp').datagrid('getChecked');
-        if(checked.length==0||no){
+        if(checked.length==0){
             return;
+        }
+        if($("td[field=name]").length==2){
+            return ;
         }
         $.messager.defaults.cancel='取消';
         $.messager.defaults.ok='确定'

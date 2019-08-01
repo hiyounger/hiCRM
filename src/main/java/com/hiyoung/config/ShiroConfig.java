@@ -49,19 +49,27 @@ public class ShiroConfig  {
          * role：对应角色权限可访问
          **/
         Map<String, String> filterMap = new LinkedHashMap<>();
-        filterMap.put("/login","anon");
+       /* filterMap.put("/login","anon");
         filterMap.put("/static/**","anon");
         filterMap.put("/system/**","authc");
         filterMap.put("/jsp/**","authc");
+        filterMap.put("/**", "authc");*/
+        filterMap.put("/login","anon");
+        filterMap.put("/static/**","anon");
+        filterMap.put("/system/**","authc");
+        filterMap.put("/manage/**","authc");
+        filterMap.put("/jsp/**","authc");
         filterMap.put("/**", "authc");
+
         bean.setFilterChainDefinitionMap(filterMap);
         return bean;
     }
 
     @Bean(name="myRealm")
-    public UserRealm realm() {
+    public UserRealm realm(HashedCredentialsMatcher hashedCredentialsMatcher) {
         UserRealm realm = new UserRealm();
-        //realm.setCredentialsMatcher(credentialsMatcher);
+        realm.setAuthorizationCachingEnabled(false);
+        realm.setCredentialsMatcher(hashedCredentialsMatcher);
         return realm ;
     }
     /**

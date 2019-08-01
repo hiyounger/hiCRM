@@ -22,6 +22,8 @@
     <script type="text/javascript" src="static/easyui/jquery.min.js"></script>
     <script type="text/javascript" src="static/easyui/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="static/easyui/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="static/js/validator.js"></script>
+   <%-- D:\feiqDownloads\work\ssm\jtcrm\src\main\webapp\static\js\validator.js--%>
     <style>
         .container {
             width: 100%;
@@ -156,12 +158,12 @@
             <img src="static/img/logo.png">
         </div>
         <div class="header_right">
-            <ul>
+            <%--<ul>
                 <li><a href="">办公</a></li>
                 <li><a href="">客户管理</a></li>
                 <li><a href="">商业智能</a></li>
                 <li><a href="">项目管理</a></li>
-            </ul>
+            </ul>--%>
         </div>
     </div>
     <div class="left">
@@ -181,28 +183,29 @@
 <div id="win" class="easyui-window" title="新建员工"  maximizable=false closed=true resizable=false style="width:600px;height:500px;padding:5px;">
     <div id="basic">&nbsp;&nbsp;基本信息</div>
 
-    <form id="form">
+    <form id="form" method="post">
         <table width="500px" >
             <tr >
                 <td>
                     <div><span class="star">*</span>手机号（登录名）</div>
-                    <div class="second" ><input name="phone" class="easyui-textbox" type="text"/></div>
+                    <div class="second" ><input name="phone" class="easyui-textbox easyui-validatebox" data-options="required:true,validType:['mobile','unique_phone']"type="text"/></div>
                 </td>
                 <td >
                     <div><span class="star">*</span>登录密码</div>
-                    <div class="second"><input name="password" class="easyui-textbox" type="text"/></div>
+                    <div class="second"><input name="password" class="easyui-textbox easyui-validatebox" data-options="required:true,validType:'password'"type="text"/></div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div><span class="star">*</span>姓名</div>
-                    <div class="second"><input name="name" class="easyui-textbox" type="text"/></div>
+                    <div class="second"><input name="name" class="easyui-textbox easyui-validatebox" data-options="required:true,validType:'name'"type="text"/></div>
                 </td>
                 <td>
                     <div>性别</div>
                     <div class="second">
                         <select  class="easyui-combobox" name="sex" style="width:200px;">
-                            <option value="男" selected>男</option>
+                            <option value="-1" selected>请选择</option>
+                            <option value="男">男</option>
                             <option value="女">女</option>
                         </select>
                     </div>
@@ -211,7 +214,7 @@
             <tr>
                 <td>
                     <div>邮箱</div>
-                    <div><input class="easyui-textbox" name="email" type="text"/></div>
+                    <div><input class="easyui-textbox easyui-validatebox" data-options="validType:'email'" name="email" type="text"/></div>
                 </td>
                 <td>
                     <div><span class="star">*</span>部门</div>
@@ -226,16 +229,16 @@
             <tr>
                 <td>
                     <div>岗位</div>
-                    <div><input name="position" class="easyui-textbox"type="text"/></div>
-
+                    <div><input name="position" class="easyui-textbox "type="text"/></div>
                 </td>
                 <td>
                     <div>直属上级</div>
                     <div class="second">
                         <select  class="easyui-combobox" name="supervisor" style="width:200px;">
-                            <option value="aa" selected>李刚</option>
+                            <option value="-1" selected>请选择</option>
                             <option>刘达</option>
                             <option>马克</option>
+                            <option>李刚</option>
                         </select>
                     </div>
                 </td>
@@ -295,25 +298,36 @@ $("#sm li:selected").toggleClass("active");
        $(this).css("background-color","white")
        $(this).css("color","black")
    })
-   $("#save").on("click",function(){
-       $.ajax({
-           'url':'system/user/insert',
-           'type':'post',
-           'async':false,
-           'data':$('#form').serialize(),
-           'dataType':'json',
-           'success':function(data){
-               if(data>0){
-                   $("#iframe").attr('src','jsp/user/user.jsp?id='+data);
+   $("#save").on("click",function() {
+       /* $.ajax({
+            'url':'system/user/insert',
+            'type':'post',
+            'async':false,
+            'data':$('#form').serialize(),
+            'dataType':'json',
+            'success':function(data){
+                if(data>0){
+                    $("#iframe").attr('src','jsp/user/user.jsp?id='+data);
+                    $("#win").window('close');
+                }
+            }
+        })*/
+       $('#form').form('submit', {
+           url: "system/user/insert",
+           onSubmit: function (param) {
+               return $(this).form('validate')
+           },
+           success: function (data) {
+               if (data > 0) {
+                   $("#iframe").attr('src', 'jsp/user/user.jsp?id=' + data);
                    $("#win").window('close');
                }
            }
        })
-
    })
    $("#cancel").on('click',function(){
        $("#form").form('clear');
-       $(".easyui-combobox").combobox('setValue','aa')
+       $(".easyui-combobox").combobox('setValue','')
    })
 
 

@@ -46,11 +46,11 @@ public class ContactsController {
 
     @RequestMapping("/listone")
     @ResponseBody
-    public Map<String,Object> getLIstOne(String name){
+    public Map<String,Object> getLIstOne(Integer id){
        // System.out.println(name);
         List<Contacts> list=new ArrayList<>();
         //从请求中获取当前页面和每页展示的条数
-        Contacts Contacts= contactsService.selectByName(name);
+        Contacts Contacts= contactsService.selectById(id);
         //System.out.println(Contacts);
         list.add(Contacts);
         int zs=1;
@@ -59,6 +59,7 @@ public class ContactsController {
         map.put("rows",list);
         return map;
     }
+
 
 
     @RequestMapping("/delete")
@@ -77,33 +78,20 @@ public class ContactsController {
 
     @RequestMapping("/add")
     @ResponseBody
- public Boolean addData(HttpServletRequest request, HttpSession session){
-        Contacts Contacts=new Contacts();
-        Map<String,String[]> map0=request.getParameterMap();
+ public Map<String,Object> addData(Contacts contacts){
+       //System.out.println(contacts);
         Map<String,Object> map=new HashMap<>();
-        map0.forEach((key,value)->{
-            if(key.equals("nextContactTime")){
-                if(value[0].trim().length()!=0&&value[0]!=null){
-                    Date date= null;
-                    try {
-                        date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(value[0]);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    map.put(key,date);
-                }
-            }else{
-                map.put(key,value[0]);
-            }
-
-        });
-        BeanUtil.mapTOBean(Contacts,map);
-        int num= contactsService.insert(Contacts);
+        int num= contactsService.insert(contacts);
         if(num!=0){
-
-            return true;
+            Integer id=contacts.getId();
+           // System.out.println(id);
+            map.put("success",true);
+            map.put("id",id);
+        }else {
+            map.put("success",false);
         }
-        return false;
+
+        return map;
     }
 
     @RequestMapping("/add.cns")

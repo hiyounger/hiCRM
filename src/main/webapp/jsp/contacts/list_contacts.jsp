@@ -93,12 +93,7 @@
                     {field:'nextContactTime',title:'下次联系时间',width:240},
                     {field:'remarks',title:'备注',width:180},
                     {field:'creater',title:'创建人',width:100},
-                    {field:'updateTime',title:'更新时间',width:240},
-                    {field:'removeState',title:'操作',formatter: function(value,row,index){
-                            return "<a href='javascript:updateData(\""+row.id+"\");'>修改</a>&emsp;"
-                        }
-                    }
-
+                    {field:'updateTime',title:'更新时间',width:240}
                 ]]
                 ,onCheck:function(rowIndex,rowData){//选中一行行数加一
                 $("#num").text($('#dg').datagrid('getChecked').length)
@@ -118,9 +113,6 @@
                     return true;
                 },showPageList:true,beforePageText:'第',afterPageText:'页'
             });
-        }
-        function updateData(id) {
-            alert(id);
         }
 
         $(function(){

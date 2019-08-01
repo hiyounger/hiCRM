@@ -35,9 +35,9 @@ public interface ContactsService {
     List<Contacts> listBYPage(String pageStr, String rowStr,String word);
 
     /**
-     * 通过联系人姓名查一条数据
-     * @param name
+     * 通过联系人id查一条数据
+     * @param id
      * @return
      */
-    public Contacts selectByName(String name);
+    public Contacts selectById(Integer id);
 }

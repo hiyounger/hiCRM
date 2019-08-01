@@ -76,7 +76,7 @@
             font-size:0.4em;
             /*margin-top: 200px;*/
             text-align: center;
-            color: purple;
+            color: #807e7f;
             /*background: red;*/
             position: absolute;
             bottom: 0;
@@ -158,67 +158,69 @@
             {
                 $("#warn").css("visibility","hidden");
                 return true
+            }else{
+                $("#warn").css("visibility","visible");
+                $("#warn").text(alerttxt);
+                return false
             }
-            $("#warn").css("visibility","visible");
-            $("#warn").text(alerttxt);
-            return false
+
         }
     }
+
     function validate_password(field,alerttxt)
     {
-        var value=$('input[type=password]').val()
+  //出现了闭包问题 局部变量不能在if体内部访问 解决办法 可以设置全局变量value或者不使用局部变量value
+        //var value=$('input[type=password]').val();
         with (field)
         {
             var reg1=/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/;
-            if (reg1.test(value))
+            if (reg1.test($('input[type=password]').val()))
             {
                 $("#warn").css("visibility","hidden");
                 return true
+            }else{
+                $("#warn").css("visibility","visible");
+                $("#warn").text(alerttxt);
+                return false
             }
-            $("#warn").css("visibility","visible");
-            $("#warn").text(alerttxt);
-            return false
+
         }
     }
     function validate_form(thisform)
     {
         with (thisform)
         {
-            if (validate_phone(phone,"请输入正确的手机号")==false){
+            if (validate_phone(phone,"请输入正确的手机号")&&validate_password(password,"请输入正确的密码（6-16位字母或数字）")){
+                return true;
+            }else{
                 return false;
             }
-            if (validate_password(password,"请输入正确的密码（6-8位字母或数字）")==false){
-                return false;
-            }
-            return true
+
         }
     }
     function prevent(subject){
         event.preventDefault()
         return validate_form(subject)
     }
-    $("input[type=text]").on('blur',function () {
-        validate_phone(phone,"请输入正确的手机号")
-    })
-       $('input[type=password]') .on('blur',function () {
-        validate_password(password,"请输入正确的密码（6-8位字母或数字）")
-        })
-    $('#submit').on('click',function(){
-            $('#fake_submit').trigger('click')
-        // $("#submit").text("正在登录...");
 
+    $('#submit').on('click',function(){
+       var isCorrect= validate_form($('#form'))
+        if(!isCorrect){
+            return;
+        }
        /*if(!($("#phone").val().trim()&&$("#password").val().trim())){
            $("#warn").css("visibility","display");
-       }
+       }*/
 
-       $.post("login",{"phone":$("#phone").val(),"password":$("#password").val()},function(data){
-         if(!data){
-              alert("登陆失败！");
-             $("#submit").text("登录");
-          } else{
+       $.post("login",$("#form").serialize(),function(data){
+         if(data){
               location.href="jsp/user/index.jsp";
-          }
-       },"json")*/
+          }else{
+             $("#warn").css("visibility","visible");
+             $("#warn").text("用户名或密码错误");
+         }
+           $("#submit").text("登录");
+       },"json")
     })
 
     window.setTimeout (function(){ $('#phone')[0].focus();},0 );

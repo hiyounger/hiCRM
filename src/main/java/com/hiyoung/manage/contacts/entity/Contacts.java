@@ -1,5 +1,7 @@
 package com.hiyoung.manage.contacts.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 public class Contacts implements Serializable {
@@ -18,13 +20,13 @@ public class Contacts implements Serializable {
     private String job;
 
     private String address;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date nextContactTime;
 
     private String remarks;
 
     private String creater;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
     private String isKeyMaker;

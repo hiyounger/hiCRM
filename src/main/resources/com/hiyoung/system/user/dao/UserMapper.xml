@@ -30,16 +30,16 @@
 
 
   <resultMap id="BaseResultMap" type="com.hiyoung.system.user.entity.User">
-      <id column="id" javaType="java.lang.Integer" jdbcType="INTEGER" property="id"/>
-      <result column="name" property="name" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <result column="password" property="password" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <result column="sex"  property="sex" javaType="java.lang.String" jdbcType="DATE" />
-      <result column="EMAIL" property="email" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <result column="PHONE" property="phone" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <result column="department" property="department" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <result column="position" property="position" javaType="java.lang.String" jdbcType="INTEGER" />
-      <result column="supervisor" property="supervisor" javaType="java.lang.String" jdbcType="INTEGER" />
-      <result column="role" property="role" javaType="java.lang.String" jdbcType="DATE" />
+      <id column="id" javaType="java.lang.Integer"  property="id"/>
+      <result column="name" property="name" javaType="java.lang.String"  />
+      <result column="password" property="password" javaType="java.lang.String"  />
+      <result column="sex"  property="sex" javaType="java.lang.String"  />
+      <result column="EMAIL" property="email" javaType="java.lang.String"  />
+      <result column="PHONE" property="phone" javaType="java.lang.String"  />
+      <result column="department" property="department" javaType="java.lang.String"  />
+      <result column="position" property="position" javaType="java.lang.String"  />
+      <result column="supervisor" property="supervisor" javaType="java.lang.String"  />
+      <result column="role" property="role" javaType="java.lang.String" />
   </resultMap>
   <sql id="Base_Column_List">
     name,sex,email,department,position,supervisor,phone
@@ -52,7 +52,7 @@
       user_role.userid left join tb_system_role as role on user_role.roleid = role.id where username =#{username} and password =#{password};
 </select>-->
 <select id="getUser" resultMap="BaseResultMap">
-  select id, <include refid="Base_Column_List"></include> ,role from tb_user where phone =#{phone} and password =#{password} and status !=0;
+  select id,password, <include refid="Base_Column_List"></include> ,role from tb_user where phone =#{phone} and status !=0;
 </select>
 
   <select id="listUsers" resultMap="BaseResultMap">
@@ -95,7 +95,9 @@
 
     <insert id="insert" parameterType="com.hiyoung.system.user.entity.User" useGeneratedKeys="true" keyProperty="id">
         insert into tb_user ( <include refid="Base_Column_List"></include> ,password,status ) VALUES
-        (#{name},#{sex},#{email},#{department},#{position},#{supervisor},#{phone},#{password},1)
+        (#{name},#{sex}
+        ,#{email},#{department},#{position},#{supervisor}
+        ,#{phone},#{password},1)
     </insert>
 
     <update id="deleteByIds" parameterType="java.util.List" >

@@ -25,6 +25,12 @@
     <script type="text/javascript" src="static/easyui/easyui-lang-zh_CN.js"></script>
 
     <style type="text/css">
+        .datagrid+.panel{
+            top: 62px!important;
+        }
+        .datagrid+.panel+.window-shadow{
+            top: 62px!important;
+        }
 
         .right h4{
             font-size: 1.5em;
@@ -56,11 +62,19 @@
             font-size: 1.33em;
         }
 
+        .panel-htop{
+            top: 62px;
+        }
+
+
+
     </style>
 
     <script type="text/javascript">
 
         var num=0;   //默认选择0条数据
+        var IsCheckFlag = false ;  //单选
+        var rowIndexTo = 0 ;
 
         function loadData(){
             //用datagrid分页展示产品信息
@@ -73,12 +87,12 @@
                 loadMsg:"正在加载，请稍等.....",//设置加载数据时的提示信息
                 pagination:true,//设置显示分页工具条
                 rownumbers:true,//设置是否显示行号
-                singleSelect:false,//设置是否只能选中一行
                 selectOnCheck: true,//true勾选会选择行，false勾选不选择行, 1.3以后有此选项。重点在这里
                 checkOnSelect: true, //true选择行勾选，false选择行不勾选, 1.3以后有此选项
                 pageNumber:1,//设置起始页码
-                pageSize:15,//设置每页展示的条数
-                pageList:[15,30,45],//设置每页展示展示的条数的下拉列表
+                pageSize:5,//设置每页展示的条数
+                pageList:[5,10,15],//设置每页展示展示的条数的下拉列表
+                singleSelect:true, //只允许选中一行
                 columns:[[
                     {field:'ck',checkbox:'true'},
                     {field:'productName',title:'产品名称'},
@@ -90,21 +104,98 @@
                     {field:'updateTime',title:'更新时间'},
                     {field:'createTime',title:'创建时间'},
                     {field:'leaderId',title:'负责人'},
-                    {field:'productState',title:'是否下架'},
-                    /*{field:'  ',title:'操作',formatter: function(value,row,index){
-                            return "<a href='javascript:updateStudent(\""+row.stuNo+"\");'>修改</a>&emsp;"+
-                                "<a href='javascript:deleteStudent(\""+row.stuNo+"\");'>删除</a>&emsp;"
-                        }
-                    }*/
+                    {field:'productState',title:'是否下架'}
                 ]],
                 onCheck:function(rowIndex,rowData){
-                    num=num + 1;             //选中多少项
-                    $("#num").text(num)
+                    num =num + 1;             //选中多少项
+                    $("#num").text(num);
                 },onUncheck:function () {
-                    num=num -1;
-                    $("#num").text(num)
+                    num =num -1;
+                    $("#num").text(num);
+                },
+                onSelect: function (rowIndex, rowData) {    //第二次点击行取消选中（单选）
+                    if (!IsCheckFlag) {
+                        IsCheckFlag = true;
+                        rowIndexTo = rowIndex;
+                    } else if (rowIndexTo == rowIndex) {
+                        IsCheckFlag = false;
+                        $('#dg').datagrid("unselectRow", rowIndex);
+                    } else {
+                        IsCheckFlag = false;
+                    }
+                },
+                onClickRow: function (index, row) {        //单击行事件
+                    //---------结合SHIFT,CTRL,ALT键点击行实现多选------------
+                    if (index != selectIndexs.firstSelectRowIndex && !inputFlags.isShiftDown) {
+                        selectIndexs.firstSelectRowIndex = index;
+                    }
+                    if (inputFlags.isShiftDown) {
+                        $('#dg').datagrid('clearSelections');
+                        selectIndexs.lastSelectRowIndex = index;
+                        var tempIndex = 0;
+                        if (selectIndexs.firstSelectRowIndex > selectIndexs.lastSelectRowIndex) {
+                            tempIndex = selectIndexs.firstSelectRowIndex;
+                            selectIndexs.firstSelectRowIndex = selectIndexs.lastSelectRowIndex;
+                            selectIndexs.lastSelectRowIndex = tempIndex;
+                        }
+                        for (var i = selectIndexs.firstSelectRowIndex ; i <= selectIndexs.lastSelectRowIndex ; i++) {
+                            $('#dg').datagrid('selectRow', i);
+                        }
+                    }
+                    //---------结合SHIFT,CTRL,ALT键点击行实现多选------------
                 }
             });
+        }
+
+        //把键盘按下事件和放开事件都放到JS中即可
+            //-------------------------------------------------------------------------------
+            //---------结合SHIFT,CTRL,ALT键点击行实现多选------------
+            //-------------------------------------------------------------------------------
+        var KEY = { SHIFT: 16, CTRL: 17, ALT: 18, DOWN: 40, RIGHT: 39, UP: 38, LEFT: 37 };   //防止魔鬼数字
+        var selectIndexs = { firstSelectRowIndex: 0, lastSelectRowIndex: 0 };   //初始化选中的行索引是0
+        var inputFlags = { isShiftDown: false, isCtrlDown: false, isAltDown: false }   //默认HIFT,CTRL,ALT键 都没点击
+
+        function keyPress(event) {  //响应键盘按下事件
+            var e = event || window.event;
+            var code = e.keyCode | e.which | e.charCode;
+            switch (code) {
+                case KEY.SHIFT:  //点击shift键
+                    inputFlags.isShiftDown = true;
+                    $('#dg').datagrid('options').singleSelect = false;
+                    break;
+                case KEY.CTRL:   //点击ctrl键
+                    inputFlags.isCtrlDown = true;
+                    $('#dg').datagrid('options').singleSelect = false;
+                    break;
+                case KEY.ALT:
+                    inputFlags.isAltDown = true;
+                    $('#dg').datagrid('options').singleSelect = false;
+                    break;
+                default:
+            }
+        }
+
+        function keyRelease(event) { //响应键盘按键放开的事件
+            var e = event || window.event;
+            var code = e.keyCode | e.which | e.charCode;
+            switch (code) {
+                case KEY.SHIFT:
+                    inputFlags.isShiftDown = false;
+                    selectIndexs.firstSelectRowIndex = 0;
+                    $('#dg').datagrid('options').singleSelect = true;
+                    break;
+                case KEY.CTRL:
+                    inputFlags.isCtrlDown = false;
+                    selectIndexs.firstSelectRowIndex = 0;
+                    $('#dg').datagrid('options').singleSelect = true;
+                    break;
+                case KEY.ALT:
+                    inputFlags.isAltDown = false;
+                    selectIndexs.firstSelectRowIndex = 0;
+                    $('#dg').datagrid('options').singleSelect = true;
+                    break;
+                default:
+            }
         }
 
         function loadSingle(){
@@ -246,9 +337,61 @@
             });
         }
 
-        //产品上下架
+        //产品上/下架
         function onProduct() {
-            $('#dlg01').dialog('open');
+            $('#dlg01').dialog('open');  //打开上架产品原因的对话框
+
+            //返回选中多行
+            var selectRow = $('#dg').datagrid('getSelections')
+            //判断是否选中行
+            if (selectRow.length==0) {
+                //没有选择上架产品
+                $.messager.alert("提示", "请选择要上架的产品！", "info");
+                return;
+            }else{
+                //选择了上架产品
+                var temID="";
+                //批量获取选中行的评估模板ID
+                for (i = 0; i < selectRow.length;i++) {
+                    if (temID =="") {
+                        temID = selectRow[i].id;
+                    }
+                    else {
+                        temID = selectRow[i].id + "," + temID;
+                    }
+                }
+
+                //提交
+                //点击上架的对话框的提交按钮
+                $("#submit1").on("click",function () {
+
+                    var onReason = $("#onReason").val()  //获取上架原因
+
+                    console.info("onReason======"+onReason);
+
+                    event.preventDefault();
+                    $.post("manage/product/addOnReasonById.do?id=" + temID+"&onReason="+onReason,
+                        // $("#ff").serialize(),
+                        function(data) {
+                            if(data.success){
+                                //alert(data.success);
+                                $(".panel-tool-close").click();  //对话框的右上角的关闭按钮默认的class 是panel-tool-close
+                                loadData();
+                            }else{
+                                alert("添加失败");
+                            }
+                        },
+                        'json')
+                })
+
+                //下架取消
+                $("#reset1").on("click",function () {
+                    //alert("1111");
+                    $(".panel-tool-close").click();  //对话框的右上角的关闭按钮默认的class 是panel-tool-close
+                })
+
+            }
+
         }
 
         //上/下架原因的提交按钮绑定事件
@@ -271,6 +414,9 @@
 
         //批量删除 下架产品
         function downProduct() {
+
+            $('#dlg02').dialog('open').dialog('refresh');
+
             //返回选中多行
             var selectRow = $('#dg').datagrid('getSelections')
             //判断是否选中行
@@ -291,53 +437,23 @@
                     }
                 }
 
-               /* //提交
-                $.ajax({
-                    type: "POST",
-                    async: false,
-                    url: "manage/product/downProduct.do?id=" + temID,   //选择多行的id 字符串
-                    data: temID,
-                    success: function (result) {
-                        if (result) {
-                            $.messager.alert("提示", "恭喜您，信息删除成功！", "info");
-                            loadData();
-                        } else {
-                            $.messager.alert("提示", "删除失败，请重新操作！", "info");
-
-                        }
-                    }
-                });*/
                 //提交
-                //var downReason = $("#downReason").text()  //获取下架原因
-                $.ajax({
-                    type: "POST",
-                    async: false,
-                    url: "manage/product/downProduct.do?id=" + temID,   //选择多行的id 字符串
-                    data:temID,
-                    success: function (result) {
-                        if (result) {
-                            //  逻辑删除成功/下架产品成功
-                           // $.messager.alert("提示", "恭喜您，下架产品成功！", "info");
-                            //loadData();
-                            $('#dlg02').dialog('open');
-
-                        } else {
-                            $.messager.alert("提示", "下架产品失败，请重新操作！", "info");
-
-                        }
-                    }
-                });
-
                 //点击下架的对话框的提交按钮
                 $("#submit2").on("click",function () {
+
+                    var downReason = $("#downReason").val()  //获取下架原因
+
+                    console.info("downReason======"+downReason);
+
                     event.preventDefault();
-                    $.post("manage/product/addDownReasonById.do",
+                    $.post("manage/product/addDownReasonById.do?id=" + temID+"&downReason="+downReason,
                        // $("#ff").serialize(),
                         function(data) {
                             if(data.success){
-                                alert(data.success);
-                               // $(".panel-tool-close").click();  //对话框的右上角的关闭按钮默认的class 是panel-tool-close
-                               // loadSingle();
+                                //alert(data.success);
+                              $(".panel-tool-close").click();  //对话框的右上角的关闭按钮默认的class 是panel-tool-close
+                                //$('#dlg02').dialog('destroy');
+                                loadData();
                             }else{
                                 alert("添加失败");
                             }
@@ -345,23 +461,42 @@
                         'json')
                 })
 
+                //下架取消
+                $("#reset2").on("click",function () {
+                   //alert("1111");
+                   $(".panel-tool-close").click();  //对话框的右上角的关闭按钮默认的class 是panel-tool-close
+                })
+
             }
         };
+
+        //enter键添加操作
+        function selectForKeyDown(){  //这个方法和onkeydown绑定，只要在指定容器中按键盘就会触发此方法
+            if (event.keyCode == 13){   //13代表Enter键
+                doSearch();  //实现条件查询功能块代码
+            }
+        }
+
 
 
     </script>
 </head>
-<body>
+<body onkeydown="javascript:keyPress(event);" onkeyup="javascript:keyRelease(event);">
 
-    <div id="dlg" class="easyui-dialog"  title="新建产品" style="width: 500px;height: 400px"
+    <%--<div id="dlg" class="easyui-dialog"  title="新建产品" style="width: 500px;height: 400px"
          data-options="closed:true"  href="jsp/product/addProduct.jsp">
+
+    </div>--%>
+    <div id="dlg" class="easyui-dialog"  title="新建产品" style="width: 500px;height: 350px;overflow: hidden"
+         data-options="closed:true" href="jsp/product/addProduct.jsp">
 
     </div>
 
     <div class="right">
         <h4>产品管理</h4>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-        <input id="search" class="easyui-searchbox" data-options="prompt:'请输入值',searcher:doSearch"  style="padding-top: 15px" />
-        <button id="addProduct" onClick='addProduct()'>新建产品</button>
+        <input id="search" class="easyui-searchbox" onkeydown="selectForKeyDown()" data-options="prompt:'请输入值',searcher:doSearch"  style="padding-top: 15px" />
+        <%--<button id="addProduct" onClick='addProduct()'>新建产品</button>--%>
+        <a href="javascript:void(0)" id="addProduct" class="easyui-linkbutton" onclick="addProduct()">新建产品</a>
     </div>
 
 
@@ -379,7 +514,7 @@
     <div id="dlg01" class="easyui-dialog"  title="上架原因" style="width: 500px;height: 400px"
          data-options="closed:true" >
         <%--<div style="font-size: 1.5em">上架原因是：</div>--%>
-        <textarea rows="17" cols="58" style="font-size: 1.2em"></textarea><br />
+        <textarea rows="17" cols="58" style="font-size: 1.2em" id="onReason"></textarea><br />
             <input type="reset"  name="reset1" value="取消" id="reset1" style="margin-top: 16px;font-size: 1.25em;float: right;margin-right: 8px"/>
             <input type="submit"  name="submit1" value="保存" id="submit1" style="margin-top: 16px;font-size: 1.25em;float: right;margin-right: 8px"/>
 

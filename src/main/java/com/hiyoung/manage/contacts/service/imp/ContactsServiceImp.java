@@ -17,8 +17,8 @@ public class ContactsServiceImp implements ContactsService {
     }
 
     @Override
-    public Contacts selectByName(String name) {
-        return ContactsMapper.selectByName(name);
+    public Contacts selectById(Integer id) {
+        return ContactsMapper.selectById(id);
     }
 
     @Override
