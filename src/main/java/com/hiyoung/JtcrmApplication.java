@@ -9,7 +9,6 @@ import org.springframework.context.annotation.ComponentScan;
 @MapperScan("com.hiyoung.*.*.dao")
 //@ComponentScan({"com.hiyoung.realm","com.hiyoung.config","com.hiyoung.system"})
 public class JtcrmApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(JtcrmApplication.class, args);
     }

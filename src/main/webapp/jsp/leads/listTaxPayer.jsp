@@ -103,7 +103,7 @@
 
 		//去掉最后一个空格
 		fuserids = fuserids.substr(0, fuserids.length - 1);//去掉最后一个“,”
-		alert(fuserids);
+		// alert(fuserids);
 		if (confirm('确定删除吗？')) {
 			// for (var i = 0; i <fuserids.length ; i++) {
 			$.ajax({
