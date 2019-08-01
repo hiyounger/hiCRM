@@ -10,12 +10,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta charset="UTF-8">
     <base href="<%=basePath%>" />
     <title>Basic Form - jQuery EasyUI Demo</title>
-    <link rel="stylesheet" href="../../static/easyui/themes/default/easyui.css">
-    <link rel="stylesheet" type="text/css" href="../../static/easyui/themes/icon.css">
-    <script type="text/javascript" src="../../static/easyui/jquery.min.js"></script>
-    <script type="text/javascript" src="../../static/easyui/jquery.easyui.min.js"></script>
-    <script type="text/javascript" src="../../static/easyui/easyui-lang-zh_CN.js"></script>
-    <script src="../../static/js/jquery.cookie.js" ></script>
+    <link rel="stylesheet" href="static/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="static/easyui/themes/icon.css">
+    <script type="text/javascript" src="static/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="static/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="static/easyui/easyui-lang-zh_CN.js"></script>
+    <script src="static/js/jquery.cookie.js" ></script>
     <style>
         h5{
             font-size: 12px;
